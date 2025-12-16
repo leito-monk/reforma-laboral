@@ -2,843 +2,447 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="Análisis del impacto económico de la reforma laboral argentina: pérdida de 1,68 millones anuales por trabajador">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Análisis del impacto económico de la reforma laboral argentina: transferencia de $21 billones anuales">
     <title>Impacto Económico: Reforma Laboral Argentina</title>
     
-    <!-- Preconectar a Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- CSS primero -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Fuentes después -->
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mobile-styles.css">
+</head>
 <body>
-    <!-- Aviso de comentarios -->
+    <!-- Banner de comentarios - solo visible en desktop -->
     <div class="comments-banner">
         <div class="comments-banner-content">
             <span class="comments-icon">💬</span>
             <p class="comments-text">
-                <strong>Este documento es colaborativo:</strong> Podés seleccionar cualquier texto y agregar comentarios, correcciones o preguntas. 
-                <span class="comments-desktop-only">Hacé clic en el ícono <strong>&lt;</strong> en la esquina superior derecha para ver todos los comentarios.</span>
-                <span class="comments-mobile-note">En móviles, seleccioná el texto y tocá "Annotate" para comentar.</span>
+                <strong>Documento colaborativo:</strong> Seleccioná texto para comentar (versión desktop/tablet)
             </p>
         </div>
     </div>
 
-    <header class="hero" role="banner">
+    <!-- Hero Section -->
+    <header class="hero">
         <div class="hero-content">
             <p class="hero-subtitle">El costo de los retrocesos</p>
-            <h1 class="hero-title">Ley de Modernización Laboral</h1>
+            <h1 class="hero-title">Reforma Laboral</h1>
             <p class="hero-description">
-                Análisis del impacto económico anual por trabajador de los principales 
-                retrocesos en derechos laborales propuestos en el proyecto de ley.
+                Análisis del impacto económico de los retrocesos laborales propuestos
             </p>
         </div>
-        <button class="scroll-indicator" type="button" aria-label="Ir a la sección de pérdida anual por trabajador">
-            <span class="scroll-text">Explorar</span>
-            <div class="scroll-arrow" aria-hidden="true"></div>
+        <button class="scroll-btn" aria-label="Ver análisis">
+            <span>↓</span>
         </button>
     </header>
 
     <main>
-        <section class="contexto-section" aria-labelledby="contexto-title">
+        <!-- Métrica Principal -->
+        <section class="section metric-section">
             <div class="container">
-                <h2 id="contexto-title" class="section-title text-center">Una Reforma con Impacto Desigual</h2>
-                <div class="contexto-content">
-                    <p class="contexto-text">
-                        Bajo el discurso de "modernización" y "creación de empleo", el proyecto de ley propone una redistribución masiva de recursos desde quienes trabajan hacia quienes emplean. Pero esta transferencia no afecta a todos por igual: <strong>profundiza las desigualdades estructurales</strong> que atraviesan el mercado laboral argentino.
-                    </p>
-                    
-                    <div class="impacto-diferencial">
-                        <h3 class="impacto-subtitle">Impacto Diferencial por Sector Social</h3>
-                        
-                        <div class="impacto-item">
-                            <strong>👩 Mujeres y disidencias:</strong> Concentradas en sectores precarizados (servicios, comercio, cuidados), enfrentan mayor rotación laboral y menores salarios. La eliminación de la presunción laboral (Art. 23) y la reducción de indemnizaciones las exponen desproporcionadamente al fraude laboral y la pérdida de protección ante despidos arbitrarios. El fraccionamiento de vacaciones (Art. 154) impacta especialmente a quienes sostienen tareas de cuidado no remuneradas.
-                        </div>
-                        
-                        <div class="impacto-item">
-                            <strong>🧑🏽 Trabajadores racializados y migrantes:</strong> Históricamente relegados a empleos informales o tercerizados, la limitación de solidaridad en cadenas de valor (Arts. 30-31) los deja sin respaldo ante incumplimientos salariales. La eliminación del preaviso en período de prueba (Art. 231) facilita la rotación constante sin costos para empleadores, perpetuando ciclos de inestabilidad laboral.
-                        </div>
-                        
-                        <div class="impacto-item">
-                            <strong>♿ Personas con discapacidad:</strong> El Art. 212 permite reducir salarios y jornadas por "incapacidad parcial", legitimando la discriminación salarial bajo argumento médico. Pierden hasta 40% de sus ingresos sin mecanismos de compensación, profundizando su vulnerabilidad económica.
-                        </div>
-                        
-                        <div class="impacto-item">
-                            <strong>👴 Trabajadores mayores de 45 años:</strong> El tope indemnizatorio (Art. 245) castiga directamente la antigüedad laboral, reduciendo hasta 50% las compensaciones por despido. Quienes más años aportaron al sistema son los más perjudicados, enfrentando mayor dificultad para reinsertarse en un mercado que los discrimina por edad.
-                        </div>
-                        
-                        <div class="impacto-item">
-                            <strong>🏘️ Trabajadores de economías regionales:</strong> En provincias con menores salarios y mayor informalidad, las barreras de acceso a justicia (pluspetición inexcusable Art. 20, topes a honorarios Arts. 277) hacen prácticamente imposible reclamar derechos. La distancia a tribunales y el riesgo de pagar costas si "reclaman de más" generan un efecto silenciador.
-                        </div>
-                        
-                        <div class="impacto-item">
-                            <strong>🔧 Trabajadores tercerizados y de plataformas:</strong> Ya operando en zonas grises de informalidad, la eliminación de presunción laboral (Art. 23) y solidaridad (Arts. 30-31) consolida su desprotección. Las empresas principales se desentienden de responsabilidades mientras extraen plusvalía sin asumir costos laborales.
-                        </div>
-                    </div>
-                    
-                    <div class="contexto-conclusion">
-                        <p>
-                            <strong>La "modernización" propuesta no es neutral:</strong> redistribuye poder y recursos desde los sectores más vulnerables hacia los más concentrados de la economía. Cada medida amplifica desigualdades preexistentes de género, raza, clase, capacidad y territorio. Lo que se presenta como "flexibilización" es, en la práctica, una desregulación que precariza más a quienes ya están en los márgenes del sistema laboral.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="main-metric" aria-labelledby="main-metric-title">
-            <div class="container">
-                <h2 id="main-metric-title" class="metric-label">Transferencia Total de Recursos</h2>
-                <p class="metric-value">
-                    <data value="21000000000000">$21 billones/año</data>
-                </p>
-                <p class="metric-description">
-                    La suma de todas las medidas transfiere 
-                    <strong>21 billones de pesos anuales</strong> 
-                    desde los trabajadores registrados hacia la patronal por la combinación de retrocesos en derechos laborales propuestos en la reforma.
+                <h2 class="metric-label">Transferencia Total</h2>
+                <p class="metric-value">$21 billones/año</p>
+                <p class="metric-desc">
+                    Todas las medidas combinadas transfieren <strong>21 billones de pesos anuales</strong> 
+                    desde trabajadores hacia patronal.
                 </p>
             </div>
         </section>
-
-        <section class="retrocesos-section" aria-labelledby="retrocesos-title">
+        <!-- Contexto Interseccional -->
+        <section class="section contexto-section">
             <div class="container">
-                <header class="section-header">
-                    <h2 id="retrocesos-title" class="section-title">12 Retrocesos Principales</h2>
-                </header>
+                <h2 class="section-title">Una Reforma con Impacto Desigual</h2>
                 
-                <div class="retrocesos-grid">
-                    <article class="retroceso-card" style="animation-delay: 0.1s">
-                        <span class="card-number" aria-hidden="true">01</span>
-                        <h3 class="card-title">Tope Indemnizatorio</h3>
-                        <p class="card-article">Artículo 245</p>
-                        <p class="card-description">
-                            Límite de 3x promedio del convenio colectivo + mínimo 67% del salario real.  
-                            Reduce hasta 50% las indemnizaciones de trabajadores con mayor antigüedad.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-2062500000000">-$2.06 billones</data>
-                            <p class="impact-detail">937.500 trabajadores × $2.200.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 0.2s">
-                        <span class="card-number" aria-hidden="true">02</span>
-                        <h3 class="card-title">Período de Prueba</h3>
-                        <p class="card-article">Artículo 231</p>
-                        <p class="card-description">
-                            Eliminación de la obligación de preaviso durante el período de prueba.  
-                            Los trabajadores pueden ser desvinculados sin compensación. 
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-825000000000">-$825.000 millones</data>
-                            <p class="impact-detail">1.500.000 trabajadores × $550.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 0.3s">
-                        <span class="card-number" aria-hidden="true">03</span>
-                        <h3 class="card-title">Presunción de Relación Laboral</h3>
-                        <p class="card-article">Artículo 23</p>
-                        <p class="card-description">
-                            Se elimina la presunción si hay factura o recibo.  Facilita el fraude laboral 
-                            mediante falsas contrataciones como autónomos.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-2816000000000">-$2.82 billones</data>
-                            <p class="impact-detail">800.000 trabajadores × $3.520.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 0.4s">
-                        <span class="card-number" aria-hidden="true">04</span>
-                        <h3 class="card-title">Solidaridad en Tercerización</h3>
-                        <p class="card-article">Artículo 30</p>
-                        <p class="card-description">
-                            Se limita la responsabilidad solidaria.  El control previo de documentación 
-                            exime al principal, aumentando el riesgo de incobrabilidad.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-1584000000000">-$1.58 billones</data>
-                            <p class="impact-detail">600.000 trabajadores × $2.640.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 0.5s">
-                        <span class="card-number" aria-hidden="true">05</span>
-                        <h3 class="card-title">Empresas Relacionadas</h3>
-                        <p class="card-article">Artículo 31</p>
-                        <p class="card-description">
-                            La solidaridad entre empresas del mismo grupo solo aplica si hay maniobras 
-                            fraudulentas o conducción temeraria probadas.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-1232000000000">-$1.23 billones</data>
-                            <p class="impact-detail">400.000 trabajadores × $3.080.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 0.6s">
-                        <span class="card-number" aria-hidden="true">06</span>
-                        <h3 class="card-title">Pluspetición Inexcusable</h3>
-                        <p class="card-article">Artículo 20</p>
-                        <p class="card-description">
-                            El trabajador debe pagar las costas si reclama "de más" de forma objetiva. 
-                            Desincentiva reclamos legítimos por miedo a costos judiciales.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-1650000000000">-$1.65 billones</data>
-                            <p class="impact-detail">1.500.000 trabajadores × $1.100.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 0.7s">
-                        <span class="card-number" aria-hidden="true">07</span>
-                        <h3 class="card-title">Cuota Litis Máxima 20%</h3>
-                        <p class="card-article">Artículo 277</p>
-                        <p class="card-description">
-                            Limita los honorarios del abogado al 20% del monto obtenido. 
-                            Dificulta el acceso a justicia en casos complejos o de bajo monto.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-990000000000">-$990.000 millones</data>
-                            <p class="impact-detail">1.500.000 trabajadores × $660.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 0.8s">
-                        <span class="card-number" aria-hidden="true">08</span>
-                        <h3 class="card-title">Banco de Horas</h3>
-                        <p class="card-article">Artículo 197 bis</p>
-                        <p class="card-description">
-                            Compensación de horas extras con francos en lugar de pago.  
-                            Elimina el plus del 50% o 100% por horas extraordinarias.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-2475000000000">-$2.48 billones</data>
-                            <p class="impact-detail">3.750.000 trabajadores × $660.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 0.9s">
-                        <span class="card-number" aria-hidden="true">09</span>
-                        <h3 class="card-title">Base de Cálculo Reducida</h3>
-                        <p class="card-article">Artículo 245</p>
-                        <p class="card-description">
-                            Excluye el SAC y conceptos no mensuales del cálculo de indemnización. 
-                            Reduce entre 15-20% la base de cálculo.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-2337500000000">-$2.34 billones</data>
-                            <p class="impact-detail">3.125.000 trabajadores × $748.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 1s">
-                        <span class="card-number" aria-hidden="true">10</span>
-                        <h3 class="card-title">Reducción por Incapacidad</h3>
-                        <p class="card-article">Artículo 212</p>
-                        <p class="card-description">
-                            Permite reducir salario y jornada en casos de incapacidad parcial. 
-                            El trabajador puede perder hasta 40% de su remuneración.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-1237500000000">-$1.24 billones</data>
-                            <p class="impact-detail">750.000 trabajadores × $1.650.000</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 1.1s">
-                        <span class="card-number" aria-hidden="true">11</span>
-                        <h3 class="card-title">Vacaciones Fraccionadas</h3>
-                        <p class="card-article">Artículo 154</p>
-                        <p class="card-description">
-                            Permite fraccionar vacaciones en períodos de 7 días.  
-                            Afecta la calidad del descanso y la desconexión efectiva.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-343750000000">-$343.750 millones</data>
-                            <p class="impact-detail">12.500.000 trabajadores × $27.500</p>
-                        </div>
-                    </article>
-
-                    <article class="retroceso-card" style="animation-delay: 1.2s">
-                        <span class="card-number" aria-hidden="true">12</span>
-                        <h3 class="card-title">Costas Limitadas al 25%</h3>
-                        <p class="card-article">Artículo 277</p>
-                        <p class="card-description">
-                            Tope del 25% del monto de sentencia para costas procesales. 
-                            Reduce la calidad de representación legal disponible.
-                        </p>
-                        <div class="card-impact">
-                            <span class="impact-label">Transferencia anual a patronal:</span>
-                            <data class="impact-value" value="-1237500000000">-$1.24 billones</data>
-                            <p class="impact-detail">1.500.000 trabajadores × $825.000</p>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="totales-section" aria-labelledby="totales-title">
-            <div class="container">
-                <h2 id="totales-title" class="section-title text-center">Impacto Global</h2>
-                <div class="totales-grid">
-                    <div class="total-box">
-                        <p class="total-label">Impacto Total Anual</p>
-                        <p class="total-value"><data value="21000000000000">$21 billones</data></p>
-                        <p class="total-sub">Sobre 12. 5 millones de trabajadores registrados</p>
-                    </div>
-                    <div class="total-box">
-                        <p class="total-label">Pérdida Promedio Anual</p>
-                        <p class="total-value"><data value="1680000">$1.680. 000</data></p>
-                        <p class="total-sub">Por trabajador registrado</p>
-                    </div>
-                    <div class="total-box">
-                        <p class="total-label">Trabajadores Afectados</p>
-                        <p class="total-value">100%</p>
-                        <p class="total-sub">Todos los trabajadores registrados pierden derechos</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="notas-section" aria-labelledby="notas-title">
-            <div class="container container--narrow">
-                <h2 id="notas-title" class="section-title text-center">Notas Metodológicas</h2>
+                <p class="lead-text">
+                    Bajo el discurso de "modernización", el proyecto redistribuye masivamente recursos desde trabajadores hacia empleadores. 
+                    Esta transferencia <strong>profundiza desigualdades estructurales</strong> existentes.
+                </p>
                 
-                <div class="nota-item">
-                    <strong>1.</strong> Los cálculos son estimaciones conservadoras basadas en datos oficiales de INDEC y Ministerio de Trabajo (MTEySS).
+                <div class="impacto-box">
+                    <h3 class="impacto-title">Impacto Diferencial por Sector</h3>
+                    
+                    <div class="impacto-card">
+                        <div class="impacto-icon">👩</div>
+                        <div class="impacto-content">
+                            <strong>Mujeres y disidencias</strong>
+                            <p>Concentradas en sectores precarizados. La eliminación de presunción laboral y reducción de indemnizaciones las expone al fraude laboral. El fraccionamiento de vacaciones impacta a quienes sostienen tareas de cuidado.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="impacto-card">
+                        <div class="impacto-icon">🧑🏽</div>
+                        <div class="impacto-content">
+                            <strong>Trabajadores racializados y migrantes</strong>
+                            <p>Relegados a empleos tercerizados, la limitación de solidaridad los deja sin respaldo. La eliminación del preaviso facilita rotación sin costos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="impacto-card">
+                        <div class="impacto-icon">♿</div>
+                        <div class="impacto-content">
+                            <strong>Personas con discapacidad</strong>
+                            <p>El Art. 212 permite reducir salarios por "incapacidad parcial", legitimando discriminación salarial. Pierden hasta 40% sin compensación.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="impacto-card">
+                        <div class="impacto-icon">👴</div>
+                        <div class="impacto-content">
+                            <strong>Trabajadores mayores de 45 años</strong>
+                            <p>El tope indemnizatorio castiga la antigüedad, reduciendo hasta 50% las compensaciones. Mayor dificultad para reinserción.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="impacto-card">
+                        <div class="impacto-icon">🏘️</div>
+                        <div class="impacto-content">
+                            <strong>Economías regionales</strong>
+                            <p>Las barreras de acceso a justicia (pluspetición, topes a honorarios) hacen imposible reclamar derechos. Efecto silenciador.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="impacto-card">
+                        <div class="impacto-icon">🔧</div>
+                        <div class="impacto-content">
+                            <strong>Trabajadores tercerizados</strong>
+                            <p>La eliminación de presunción laboral y solidaridad consolida su desprotección. Empresas se desentienden de responsabilidades.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="nota-item">
-                    <strong>2.</strong> Los porcentajes de afectación se basan en estudios de rotación laboral, litigiosidad y estructura del mercado de trabajo argentino.
-                </div>
-                <div class="nota-item">
-                    <strong>3.</strong> No se incluyen costos indirectos como estrés, tiempo perdido, deterioro de salud mental e inseguridad jurídica.
-                </div>
-                <div class="nota-item">
-                    <strong>4.</strong> El impacto real puede ser significativamente mayor considerando efectos acumulativos y sinergias negativas entre diferentes retrocesos.
-                </div>
-                <div class="nota-item">
-                    <strong>5.</strong> El tope indemnizatorio afecta desproporcionadamente a trabajadores con mayor antigüedad y salarios superiores al promedio del convenio. 
-                </div>
-                <div class="nota-item">
-                    <strong>6.</strong> La eliminación de solidaridad aumenta drásticamente el riesgo de incobrabilidad, especialmente en PyMEs y cadenas de tercerización.
-                </div>
-                <div class="nota-item">
-                    <strong>7.</strong> Las reformas procesales (pluspetición, cuota litis, costas) generan un efecto disuasorio que dificulta el acceso efectivo a la justicia.
-                </div>
-                <div class="nota-item">
-                    <strong>8.</strong> Salario base utilizado:  $550.000 mensuales (promedio INDEC octubre 2024). Antigüedad promedio: 8 años. 
+                
+                <div class="conclusion-box">
+                    <p>
+                        <strong>La "modernización" no es neutral:</strong> redistribuye poder desde sectores vulnerables hacia concentrados. 
+                        Cada medida amplifica desigualdades de género, raza, clase, capacidad y territorio.
+                    </p>
                 </div>
             </div>
         </section>
-
-        <section class="redistribucion-section" aria-labelledby="redistribucion-title">
+        <!-- Retrocesos -->
+        <section class="section retrocesos-section">
             <div class="container">
-                <header class="section-header">
-                    <h2 id="redistribucion-title" class="section-title text-center accent-color">
-                        ¿Y Si Redistribuimos Este Dinero?
-                    </h2>
-                </header>
+                <h2 class="section-title">12 Retrocesos Principales</h2>
+                
+                <article class="retroceso-card">
+                    <span class="card-num">01</span>
+                    <h3 class="card-title">Tope Indemnizatorio</h3>
+                    <p class="card-art">Artículo 245</p>
+                    <p class="card-desc">
+                        Límite de 3x promedio convenio + mínimo 67% salario real. Reduce hasta 50% indemnizaciones con mayor antigüedad.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$2.06 billones</p>
+                        <p class="impact-calc">937.500 trabajadores × $2.200.000</p>
+                    </div>
+                </article>
 
-                <div class="pregunta-critica">
-                    <p class="pregunta-intro">Si el objetivo es reducir el "costo laboral" para crear empleo,</p>
-                    <p class="pregunta-principal">
-                        ¿Cuántos puestos de trabajo deberían crearse para que la reforma no perjudique a los trabajadores como clase?
+                <article class="retroceso-card">
+                    <span class="card-num">02</span>
+                    <h3 class="card-title">Período de Prueba</h3>
+                    <p class="card-art">Artículo 231</p>
+                    <p class="card-desc">
+                        Eliminación de preaviso durante período de prueba. Desvinculación sin compensación.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$825.000 millones</p>
+                        <p class="impact-calc">1.500.000 trabajadores × $550.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">03</span>
+                    <h3 class="card-title">Presunción Laboral</h3>
+                    <p class="card-art">Artículo 23</p>
+                    <p class="card-desc">
+                        Se elimina presunción si hay factura. Facilita fraude laboral mediante falsas contrataciones como autónomos.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$2.82 billones</p>
+                        <p class="impact-calc">800.000 trabajadores × $3.520.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">04</span>
+                    <h3 class="card-title">Solidaridad en Tercerización</h3>
+                    <p class="card-art">Artículo 30</p>
+                    <p class="card-desc">
+                        Se limita responsabilidad solidaria. Control previo exime al principal, aumenta incobrabilidad.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$1.58 billones</p>
+                        <p class="impact-calc">600.000 trabajadores × $2.640.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">05</span>
+                    <h3 class="card-title">Empresas Relacionadas</h3>
+                    <p class="card-art">Artículo 31</p>
+                    <p class="card-desc">
+                        Solidaridad entre empresas del grupo solo si hay maniobras fraudulentas probadas.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$1.23 billones</p>
+                        <p class="impact-calc">400.000 trabajadores × $3.080.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">06</span>
+                    <h3 class="card-title">Pluspetición Inexcusable</h3>
+                    <p class="card-art">Artículo 20</p>
+                    <p class="card-desc">
+                        Trabajador paga costas si reclama "de más". Desincentiva reclamos legítimos por miedo a costos.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$1.65 billones</p>
+                        <p class="impact-calc">1.500.000 trabajadores × $1.100.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">07</span>
+                    <h3 class="card-title">Cuota Litis 20%</h3>
+                    <p class="card-art">Artículo 277</p>
+                    <p class="card-desc">
+                        Limita honorarios al 20%. Dificulta acceso a justicia en casos complejos o bajo monto.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$990.000 millones</p>
+                        <p class="impact-calc">1.500.000 trabajadores × $660.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">08</span>
+                    <h3 class="card-title">Banco de Horas</h3>
+                    <p class="card-art">Artículo 197 bis</p>
+                    <p class="card-desc">
+                        Compensación con francos en lugar de pago. Elimina plus 50-100% por horas extras.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$2.48 billones</p>
+                        <p class="impact-calc">3.750.000 trabajadores × $660.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">09</span>
+                    <h3 class="card-title">Base de Cálculo Reducida</h3>
+                    <p class="card-art">Artículo 245</p>
+                    <p class="card-desc">
+                        Excluye SAC y conceptos no mensuales. Reduce 15-20% base de cálculo indemnización.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$2.34 billones</p>
+                        <p class="impact-calc">3.125.000 trabajadores × $748.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">10</span>
+                    <h3 class="card-title">Reducción por Incapacidad</h3>
+                    <p class="card-art">Artículo 212</p>
+                    <p class="card-desc">
+                        Permite reducir salario y jornada por incapacidad parcial. Pérdida hasta 40% remuneración.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$1.24 billones</p>
+                        <p class="impact-calc">750.000 trabajadores × $1.650.000</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">11</span>
+                    <h3 class="card-title">Vacaciones Fraccionadas</h3>
+                    <p class="card-art">Artículo 154</p>
+                    <p class="card-desc">
+                        Permite fraccionar en períodos de 7 días. Afecta calidad de descanso y desconexión.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$343.750 millones</p>
+                        <p class="impact-calc">12.500.000 trabajadores × $27.500</p>
+                    </div>
+                </article>
+
+                <article class="retroceso-card">
+                    <span class="card-num">12</span>
+                    <h3 class="card-title">Costas Limitadas 25%</h3>
+                    <p class="card-art">Artículo 277</p>
+                    <p class="card-desc">
+                        Tope 25% monto sentencia para costas. Reduce calidad de representación disponible.
+                    </p>
+                    <div class="card-impact">
+                        <span class="impact-label">Transferencia anual:</span>
+                        <p class="impact-value">$1.24 billones</p>
+                        <p class="impact-calc">1.500.000 trabajadores × $825.000</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Redistribución -->
+        <section class="section redistribucion-section">
+            <div class="container">
+                <h2 class="section-title">¿Y Si Redistribuimos?</h2>
+                
+                <div class="pregunta-box">
+                    <p class="pregunta-intro">Si el objetivo es reducir "costo laboral" para crear empleo,</p>
+                    <p class="pregunta-main">¿Cuántos puestos deberían crearse para no perjudicar a trabajadores?</p>
+                </div>
+
+                <div class="highlight-box">
+                    <p class="highlight-label">Ahorro para Empresarios</p>
+                    <p class="highlight-value">$21 billones/año</p>
+                    <p class="highlight-text">
+                        Para neutralidad, debería convertirse íntegramente en salarios de nuevos empleados.
                     </p>
                 </div>
 
-                <div class="highlight-box highlight-box--primary">
-                    <p class="highlight-label">Ahorro Total para Empresarios</p>
-                    <p class="highlight-value"><data value="21000000000000">$21 billones/año</data></p>
-                    <p class="highlight-description">
-                        Este es el dinero que los empresarios <strong>dejan de pagar</strong> en derechos laborales.  
-                        Para que la reforma sea neutra para los trabajadores, este monto debería convertirse íntegramente en <strong>salarios de nuevos empleados</strong>.
-                    </p>
-                </div>
-
-                <div class="scenarios-grid">
-                    <article class="scenario-card scenario-card--secondary">
+                <div class="scenario-grid">
+                    <div class="scenario-card">
                         <p class="scenario-label">Con salario mínimo</p>
                         <p class="scenario-value">6.600.000</p>
-                        <p class="scenario-sub">empleos nuevos necesarios</p>
+                        <p class="scenario-sub">empleos necesarios</p>
                         <p class="scenario-impact">+53% empleos</p>
-                    </article>
+                    </div>
 
-                    <article class="scenario-card scenario-card--accent">
+                    <div class="scenario-card">
                         <p class="scenario-label">Con salario promedio</p>
                         <p class="scenario-value">2.200.000</p>
-                        <p class="scenario-sub">empleos nuevos necesarios</p>
+                        <p class="scenario-sub">empleos necesarios</p>
                         <p class="scenario-impact">+18% empleos</p>
-                    </article>
+                    </div>
 
-                    <article class="scenario-card scenario-card--primary">
+                    <div class="scenario-card scenario-alert">
                         <p class="scenario-label">Contexto real</p>
                         <p class="scenario-value">RECESIÓN</p>
-                        <p class="scenario-sub">Empleo cayendo -1.5%</p>
+                        <p class="scenario-sub">Empleo -1.5%</p>
                         <p class="scenario-impact">Imposible</p>
-                    </article>
+                    </div>
                 </div>
 
-                <div class="alert-box alert-box--danger">
-                    <h3 class="alert-title">⚠️ Análisis de Viabilidad</h3>
-                    
-                    <div class="viability-grid">
-                        <div class="viability-item">
-                            <span class="viability-label">Crecimiento histórico anual del empleo: </span>
-                            <strong class="viability-value accent-color">2.5%</strong>
-                        </div>
-                        <div class="viability-item">
-                            <span class="viability-label">Crecimiento necesario para neutralidad:</span>
-                            <strong class="viability-value text-primary">18%</strong>
-                        </div>
-                        <div class="viability-item">
-                            <span class="viability-label">Relación necesario vs. histórico:</span>
-                            <strong class="viability-value viability-value--large text-primary">7. 2x más</strong>
-                        </div>
+                <div class="alert-box">
+                    <h3 class="alert-title">⚠️ Viabilidad</h3>
+                    <div class="viability-item">
+                        <span>Crecimiento histórico anual:</span>
+                        <strong>2.5%</strong>
                     </div>
-                    
-                    <div class="alert-footer">
-                        Se necesita crear en 1 año lo que históricamente se crea en 7 años
+                    <div class="viability-item">
+                        <span>Necesario para neutralidad:</span>
+                        <strong>18%</strong>
                     </div>
+                    <div class="viability-item">
+                        <span>Relación necesario vs histórico:</span>
+                        <strong class="big">7.2x más</strong>
+                    </div>
+                    <p class="alert-footer">Se necesita crear en 1 año lo que históricamente se crea en 7 años</p>
                 </div>
 
                 <div class="distribution-box">
-                    <h3 class="distribution-title">📊 Destino Real del Ahorro Empresarial</h3>
-                    <p class="distribution-intro">
-                        Sin mecanismos obligatorios de redistribución, así es como históricamente se distribuye el "ahorro" empresarial:
-                    </p>
+                    <h3>📊 Destino Real del Ahorro</h3>
+                    <p>Sin redistribución obligatoria, históricamente:</p>
                     
-                    <div class="distribution-bars">
-                        <div class="distribution-bar">
-                            <span class="bar-label">Dividendos y utilidades</span>
-                            <div class="bar-container">
-                                <div class="bar-fill bar-fill--40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                    <span class="bar-percent">40%</span>
-                                </div>
-                            </div>
-                            <span class="bar-amount">$8.4 billones</span>
+                    <div class="bar-item">
+                        <span class="bar-label">Dividendos</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 40%">40%</div>
                         </div>
-
-                        <div class="distribution-bar">
-                            <span class="bar-label">Nuevas contrataciones</span>
-                            <div class="bar-container">
-                                <div class="bar-fill bar-fill--25 bar-fill--accent" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    <span class="bar-percent bar-percent--dark">25%</span>
-                                </div>
-                            </div>
-                            <span class="bar-amount">$5.3 billones</span>
-                        </div>
-
-                        <div class="distribution-bar">
-                            <span class="bar-label">Inversión productiva</span>
-                            <div class="bar-container">
-                                <div class="bar-fill bar-fill--20 bar-fill--blue" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                    <span class="bar-percent">20%</span>
-                                </div>
-                            </div>
-                            <span class="bar-amount">$4.2 billones</span>
-                        </div>
-
-                        <div class="distribution-bar">
-                            <span class="bar-label">Reducción de precios</span>
-                            <div class="bar-container">
-                                <div class="bar-fill bar-fill--15 bar-fill--gray" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
-                                    <span class="bar-percent">15%</span>
-                                </div>
-                            </div>
-                            <span class="bar-amount">$3.2 billones</span>
-                        </div>
+                        <span class="bar-amount">$8.4B</span>
                     </div>
 
-                    <div class="distribution-conclusion">
-                        <strong class="accent-color">Resultado:</strong>
-                        <p>
-                            Incluso en el escenario optimista (25% a nuevas contrataciones), solo se crearían 
-                            <strong class="text-primary">~550. 000 empleos</strong>, 
-                            apenas el <strong class="text-primary">25%</strong> de lo necesario para neutralidad.
-                        </p>
+                    <div class="bar-item">
+                        <span class="bar-label">Nuevas contrataciones</span>
+                        <div class="bar-container">
+                            <div class="bar-fill bar-accent" style="width: 25%">25%</div>
+                        </div>
+                        <span class="bar-amount">$5.3B</span>
                     </div>
+
+                    <div class="bar-item">
+                        <span class="bar-label">Inversión</span>
+                        <div class="bar-container">
+                            <div class="bar-fill bar-blue" style="width: 20%">20%</div>
+                        </div>
+                        <span class="bar-amount">$4.2B</span>
+                    </div>
+
+                    <div class="bar-item">
+                        <span class="bar-label">Reducción precios</span>
+                        <div class="bar-container">
+                            <div class="bar-fill bar-gray" style="width: 15%">15%</div>
+                        </div>
+                        <span class="bar-amount">$3.2B</span>
+                    </div>
+
+                    <p class="distribution-conclusion">
+                        <strong>Resultado:</strong> Incluso optimista (25% a empleos), solo ~550.000 puestos, 
+                        apenas 25% de lo necesario.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section class="mecanismo-section" aria-labelledby="mecanismo-title">
+        <!-- Contacto -->
+        <section class="section contacto-section">
             <div class="container">
-                <h2 id="mecanismo-title" class="section-title text-center">
-                    💡 Mecanismo Obligatorio de Redistribución
-                </h2>
-                <p class="section-description text-center">
-                    Si realmente el objetivo es crear empleo, la ley debe incluir mecanismos obligatorios 
-                    que garanticen que el ahorro empresarial se traduzca en nuevos puestos de trabajo: 
-                </p>
-                
-                <div class="mecanismo-grid">
-                    <article class="mecanismo-item">
-                        <span class="mecanismo-icon" aria-hidden="true">1️⃣</span>
-                        <h3 class="mecanismo-title">Fondo de Redistribución Obligatorio</h3>
-                        <p class="mecanismo-description">
-                            100% del ahorro va a un fondo administrado tripartitamente 
-                            (gobierno, sindicatos, empresarios) destinado exclusivamente a subsidiar nuevas contrataciones.
-                        </p>
-                    </article>
-
-                    <article class="mecanismo-item">
-                        <span class="mecanismo-icon" aria-hidden="true">2️⃣</span>
-                        <h3 class="mecanismo-title">Subsidio del 80% por 24 meses</h3>
-                        <p class="mecanismo-description">
-                            El fondo paga el 80% del salario bruto de cada nuevo empleado durante 2 años, 
-                            garantizando que el ahorro se convierta efectivamente en empleo.
-                        </p>
-                    </article>
-
-                    <article class="mecanismo-item">
-                        <span class="mecanismo-icon" aria-hidden="true">3️⃣</span>
-                        <h3 class="mecanismo-title">Auditoría Trimestral Independiente</h3>
-                        <p class="mecanismo-description">
-                            Verificación cada 3 meses de que se están creando los empleos necesarios.  
-                            Publicación de reportes públicos con datos desagregados por sector.
-                        </p>
-                    </article>
-
-                    <article class="mecanismo-item">
-                        <span class="mecanismo-icon" aria-hidden="true">4️⃣</span>
-                        <h3 class="mecanismo-title">Cláusula Gatillo Automática</h3>
-                        <p class="mecanismo-description">
-                            Si no se alcanza el 18% de crecimiento del empleo registrado en 12 meses, 
-                            la reforma se revierte AUTOMÁTICAMENTE y se reinstauran todos los derechos eliminados.
-                        </p>
-                    </article>
-
-                    <article class="mecanismo-item">
-                        <span class="mecanismo-icon" aria-hidden="true">5️⃣</span>
-                        <h3 class="mecanismo-title">Penalizaciones Severas</h3>
-                        <p class="mecanismo-description">
-                            Las empresas que reciban el beneficio pero no contraten, deben devolver el TRIPLE 
-                            del ahorro obtenido, más intereses punitorios del 50% anual. 
-                        </p>
-                    </article>
-                </div>
-
-                <div class="comparison-box">
-                    <h3 class="comparison-title">⚖️ LA ALTERNATIVA ES CLARA</h3>
-                    <div class="comparison-grid">
-                        <div class="comparison-column comparison-column--good">
-                            <h4 class="comparison-subtitle">CON mecanismo obligatorio: </h4>
-                            <ul class="comparison-list">
-                                <li>2. 2 millones de empleos nuevos garantizados</li>
-                                <li>Neutralidad para trabajadores como clase</li>
-                                <li>Redistribución verificable y transparente</li>
-                                <li>Reversión automática si falla</li>
-                            </ul>
-                        </div>
-                        <div class="comparison-column comparison-column--bad">
-                            <h4 class="comparison-subtitle">SIN mecanismo obligatorio:</h4>
-                            <ul class="comparison-list">
-                                <li>40% va a dividendos empresariales</li>
-                                <li>Solo ~550.000 empleos (25% necesario)</li>
-                                <li>Trabajadores pierden derechos sin compensación</li>
-                                <li>No hay forma de revertir el daño</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="fuentes-section" aria-labelledby="fuentes-title">
-            <div class="container container--wide">
-                <h2 id="fuentes-title" class="section-title text-center">📚 Fuentes de Datos y Referencias</h2>
-                
-                <div class="fuentes-group">
-                    <h3 class="fuentes-group-title">🏛️ Fuentes Primarias</h3>
-                    
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">1.  Proyecto de Ley de Modernización Laboral</h4>
-                        <a href="https://www.argentina.gob.ar/sites/default/files/proyecto_de_ley_de_modernizacion_laboral._vf. pdf" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver documento oficial (PDF)
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en:  Todos los artículos citados (Art. 20, 23, 30, 31, 154, 197 bis, 212, 231, 245, 277)
-                        </p>
-                    </article>
-
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">2. INDEC - Salario Promedio</h4>
-                        <a href="https://www.indec.gob.ar/indec/web/Nivel4-Tema-4-31-58" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver estadísticas salariales
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Salario mensual promedio ($550.000, octubre 2024), base de cálculo de todos los impactos económicos
-                        </p>
-                    </article>
-
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">3.  INDEC - Índice de Precios al Consumidor (IPC)</h4>
-                        <a href="https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-5-31" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver IPC
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Actualización de créditos laborales (Art. 276), cálculo de impacto real en poder adquisitivo
-                        </p>
-                    </article>
-
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">4. Ministerio de Trabajo - Estadísticas de Empleo</h4>
-                        <a href="https://www.argentina.gob.ar/trabajo/estadisticas" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver estadísticas
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Número de trabajadores registrados (12. 5 millones), antigüedad promedio (8 años), tasa de rotación laboral (25%)
-                        </p>
-                    </article>
-
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">5. Ministerio de Trabajo - SIPA</h4>
-                        <a href="https://www.argentina.gob.ar/trabajo/seguridadsocial/sipa" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver información SIPA
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Cargas sociales (45% aproximado), aportes patronales, base para cálculo de costo laboral total
-                        </p>
-                    </article>
-
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">6. Salario Mínimo Vital y Móvil - Diciembre 2024</h4>
-                        <a href="https://www.argentina.gob.ar/trabajo/salariominimo" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver SMVM
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Cálculo escenario de redistribución con salario mínimo ($271.571), proyección de empleos creables
-                        </p>
-                    </article>
-
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">7. Ley de Contrato de Trabajo N° 20.744</h4>
-                        <a href="http://servicios.infoleg.gob.ar/infolegInternet/anexos/25000-29999/25552/texact.htm" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver texto legal
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Legislación vigente para comparación de derechos actuales vs. propuestos, cálculo de indemnizaciones actuales
-                        </p>
-                    </article>
-                </div>
-
-                <div class="fuentes-group">
-                    <h3 class="fuentes-group-title">📊 Estudios y Literatura Académica</h3>
-                    
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">8.  CENDA - Centro de Estudios para el Desarrollo Argentino</h4>
-                        <a href="http://www.cenda.org.ar/" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Visitar sitio
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Análisis de distribución del ingreso, impacto de reformas laborales en economía argentina
-                        </p>
-                    </article>
-
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">9. OIT - Organización Internacional del Trabajo</h4>
-                        <a href="https://www.ilo.org/americas/paises/argentina/lang--es/index.htm" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver estudios sobre Argentina
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Estándares internacionales de derechos laborales, estudios sobre flexibilización laboral y empleo
-                        </p>
-                    </article>
-
-                    <article class="fuente-item">
-                        <h4 class="fuente-title">10. CEPAL - Comisión Económica para América Latina</h4>
-                        <a href="https://www.cepal.org/es/areas-de-trabajo/desarrollo-social" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="fuente-link">
-                            Ver publicaciones
-                        </a>
-                        <p class="fuente-usage">
-                            📍 Usado en: Impacto de reformas laborales en distribución del ingreso, análisis comparativo regional
-                        </p>
-                    </article>
-                </div>
-
-                <div class="fuentes-group">
-                    <h3 class="fuentes-group-title">🔍 Metodología y Supuestos</h3>
-                    
-                    <div class="metodologia-item">
-                        <h4 class="metodologia-subtitle">Cálculo de Pérdidas Individuales</h4>
-                        <p class="metodologia-text">
-                            <strong>Fórmula base:</strong> Pérdida = Salario Base × Antigüedad Promedio × % Reducción del Derecho<br>
-                            <strong>Ejemplo Art. 245 (Tope indemnizatorio):</strong> $550.000 × 8 años × 0.5 = $2.200.000<br>
-                            <strong>Fuentes:</strong> Art. específico del proyecto + Salario INDEC + Antigüedad MTEySS
-                        </p>
-                    </div>
-
-                    <div class="metodologia-item">
-                        <h4 class="metodologia-subtitle">Cálculo de Afectados Anuales</h4>
-                        <p class="metodologia-text">
-                            <strong>Fórmula: </strong> Afectados = Trabajadores Totales × Tasa Rotación × % Casos Aplicables<br>
-                            <strong>Ejemplo Tope indemnizatorio:</strong> 12.5M × 0.25 × 0.3 = 937.500 trabajadores<br>
-                            <strong>Fuentes:</strong> Trabajadores registrados MTEySS + Rotación laboral histórica + % estimado por tipo de caso
-                        </p>
-                    </div>
-
-                    <div class="metodologia-item">
-                        <h4 class="metodologia-subtitle">Cálculo de Impacto Total</h4>
-                        <p class="metodologia-text">
-                            <strong>Fórmula:</strong> Impacto Total = Σ(Pérdida Individual × Afectados) para cada retroceso<br>
-                            <strong>Total: </strong> $21 billones = suma de 12 retrocesos principales<br>
-                            <strong>Verificación:</strong> $21B / 12.5M trabajadores = $1.68M pérdida promedio por trabajador
-                        </p>
-                    </div>
-
-                    <div class="metodologia-item">
-                        <h4 class="metodologia-subtitle">Cálculo de Empleos Necesarios</h4>
-                        <p class="metodologia-text">
-                            <strong>Fórmula:</strong> Empleos = Ahorro Total / (Salario Mensual × 12 × 1.45)<br>
-                            <strong>Factor 1.45</strong> = cargas sociales aproximadas (contribuciones patronales)<br>
-                            <strong>Ejemplo:</strong> $21B / ($550.000 × 12 × 1.45) = ~2.2 millones de empleos<br>
-                            <strong>Fuentes:</strong> Cálculo propio basado en estructura de costos laborales (SIPA)
-                        </p>
-                    </div>
-
-                    <div class="metodologia-item">
-                        <h4 class="metodologia-subtitle">Supuestos Conservadores Aplicados</h4>
-                        <ul class="metodologia-list">
-                            <li>Rotación laboral:  25% anual (puede ser mayor en sectores específicos)</li>
-                            <li>Porcentajes de afectación: estimaciones conservadoras por tipo de retroceso</li>
-                            <li>Antigüedad promedio: 8 años (dato nacional, varía por sector)</li>
-                            <li>No se incluyen:  costos indirectos, pérdida de poder adquisitivo futuro, efectos en salud mental</li>
-                            <li>Escenario de redistribución: asume 25% a nuevas contrataciones (optimista vs. realidad histórica)</li>
-                        </ul>
-                    </div>
-
-                    <div class="metodologia-item">
-                        <h4 class="metodologia-subtitle">Limitaciones del Análisis</h4>
-                        <ul class="metodologia-list">
-                            <li>Variabilidad sectorial no reflejada en promedios nacionales</li>
-                            <li>Efectos de equilibrio general no modelizados</li>
-                            <li>Supuesto de comportamiento empresarial basado en experiencia histórica</li>
-                            <li>No se modelizan efectos macroeconómicos de segunda ronda</li>
-                            <li>Estimaciones de % de casos afectados basadas en estructura actual (puede cambiar)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="transparencia-box">
-                    <h3 class="transparencia-title">⚖️ Transparencia Metodológica</h3>
-                    <p class="transparencia-text">
-                        Todos los cálculos son <strong>reproducibles y verificables</strong>. Las hojas de cálculo incluyen 
-                        las fórmulas completas y referencias específicas a cada fuente de dato.  Los supuestos están 
-                        claramente identificados y pueden ser modificados para análisis de sensibilidad.  Este análisis 
-                        busca ser una <strong>herramienta de debate informado</strong>, no una predicción determinística.
+                <div class="contacto-box">
+                    <h3>💬 Comentarios Colaborativos</h3>
+                    <p>
+                        Este documento usa <strong>Hypothesis</strong> para comentarios (versión desktop/tablet). 
+                        Seleccioná texto para anotar y participar del debate.
                     </p>
                 </div>
 
                 <div class="contacto-box">
-                    <strong class="contacto-title">💬 Sistema de Comentarios Colaborativos</strong>
-                    <p class="contacto-text">
-                        Este documento utiliza <strong>Hypothesis</strong> para permitir comentarios y anotaciones colaborativas. 
-                        Podés comentar cualquier sección del análisis, responder a otros comentarios y participar del debate.
-                    </p>
-                    <div class="hypothesis-instructions">
-                        <h4>Cómo comentar:</h4>
-                        <ol>
-                            <li><strong>Seleccioná</strong> cualquier texto del documento</li>
-                            <li>Hacé clic en <strong>"Annotate"</strong> o <strong>"Highlight"</strong> en el menú que aparece</li>
-                            <li>Escribí tu comentario, corrección o pregunta</li>
-                            <li>Los comentarios pueden ser <strong>públicos</strong> (visibles para todos) o en <strong>grupos privados</strong></li>
-                        </ol>
-                        <p class="hypothesis-note">
-                            📌 Crea una cuenta gratuita en <a href="https://hypothes.is" target="_blank" rel="noopener">hypothes.is</a> 
-                            para participar en la conversación.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="contacto-box">
-                    <strong class="contacto-title">📧 Contacto Directo</strong>
-                    <p class="contacto-text">
-                        Si preferís enviar comentarios de forma privada o tenés acceso a fuentes de datos más precisas, 
-                        toda corrección constructiva es bienvenida para mejorar la calidad del análisis.
+                    <h3>📧 Contacto</h3>
+                    <p>
+                        Análisis elaborado como ejercicio de transparencia. 
+                        Correcciones constructivas son bienvenidas para mejorar calidad.
                     </p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer" role="contentinfo">
-        <p class="footer-title">Análisis Independiente - Diciembre 2025</p>
-        <p class="footer-text">
-            Basado en el Proyecto de Ley de Modernización Laboral del Gobierno de Argentina<br>
-            Todas las fuentes de datos son públicas y verificables (ver sección Referencias arriba)
+    <footer class="footer">
+        <p class="footer-title">Análisis Independiente - Diciembre 2024</p>
+        <p>
+            Basado en Proyecto de Ley de Modernización Laboral<br>
+            Fuentes públicas y verificables
         </p>
         <p class="footer-conclusion">
-            <strong>Conclusión Principal:</strong><br>
-            Sin mecanismos obligatorios de redistribución verificable, la reforma transfiere $21 billones anuales 
-            de trabajadores a empresarios sin garantía de creación de empleo equivalente. 
+            <strong>Conclusión:</strong> Sin redistribución obligatoria verificable, 
+            la reforma transfiere $21B anuales sin garantía de empleo equivalente.
         </p>
     </footer>
 
-    <!-- Hypothesis - Sistema de Anotaciones Colaborativas (habilitado para todos los tamaños de pantalla) -->
+    <!-- Hypothesis solo en desktop -->
     <script>
-        // Cargar Hypothesis en todos los dispositivos con configuración optimizada para móviles
-        var config = document.createElement('script');
-        config.type = 'application/json';
-        config.className = 'js-hypothesis-config';
-        config.text = JSON.stringify({
-            locale: 'es',
-            theme: 'clean',
-            openSidebar: window.innerWidth > 768, // Solo abrir sidebar automáticamente en desktop
-            showHighlights: 'always',  // Siempre mostrar highlights
-            enableExperimentalNewNoteButton: true // Mostrar botón para crear notas
-        });
-        document.body.appendChild(config);
-        
-        var script = document.createElement('script');
-        script.src = 'https://hypothes.is/embed.js';
-        script.async = true;
-        document.body.appendChild(script);
+        if (window.innerWidth > 768) {
+            var config = document.createElement('script');
+            config.type = 'application/json';
+            config.className = 'js-hypothesis-config';
+            config.text = JSON.stringify({ locale: 'es' });
+            document.body.appendChild(config);
+            
+            var script = document.createElement('script');
+            script.src = 'https://hypothes.is/embed.js';
+            script.async = true;
+            document.body.appendChild(script);
+        }
     </script>
     
     <script src="script.js"></script>
