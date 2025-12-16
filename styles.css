@@ -58,8 +58,10 @@ body {
     overflow-x: hidden;
     line-height: 1.6;
     width: 100%;
+    max-width: 100vw;
     position: relative;
     min-height: 100vh;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling en iOS */
 }
 
 img, video, iframe {
@@ -461,8 +463,9 @@ section {
 
 .retrocesos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
     gap: var(--spacing-lg);
+    width: 100%;
 }
 
 .retroceso-card {
@@ -590,9 +593,10 @@ section {
 
 .totales-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: var(--spacing-lg);
     margin-top: var(--spacing-lg);
+    width: 100%;
 }
 
 .total-box {
@@ -713,9 +717,10 @@ section {
 /* Scenarios */
 .scenarios-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
+    width: 100%;
 }
 
 .scenario-card {
@@ -1320,44 +1325,77 @@ button:focus-visible {
 }
 
 /* ==================== HYPOTHESIS MOBILE FIX ==================== */
-/* Ajustar Hypothesis en móviles */
+/* Ajustar Hypothesis para que funcione en móviles sin romper el layout */
 @media (max-width: 768px) {
-    /* Ocultar solo elementos específicos de Hypothesis en móviles */
+    /* Asegurar que Hypothesis no cause overflow horizontal en móviles */
     .hypothesis-sidebar,
-    .hypothesis-adder,
-    .annotator-frame,
-    hypothesis-sidebar,
-    .annotator-bucket-bar,
-    .hypothesis-highlight-always,
-    iframe.hypothesis-sidebar,
-    iframe.annotator-frame {
-        display: none !important;
-        visibility: hidden !important;
+    iframe.hypothesis-sidebar {
+        max-width: 100vw !important;
+        width: 100% !important;
+        right: 0 !important;
+        left: 0 !important;
+    }
+    
+    /* Hacer que el botón de Hypothesis sea más accesible en móviles */
+    .hypothesis-adder {
+        z-index: 9999 !important;
+    }
+    
+    /* Asegurar que el contenido principal sea visible cuando la sidebar está abierta */
+    body.hypothesis-sidebar-open {
+        overflow-x: hidden !important;
+    }
+    
+    /* Ajustar la barra de buckets para móviles */
+    .annotator-bucket-bar {
+        width: 40px !important;
     }
 }
 
-/* En desktop, asegurar que no cause overflow */
-@media (min-width: 769px) {
-    body {
-        padding-right: 0 !important;
-    }
+/* En todos los tamaños, asegurar que no cause overflow */
+body {
+    padding-right: 0 !important;
+    overflow-x: hidden !important;
+}
+
+/* Prevenir que Hypothesis cause scroll horizontal */
+html {
+    overflow-x: hidden !important;
+}
+
+/* Asegurar que los highlights de Hypothesis sean visibles pero no rompan el layout */
+.hypothesis-highlight {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
 }
 
 /* ==================== RESPONSIVE ADJUSTMENTS ==================== */
 @media (max-width: 768px) {
+    /* Asegurar que el background oscuro se mantenga en móviles */
+    html, body {
+        background: var(--bg-dark) !important;
+        min-height: 100vh;
+        width: 100%;
+        max-width: 100vw;
+    }
+    
     /* Contenedores */
     .container {
         padding: 0 var(--spacing-md);
+        max-width: 100%;
     }
     
     /* Secciones */
     section {
         padding: var(--spacing-xl) var(--spacing-md);
+        width: 100%;
+        max-width: 100vw;
     }
     
     /* Títulos de sección */
     .section-title {
         font-size: 1.8rem;
+        word-wrap: break-word;
     }
     
     /* Texto contextual */
@@ -1372,6 +1410,7 @@ button:focus-visible {
     .impacto-item {
         padding: var(--spacing-sm);
         font-size: 0.95rem;
+        width: 100%;
     }
     
     .impacto-item strong {
@@ -1381,10 +1420,12 @@ button:focus-visible {
     /* Cards de retrocesos */
     .retroceso-card {
         padding: var(--spacing-md);
+        width: 100%;
     }
     
     .card-title {
         font-size: 1.3rem;
+        word-wrap: break-word;
     }
     
     .impact-value {
@@ -1412,6 +1453,18 @@ button:focus-visible {
     
     .pregunta-principal {
         font-size: 1.5rem;
+        word-wrap: break-word;
+    }
+    
+    /* Prevenir que las imágenes o contenido grande rompa el layout */
+    * {
+        max-width: 100%;
+    }
+    
+    /* Asegurar que los grids se comporten bien en móviles */
+    .retrocesos-grid {
+        grid-template-columns: 1fr;
+        width: 100%;
     }
 }
 

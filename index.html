@@ -23,7 +23,7 @@
             <p class="comments-text">
                 <strong>Este documento es colaborativo:</strong> Podés seleccionar cualquier texto y agregar comentarios, correcciones o preguntas. 
                 <span class="comments-desktop-only">Hacé clic en el ícono <strong>&lt;</strong> en la esquina superior derecha para ver todos los comentarios.</span>
-                <span class="comments-mobile-note">Para comentar, usá la versión de escritorio o tablet.</span>
+                <span class="comments-mobile-note">En móviles, seleccioná el texto y tocá "Annotate" para comentar.</span>
             </p>
         </div>
     </div>
@@ -820,24 +820,23 @@
         </p>
     </footer>
 
-    <!-- Hypothesis - Sistema de Anotaciones Colaborativas (solo desktop) -->
+    <!-- Hypothesis - Sistema de Anotaciones Colaborativas (habilitado para todos los tamaños de pantalla) -->
     <script>
-        // Solo cargar Hypothesis en dispositivos de escritorio
-        if (window.innerWidth > 768) {
-            var config = document.createElement('script');
-            config.type = 'application/json';
-            config.className = 'js-hypothesis-config';
-            config.text = JSON.stringify({
-                locale: 'es',
-                theme: 'clean'
-            });
-            document.body.appendChild(config);
-            
-            var script = document.createElement('script');
-            script.src = 'https://hypothes.is/embed.js';
-            script.async = true;
-            document.body.appendChild(script);
-        }
+        // Cargar Hypothesis en todos los dispositivos con configuración optimizada para móviles
+        var config = document.createElement('script');
+        config.type = 'application/json';
+        config.className = 'js-hypothesis-config';
+        config.text = JSON.stringify({
+            locale: 'es',
+            theme: 'clean',
+            openSidebar: window.innerWidth > 768 // Solo abrir sidebar automáticamente en desktop
+        });
+        document.body.appendChild(config);
+        
+        var script = document.createElement('script');
+        script.src = 'https://hypothes.is/embed.js';
+        script.async = true;
+        document.body.appendChild(script);
     </script>
     
     <script src="script.js"></script>
