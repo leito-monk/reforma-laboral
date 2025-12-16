@@ -1457,7 +1457,7 @@ html {
     }
     
     /* Prevenir que las imágenes o contenido grande rompa el layout */
-    * {
+    img, video, iframe, table, canvas, svg {
         max-width: 100%;
     }
 }
