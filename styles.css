@@ -74,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
 }
 
-. text-center {
+.text-center {
     text-align: center;
 }
 
@@ -304,7 +304,7 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 2px;
 }
 
-. scroll-arrow {
+.scroll-arrow {
     width: 24px;
     height: 24px;
     border-right: 2px solid var(--accent);
@@ -457,7 +457,7 @@ section {
 }
 
 /* ==================== RETROCESOS ==================== */
-. retrocesos-section {
+.retrocesos-section {
     background: var(--bg-dark);
 }
 
@@ -489,7 +489,7 @@ section {
     }
 }
 
-.retroceso-card:: before {
+.retroceso-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -628,7 +628,7 @@ section {
 }
 
 /* ==================== NOTAS METODOLÓGICAS ==================== */
-. notas-section {
+.notas-section {
     background: var(--bg-medium);
 }
 
@@ -764,12 +764,12 @@ section {
     margin-bottom: var(--spacing-xs);
 }
 
-. scenario-sub {
+.scenario-sub {
     font-size: 0.9rem;
     color: var(--text-gray-dark);
 }
 
-. scenario-impact {
+.scenario-impact {
     font-size: 1.3rem;
     color: var(--primary);
     margin-top: var(--spacing-sm);
@@ -888,7 +888,7 @@ section {
 }
 
 .bar-fill--40 { width: 40%; }
-. bar-fill--25 { width: 25%; }
+.bar-fill--25 { width: 25%; }
 .bar-fill--20 { width: 20%; }
 .bar-fill--15 { width: 15%; }
 
@@ -924,7 +924,7 @@ section {
     font-weight: 600;
 }
 
-. distribution-conclusion {
+.distribution-conclusion {
     padding: var(--spacing-md);
     background: var(--bg-dark);
     border-left: 4px solid var(--accent);
@@ -1085,7 +1085,7 @@ section {
     outline: none;
 }
 
-. fuente-usage {
+.fuente-usage {
     color: var(--text-gray-dark);
     font-size: 0.9rem;
 }
@@ -1241,7 +1241,7 @@ section {
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
-    : root {
+    :root {
         --spacing-lg: 1.5rem;
         --spacing-xl: 2rem;
         --spacing-xxl: 3rem;
@@ -1459,12 +1459,6 @@ html {
     /* Prevenir que las imágenes o contenido grande rompa el layout */
     * {
         max-width: 100%;
-    }
-    
-    /* Asegurar que los grids se comporten bien en móviles */
-    .retrocesos-grid {
-        grid-template-columns: 1fr;
-        width: 100%;
     }
 }
 
