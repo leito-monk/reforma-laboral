@@ -1372,27 +1372,22 @@ hypothesis-sidebar {
     }
 }
 
-/* En todos los tamaños, asegurar que no cause overflow pero permitir Hypothesis */
-body {
-    padding-right: 0;
-    overflow-x: hidden;
-}
-
-/* Prevenir scroll horizontal generalmente */
+/* En todos los tamaños, prevenir scroll horizontal en el contenido */
 html {
     overflow-x: hidden;
 }
 
-/* IMPORTANTE: Permitir que el iframe de Hypothesis sea visible */
-body:has(.hypothesis-sidebar-iframe),
-body:has(hypothesis-sidebar) {
-    overflow-x: visible !important;
+body {
+    padding-right: 0;
+    overflow-x: hidden;
+    position: relative;
 }
 
-/* Asegurar que el iframe de Hypothesis no quede cortado */
+/* Asegurar que el iframe de Hypothesis no quede cortado por overflow-x */
 .hypothesis-sidebar-iframe,
 hypothesis-sidebar,
-iframe[title="Hypothesis annotation viewer"] {
+iframe[title="Hypothesis annotation viewer"],
+iframe[name="hyp_sidebar_frame"] {
     position: fixed !important;
     right: 0 !important;
     top: 0 !important;
@@ -1400,6 +1395,7 @@ iframe[title="Hypothesis annotation viewer"] {
     z-index: 2147483647 !important;
     display: block !important;
     visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 /* Asegurar que los highlights de Hypothesis sean visibles pero no rompan el layout */
