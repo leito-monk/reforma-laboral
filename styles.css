@@ -1324,6 +1324,26 @@ button:focus-visible {
     outline-offset:  2px;
 }
 
+/* ==================== HYPOTHESIS WIDGET FIX ==================== */
+/* Asegurar que el botón de toggle de Hypothesis sea visible */
+.hypothesis-sidebar-iframe,
+.annotator-frame,
+hypothesis-sidebar {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 2147483647 !important;
+}
+
+/* Asegurar que el tab de Hypothesis (botón <) sea visible */
+.hypothesis-sidebar-iframe .sidebar-toggle,
+.annotator-frame .sidebar-toggle,
+.h-sidebar-trigger {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
 /* ==================== HYPOTHESIS MOBILE FIX ==================== */
 /* Ajustar Hypothesis para que funcione en móviles sin romper el layout */
 @media (max-width: 768px) {
@@ -1352,15 +1372,30 @@ button:focus-visible {
     }
 }
 
-/* En todos los tamaños, asegurar que no cause overflow */
-body {
-    padding-right: 0 !important;
-    overflow-x: hidden !important;
+/* En todos los tamaños, prevenir scroll horizontal en el contenido */
+html {
+    overflow-x: hidden;
 }
 
-/* Prevenir que Hypothesis cause scroll horizontal */
-html {
-    overflow-x: hidden !important;
+body {
+    padding-right: 0;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Asegurar que el iframe de Hypothesis no quede cortado por overflow-x */
+.hypothesis-sidebar-iframe,
+hypothesis-sidebar,
+iframe[title="Hypothesis annotation viewer"],
+iframe[name="hyp_sidebar_frame"] {
+    position: fixed !important;
+    right: 0 !important;
+    top: 0 !important;
+    height: 100% !important;
+    z-index: 2147483647 !important;
+    display: block !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 /* Asegurar que los highlights de Hypothesis sean visibles pero no rompan el layout */

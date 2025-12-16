@@ -829,7 +829,9 @@
         config.text = JSON.stringify({
             locale: 'es',
             theme: 'clean',
-            openSidebar: window.innerWidth > 768 // Solo abrir sidebar automáticamente en desktop
+            openSidebar: window.innerWidth > 768, // Solo abrir sidebar automáticamente en desktop
+            showHighlights: 'always',  // Siempre mostrar highlights
+            enableExperimentalNewNoteButton: true // Mostrar botón para crear notas
         });
         document.body.appendChild(config);
         
