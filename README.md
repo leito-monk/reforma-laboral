@@ -201,20 +201,6 @@ Para consultas, correcciones o sugerencias sobre la metodología y los datos uti
 - Las fórmulas son explícitas y públicas
 - Este análisis es una **herramienta de debate**, no una predicción determinística
 
-## 🔄 Actualizaciones
-
-- **Diciembre 2025** - Versión 2.0
-  - Análisis Parte I convertido a calculadora interactiva
-  - Análisis Parte II (costo fiscal) agregado con calculadora
-  - Página principal (index) como hub de la serie
-  - Hypothesis deshabilitado en favor de interactividad
-  - Mobile-first responsive en todos los documentos
-  - Estructura reorganizada en serie de análisis
-
-- **Diciembre 2024** - Versión inicial
-  - Análisis estático basado en proyecto de ley oficial
-  - Datos INDEC octubre 2024
-
 ---
 
 **Autor:** Leandro Monk  
