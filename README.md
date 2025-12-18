@@ -1,57 +1,82 @@
-# Análisis Económico: Reforma Laboral Argentina
+# Serie de Análisis: Reforma Laboral Argentina
 
-Análisis del impacto económico de la Ley de Modernización Laboral propuesta en Argentina, mostrando la transferencia de recursos desde trabajadores hacia la patronal.
+Serie de análisis económicos sobre la Ley de Modernización Laboral propuesta en Argentina. Incluye análisis del impacto en trabajadores y el costo fiscal para el Estado.
 
 ## 🎯 Objetivo
 
-Proporcionar un análisis transparente, basado en datos públicos, del impacto económico de los principales retrocesos laborales propuestos en el proyecto de ley.
+Proporcionar análisis transparentes e interactivos, basados en datos públicos, del impacto económico y fiscal de la reforma laboral propuesta.
 
 ## 📊 Datos Principales
 
+**Parte I: Impacto en Trabajadores**
 - **Transferencia total:** $21 billones anuales desde trabajadores a patronal
 - **Trabajadores afectados:** 12.5 millones (100% de trabajadores registrados)
-- **12 retrocesos principales** analizados en detalle
-- **Análisis interseccional** del impacto diferencial por sector social
+- **12 retrocesos principales** analizados con calculadora interactiva
 
-## 🚀 Versiones Disponibles
+**Parte II: Costo Fiscal**
+- **Costo fiscal anual:** $0,83 billones
+- **% del PBI:** 0,13%
+- **Calculadora interactiva** para explorar diferentes escenarios
 
-### `index.html` - Versión Original
-- Diseño completo con todas las funcionalidades
-- Incluye sistema de comentarios Hypothesis (desktop)
-- Animaciones y efectos visuales avanzados
+## 🚀 Documentos de la Serie
 
-### `mobile.html` - Versión Mobile-First
-- Optimizada para dispositivos móviles
-- CSS construido desde mobile hacia desktop
-- Sin problemas de overflow
-- Carga más rápida y ligera
+### `index.html` - Página Principal
+- Resumen de ambos análisis
+- Links a las partes I y II
+- Métricas principales
 
-## 💬 Sistema de Comentarios
+### `analisis-transferencia-trabajadores.html` - Parte I
+- **Calculadora interactiva** de las 12 medidas
+- Modificá trabajadores afectados y pérdidas por medida
+- Cálculo automático de transferencia total
+- Análisis interseccional del impacto diferencial
+- Mobile-first y completamente responsive
 
-El sitio utiliza **[Hypothesis](https://hypothes.is/)** para permitir comentarios colaborativos estilo Google Docs:
+### `analisis-costo-fiscal-v6.html` - Parte II
+- **Calculadora interactiva** del costo fiscal
+- Modificá variables económicas y fiscales
+- Análisis de recaudación IVA, Ganancias y contribuciones
+- Exploración de escenarios de creación de empleo
 
-- Selecciona cualquier texto para comentar
-- Los comentarios son públicos y permanentes
-- Solo disponible en versión desktop (>768px)
+### `redirect.html` - Landing Alternativa
+- Página de aterrizaje para dominio alternativo
+- Resumen y link a GitHub Pages
+
+## 💻 Características Interactivas
+
+Ambos análisis principales son **completamente interactivos**:
+
+**Parte I - Calculadora de Transferencias:**
+- Inputs para modificar número de trabajadores afectados por medida
+- Inputs para ajustar pérdida promedio por trabajador
+- Actualización en tiempo real del total transferido
+- Formato automático de números (billones/millones)
+
+**Parte II - Calculadora Fiscal:**
+- Inputs para variables macroeconómicas (PBI, salarios, tasas)
+- Cálculo dinámico de costo fiscal
+- Análisis de recuperación vía empleo
+- Escenarios comparativos
 
 ## 🎨 Tecnologías
 
 - **HTML5** semántico y accesible
-- **CSS3** con variables custom y mobile-first
-- **JavaScript vanilla** para interacciones
-- **Hypothesis** para anotaciones colaborativas
-- **Google Fonts** (Archivo Black, Work Sans)
+- **CSS3** mobile-first con variables custom
+- **JavaScript vanilla** para calculadoras interactivas
+- **Google Fonts** (Archivo Black, Work Sans, IBM Plex Mono)
 
 ## 📁 Estructura del Proyecto
 
 ```
 reforma-laboral/
-├── index.html           # Versión original
-├── mobile.html          # Versión mobile-first
-├── styles.css           # Estilos versión original
-├── mobile-styles.css    # Estilos mobile-first
-├── script.js            # JavaScript común
-└── README.md           # Este archivo
+├── index.html                                  # Página principal
+├── analisis-transferencia-trabajadores.html   # Parte I (interactiva)
+├── analisis-costo-fiscal-v6.html              # Parte II (interactiva)
+├── redirect.html                               # Landing alternativa
+├── mobile-styles.css                           # Estilos mobile-first
+├── Yo.jpeg                                     # Foto de perfil
+├── README.md                                   # Este archivo
+└── backup/                                     # Archivos de respaldo
 ```
 
 ## 🔍 Fuentes de Datos
@@ -60,58 +85,75 @@ Todos los cálculos se basan en fuentes oficiales públicas:
 
 - **INDEC** - Salarios promedio y estadísticas laborales
 - **Ministerio de Trabajo (MTEySS)** - Trabajadores registrados, antigüedad, rotación
-- **Proyecto de Ley oficial** - Artículos específicos citados
+- **Proyecto de Ley oficial** - [PDF oficial](https://www.argentina.gob.ar/sites/default/files/proyecto_de_ley_de_modernizacion_laboral._vf.pdf)
 - **SIPA** - Estructura de costos laborales y cargas sociales
+- **Ministerio de Economía** - Datos fiscales y tributarios
 
-Ver sección "Fuentes y Referencias" en el sitio para enlaces completos.
+Ver secciones de metodología en cada análisis para referencias completas.
 
 ## 📐 Metodología
 
-### Cálculo de Transferencias Individuales
+### Parte I: Transferencia a Trabajadores
+
+**Cálculo de Transferencias Individuales:**
 ```
-Transferencia = Salario Base × Antigüedad × % Reducción del Derecho
+Transferencia = Trabajadores Afectados × Pérdida Promedio Anual
 ```
 
-### Cálculo de Afectados Anuales
-```
-Afectados = Trabajadores Totales × Tasa Rotación × % Casos Aplicables
-```
+**Calculadora Interactiva:**
+- Cada medida permite modificar trabajadores afectados y pérdida promedio
+- Total general = Σ(todas las medidas)
+- Formato automático: billones (>$1T) o millones
 
-### Cálculo de Impacto Total
-```
-Impacto Total = Σ(Transferencia Individual × Afectados)
-```
-
-### Supuestos Conservadores
-- Salario base: $550.000 mensuales (promedio INDEC octubre 2024)
+**Supuestos Base (modificables):**
+- Salario base: $550.000 mensuales (INDEC)
 - Antigüedad promedio: 8 años
 - Rotación laboral: 25% anual
-- No se incluyen costos indirectos ni efectos de segunda ronda
+- Estimaciones conservadoras (sin efectos indirectos)
+
+### Parte II: Costo Fiscal
+
+**Variables Modificables:**
+- PBI base ($650,8 billones)
+- Costos de medidas fiscales (contribuciones, blanqueo, etc.)
+- Transferencia desde trabajadores ($21 billones)
+- Salario mensual promedio ($880.000)
+- Tasas impositivas (IVA 6,3%, Ganancias 4,5%, etc.)
+
+**Cálculos Automáticos:**
+- Costo fiscal total
+- % del PBI
+- Recuperación potencial vía empleo
+- Salarios necesarios vs históricos
 
 ## 🌐 Deployment
 
-### Opción 1: GitHub Pages
-```bash
-# En la configuración del repositorio
-Settings > Pages > Source: main branch
-```
+Sitio desplegado en: **https://leito-monk.github.io/reforma-laboral/**
 
-### Opción 2: Netlify/Vercel
-Simplemente conecta el repositorio y deploy automático.
+### GitHub Pages (Configurado)
+El sitio se actualiza automáticamente al hacer push a la rama main.
 
-### Opción 3: Servidor estático
+### Dominios Alternativos
+- `redirect.html` disponible para dominios alternativos
+- Apunta automáticamente a GitHub Pages
+
+### Servidor Local para Desarrollo
 ```bash
-# Cualquier servidor web estático funciona
+# Python
 python -m http.server 8000
-# o
+
+# Node.js
 npx serve
+
+# PHP
+php -S localhost:8000
 ```
 
 ## 🎯 Perspectiva Interseccional
 
-El análisis incluye el impacto diferencial en:
+El análisis de transferencias incluye el impacto diferencial en:
 
-- 👩 **Mujeres y disidencias** - Mayor exposición a fraude laboral
+- 👩 **Mujeres y disidencias** - Mayor exposición a fraude laboral y precarización
 - 🧑🏽 **Trabajadores racializados/migrantes** - Vulnerabilidad en tercerización
 - ♿ **Personas con discapacidad** - Discriminación salarial legitimada
 - 👴 **Mayores de 45 años** - Penalización por antigüedad
@@ -161,9 +203,25 @@ Para consultas, correcciones o sugerencias sobre la metodología y los datos uti
 
 ## 🔄 Actualizaciones
 
-- **Diciembre 2024** - Versión inicial basada en proyecto de ley oficial
-- Datos actualizados con información de INDEC octubre 2024
+- **Diciembre 2025** - Versión 2.0
+  - Análisis Parte I convertido a calculadora interactiva
+  - Análisis Parte II (costo fiscal) agregado con calculadora
+  - Página principal (index) como hub de la serie
+  - Hypothesis deshabilitado en favor de interactividad
+  - Mobile-first responsive en todos los documentos
+  - Estructura reorganizada en serie de análisis
+
+- **Diciembre 2024** - Versión inicial
+  - Análisis estático basado en proyecto de ley oficial
+  - Datos INDEC octubre 2024
 
 ---
 
-**Nota:** Este es un análisis independiente con fines informativos y de debate público sobre políticas laborales.
+**Autor:** Leandro Monk  
+**Contacto:** leandro@gcoop.coop  
+**GitHub:** [@leito-monk](https://github.com/leito-monk)  
+**Organización:** [gcoop](https://gcoop.coop) | [MIT](https://mit.org.ar)
+
+---
+
+**Nota:** Esta es una serie de análisis independientes con fines informativos y de debate público sobre políticas laborales. Las calculadoras permiten explorar diferentes escenarios y supuestos.
