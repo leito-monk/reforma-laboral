@@ -689,26 +689,26 @@
                 
                 <div class="input-row">
                     <label>
-                        PBI nominal 2026 (billones $)
-                        <span class="label-info">Estimado a partir del presupuesto 2026</span>
+                        PBI nominal 2026
+                        <span class="label-info">Estimado a partir del presupuesto 2026 (billones $)</span>
                     </label>
-                    <input type="number" id="pbi" value="650.8" step="10">
+                    <input type="number" id="pbi" value="650.8" step="10" placeholder="billones $">
                 </div>
 
                 <div class="input-row">
                     <label>
-                        Transferencias trabajadores → empresas (billones $)
-                        <span class="label-info">Según <a href="https://leito-monk.github.io/reforma-laboral/" target="_blank">análisis previo de retrocesos</a></span>
+                        Transferencias trabajadores → empresas
+                        <span class="label-info">Según <a href="https://leito-monk.github.io/reforma-laboral/" target="_blank">análisis previo de retrocesos</a> (billones $)</span>
                     </label>
-                    <input type="number" id="transferencias" value="21" step="0.5">
+                    <input type="number" id="transferencias" value="21" step="0.5" placeholder="billones $">
                 </div>
 
                 <div class="input-row">
                     <label>
-                        Salario promedio mensual (millones $)
-                        <span class="label-info">Datos oficiales</span>
+                        Salario promedio mensual
+                        <span class="label-info">Datos oficiales (millones $)</span>
                     </label>
-                    <input type="number" id="salario_mensual" value="0.88" step="0.01">
+                    <input type="number" id="salario_mensual" value="0.88" step="0.01" placeholder="millones $">
                 </div>
             </div>
 
@@ -719,33 +719,33 @@
                 <div class="input-row">
                     <label>
                         1. Reducción Contribuciones Patronales
-                        <span class="label-info">~USD 3.000M/año según Invecq. Baja de 20,4%→17,4% y 18%→15%</span>
+                        <span class="label-info">~USD 3.000M/año según Invecq. Baja de 20,4%→17,4% y 18%→15% (% PBI)</span>
                     </label>
-                    <input type="number" id="costo_contrib" value="0.50" step="0.01">
+                    <input type="number" id="costo_contrib" value="0.50" step="0.01" placeholder="% PBI">
                 </div>
 
                 <div class="input-row">
                     <label>
                         2. Fondo de Asistencia Laboral (FAL)
-                        <span class="label-info">Neto cero: 3% al FAL compensado con -3% al SIPA. Impacto directo = 0</span>
+                        <span class="label-info">Neto cero: 3% al FAL compensado con -3% al SIPA. Impacto directo = 0 (% PBI)</span>
                     </label>
-                    <input type="number" id="costo_fal" value="0.00" step="0.01">
+                    <input type="number" id="costo_fal" value="0.00" step="0.01" placeholder="% PBI">
                 </div>
 
                 <div class="input-row">
                     <label>
                         3. Impuesto a las Ganancias Corporativo
-                        <span class="label-info">Estimación propia: 30%→27% y 35%→31,5% reduce ~10% recaudación del impuesto</span>
+                        <span class="label-info">Estimación propia: 30%→27% y 35%→31,5% reduce ~10% recaudación del impuesto (% PBI)</span>
                     </label>
-                    <input type="number" id="costo_ganancias_corp" value="0.20" step="0.01">
+                    <input type="number" id="costo_ganancias_corp" value="0.20" step="0.01" placeholder="% PBI">
                 </div>
 
                 <div class="input-row">
                     <label>
                         4. Eliminación Impuestos Internos
-                        <span class="label-info">Estimación propia basada en recaudación actual de internos (~0,3% PBI parcial)</span>
+                        <span class="label-info">Estimación propia basada en recaudación actual de internos (~0,3% PBI parcial) (% PBI)</span>
                     </label>
-                    <input type="number" id="costo_internos" value="0.10" step="0.01">
+                    <input type="number" id="costo_internos" value="0.10" step="0.01" placeholder="% PBI">
                 </div>
 
                 <div class="input-row">
@@ -753,15 +753,15 @@
                         5. RIMI (Medianas Inversiones)
                         <span class="label-info">Sin dato oficial. Estimación conservadora por amortización acelerada + IVA</span>
                     </label>
-                    <input type="number" id="costo_rimi" value="0.03" step="0.01">
+                    <input type="number" id="costo_rimi" value="0.03" step="0.01" placeholder="% PBI">
                 </div>
 
                 <div class="input-row">
                     <label>
                         6. Blanqueo Laboral (PER)
-                        <span class="label-info">Condonación de deuda existente, no genera costo recurrente. Impacto puntual</span>
+                        <span class="label-info">Condonación de deuda existente, no genera costo recurrente. Impacto puntual (% PBI)</span>
                     </label>
-                    <input type="number" id="costo_blanqueo" value="0.00" step="0.01">
+                    <input type="number" id="costo_blanqueo" value="0.00" step="0.01" placeholder="% PBI">
                 </div>
 
                 <div style="background: var(--bg); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid var(--border);">
@@ -778,34 +778,34 @@
                 
                 <div class="input-row">
                     <label>
-                        Contribuciones patronales promedio (%)
-                        <span class="label-info">Mix entre RIFL (2%) y tasa reducida (15%)</span>
+                        Contribuciones patronales promedio
+                        <span class="label-info">Mix entre RIFL (2%) y tasa reducida (15%) (%)</span>
                     </label>
-                    <input type="number" id="tasa_contrib" value="10" step="1">
+                    <input type="number" id="tasa_contrib" value="10" step="1" placeholder="%">
                 </div>
 
                 <div class="input-row">
                     <label>
-                        Aportes personales (%)
-                        <span class="label-info">Tasa estándar</span>
+                        Aportes personales
+                        <span class="label-info">Tasa estándar (%)</span>
                     </label>
-                    <input type="number" id="tasa_aportes" value="17" step="1">
+                    <input type="number" id="tasa_aportes" value="17" step="1" placeholder="%">
                 </div>
 
                 <div class="input-row">
                     <label>
-                        IVA indirecto recuperado (%)
-                        <span class="label-info">21% IVA × 60% consumo × 50% recuperación</span>
+                        IVA indirecto recuperado
+                        <span class="label-info">21% IVA × 60% consumo × 50% recuperación (%)</span>
                     </label>
-                    <input type="number" id="tasa_iva" value="6.3" step="0.1">
+                    <input type="number" id="tasa_iva" value="6.3" step="0.1" placeholder="%">
                 </div>
 
                 <div class="input-row">
                     <label>
-                        Ganancias promedio (%)
-                        <span class="label-info">15% sobre ~30% de empleos sobre mínimo no imponible</span>
+                        Ganancias promedio
+                        <span class="label-info">15% sobre ~30% de empleos sobre mínimo no imponible (%)</span>
                     </label>
-                    <input type="number" id="tasa_ganancias" value="4.5" step="0.1">
+                    <input type="number" id="tasa_ganancias" value="4.5" step="0.1" placeholder="%">
                 </div>
             </div>
 
@@ -817,7 +817,7 @@
                         % del "ahorro" empresarial que va a nuevos empleos
                         <span class="label-info">Basado en comportamiento histórico</span>
                     </label>
-                    <input type="number" id="ratio_empleo" value="25" step="5">
+                    <input type="number" id="ratio_empleo" value="25" step="5" placeholder="%">
                 </div>
             </div>
 
