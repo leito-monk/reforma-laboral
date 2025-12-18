@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis: Costo Fiscal de la Reforma Laboral</title>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF4136;
+            --secondary: #e63946;
+            --accent: #FF851B;
+            --bg: #0D0D0D;
+            --bg-medium: #1A1A1A;
+            --surface: #1F1F1F;
+            --text: #E8E8E8;
+            --text-light: #A0A0A0;
+            --border: #333333;
+            --success: #2ECC40;
+            --warning: #FFDC00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            padding: 3rem 1rem 2rem;
+            background: linear-gradient(135deg, var(--bg-medium) 0%, var(--bg) 100%);
+            color: white;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 65, 54, 0.1);
+            transform: rotate(15deg);
+        }
+
+        h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .subtitle {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            letter-spacing: 0.05em;
+            position: relative;
+            z-index: 1;
+        }
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Foto de perfil -->
+                <div class="profile-photo">
+                    <img src="Yo.jpeg" alt="Leandro Monk">
+                </div>
+                
+                <!-- Información de contacto -->
+                <div class="contact-info">
+                    <h3>Leandro Monk</h3>
+                    <p class="bio">
+                        Fundador de <a href="https://gcoop.coop" target="_blank" style="color: var(--accent);">gcoop</a>, primera cooperativa de software libre de Argentina. 
+                        Presidente de <a href="https://mit.org.ar" target="_blank" style="color: var(--accent);">MIT.</a> 
+                        Especialista en tecnología cooperativa, soberanía tecnológica y economía social.
+                    </p>
+                    
+                    <!-- Redes sociales -->
+                    <div class="social-links">
+                        <a href="https://x.com/leitomonk" target="_blank">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                            @leitomonk
+                        </a>
+                        <a href="https://www.linkedin.com/in/leandromonk/" target="_blank">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://github.com/leito-monk" target="_blank">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                        <a href="mailto:leandro@gcoop.coop">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            Contacto
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Nota final -->
+                <div class="footer-note">
+                    <p><strong>Serie: Reforma Laboral Argentina</strong></p>
+                    <p style="margin-top: 0.5rem;">
+                        <a href="https://leito-monk.github.io/reforma-laboral/" target="_blank">Parte I: Análisis de Retrocesos</a> · 
+                        Parte II: Costo Fiscal (este documento)
+                    </p>
+                    <p style="margin-top: 1rem;">Análisis elaborado como ejercicio de transparencia y debate público</p>
+                    <p style="margin-top: 0.5rem;">Documento colaborativo abierto a correcciones y mejoras</p>
+                    <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">Diciembre 2025</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+        .series-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--border);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section.highlight {
+            border-left-color: var(--secondary);
+        }
+
+        .section.warning {
+            border-left-color: var(--warning);
+            background: #2A2510;
+        }
+
+        h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        .input-group {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: var(--bg-medium);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .input-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .label-info {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .label-info a {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        input[type="number"] {
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 65, 54, 0.2);
+        }
+
+        .hypothesis-tag {
+            display: inline-block;
+            background: var(--warning);
+            color: var(--bg);
+            padding: 0.25rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-tag {
+            display: inline-block;
+            background: var(--success);
+            color: var(--bg);
+            padding: 0.25rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, var(--primary) 0%, #c73542 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 20px rgba(255, 65, 54, 0.3);
+        }
+
+        .result-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .big-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .result-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .calc-step {
+            background: var(--bg-medium);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            border-left: 3px solid var(--accent);
+        }
+
+        .calc-step-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .formula {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--bg);
+            padding: 0.75rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            color: var(--text);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'IBM Plex Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+        }
+
+        button:hover {
+            background: #E53A30;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 65, 54, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .alert {
+            background: #2A2510;
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .alert-critical {
+            background: #2A1515;
+            border-left: 4px solid var(--primary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-medium);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 65, 54, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .conclusion-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .conclusion-item:last-child {
+            border-bottom: none;
+        }
+
+        .conclusion-item strong {
+            color: var(--accent);
+        }
+
+        footer {
+            background: var(--bg-medium);
+            border-top: 3px solid var(--primary);
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 3rem 1rem;
+        }
+
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            background: var(--bg);
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #999;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .bio {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-note {
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+            width: 100%;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .footer-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        .methodology {
+            background: var(--bg-medium);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .methodology a {
+            color: var(--accent);
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .section {
+                padding: 1.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .big-number {
+                font-size: 2rem;
+            }
+
+            .result-box {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="series-badge">Serie: Reforma Laboral Argentina</div>
+            <h1>Análisis del Costo Fiscal</h1>
+            <p class="subtitle">Reforma Laboral Argentina 2025 · Parte II</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Introducción -->
+        <section class="section highlight">
+            <h2>💰 Objetivo del Análisis</h2>
+            <p>Este documento analiza el <strong>costo fiscal real</strong> de los incentivos propuestos en la reforma laboral, considerando tanto la inversión del Estado (resignación de ingresos) como la posible recuperación vía mayor recaudación si efectivamente se crea empleo.</p>
+            <p style="margin-top: 1rem;">Los datos marcados como <span class="data-tag">DATO</span> provienen de fuentes oficiales o estudios publicados. Los marcados como <span class="hypothesis-tag">HIPÓTESIS</span> son estimaciones que puedes modificar para explorar diferentes escenarios.</p>
+            <p style="margin-top: 1rem;"><strong>Documento de referencia:</strong> <a href="https://www.argentina.gob.ar/sites/default/files/proyecto_de_ley_de_modernizacion_laboral._vf.pdf" target="_blank" style="color: var(--accent);">Proyecto de Ley de Modernización Laboral (PDF oficial)</a></p>
+        </section>
+
+        <!-- Medidas de Promoción del Empleo -->
+        <section class="section">
+            <h2>📋 Medidas Fiscales de la Ley</h2>
+            <p style="margin-bottom: 1.5rem;">El proyecto contempla múltiples medidas fiscales con impacto en el costo laboral y la recaudación:</p>
+            
+            <div class="incentivo-card" style="background: var(--bg-medium); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
+                <h3 style="margin-top: 0;">1. Reducción de Contribuciones Patronales</h3>
+                <p><strong style="color: var(--primary);">Costo fiscal estimado: 0,5% del PBI (~USD 3.000 millones/año)</strong></p>
+                <p style="margin-top: 0.75rem;"><strong>Alícuotas actuales vs. nuevas:</strong></p>
+                <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--text-light);">
+                    <li>Servicios y comercio (grandes): <strong style="color: var(--text);">20,40% → 17,40%</strong> (-3 puntos)</li>
+                    <li>Resto sector privado: <strong style="color: var(--text);">18,00% → 15,00%</strong> (-3 puntos)</li>
+                    <li>Obras Sociales: se fija en <strong style="color: var(--text);">5,00%</strong></li>
+                </ul>
+                <p style="margin-top: 0.75rem;"><strong>RIFL (Régimen de Incentivo a la Formalización Laboral):</strong></p>
+                <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--text-light);">
+                    <li>Vigencia: 1 año para adherir, beneficio por <strong style="color: var(--accent);">48 meses</strong></li>
+                    <li>Contribuciones reducidas al <strong style="color: var(--accent);">2%</strong> (SIPA/FNE/Asig.Fam.) y <strong style="color: var(--accent);">3%</strong> (PAMI)</li>
+                    <li>Aplica a: desempleados, monotributistas, ex empleados públicos</li>
+                    <li>Requisito: incremento neto de nómina</li>
+                </ul>
+            </div>
+
+            <div class="incentivo-card" style="background: var(--bg-medium); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--accent);">
+                <h3 style="margin-top: 0;">2. Fondo de Asistencia Laboral (FAL)</h3>
+                <p><strong style="color: var(--accent);">Impacto neto para empresas: CERO (pero desfinancia SIPA)</strong></p>
+                <ul style="margin: 0.75rem 0 0 1.5rem; color: var(--text-light);">
+                    <li>Empresas aportan <strong style="color: var(--text);">3%</strong> de salarios al FAL</li>
+                    <li>Reciben reducción de <strong style="color: var(--text);">3 puntos</strong> en contribuciones al SIPA</li>
+                    <li>Resultado: mejora balance empresarial (fondo propio vs. contribución)</li>
+                </ul>
+                <div class="alert" style="margin-top: 1rem; background: rgba(255, 65, 54, 0.1); border-left-color: var(--primary);">
+                    <strong>⚠️ Riesgo fiscal:</strong> Desfinancia SIPA (jubilaciones), PAMI y asignaciones familiares. Riesgo fiscal de mediano plazo sobre sostenibilidad previsional. Pérdida estimada: USD 2.600-4.700 millones/año.
+                </div>
+            </div>
+
+            <div class="incentivo-card" style="background: var(--bg-medium); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--success);">
+                <h3 style="margin-top: 0;">3. Impuesto a las Ganancias Corporativo</h3>
+                <p><strong style="color: var(--success);">Costo fiscal estimado: 0,2% del PBI</strong></p>
+                <p style="margin-top: 0.75rem;"><strong>Reducción de alícuotas (desde ejercicios 2026):</strong></p>
+                <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--text-light);">
+                    <li>Tramo superior: <strong style="color: var(--text);">30% → 27%</strong></li>
+                    <li>Tramo máximo: <strong style="color: var(--text);">35% → 31,5%</strong></li>
+                </ul>
+                <p style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--text-light);">Impacto fiscal desde 2027 (primer cierre ejercicio 2026)</p>
+            </div>
+
+            <div class="incentivo-card" style="background: var(--bg-medium); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--warning);">
+                <h3 style="margin-top: 0;">4. Eliminación de Impuestos Internos</h3>
+                <p><strong style="color: var(--warning);">Costo fiscal estimado: 0,1% del PBI</strong></p>
+                <p style="margin-top: 0.75rem;"><strong>Productos alcanzados:</strong></p>
+                <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--text-light);">
+                    <li>Seguros</li>
+                    <li>Telefonía celular</li>
+                    <li>Objetos suntuarios</li>
+                    <li>Vehículos, embarcaciones, aeronaves</li>
+                    <li>Electrónicos, videogramas</li>
+                    <li>Bebidas alcohólicas y energizantes</li>
+                </ul>
+            </div>
+
+            <div class="incentivo-card" style="background: var(--bg-medium); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--text-light);">
+                <h3 style="margin-top: 0;">5. RIMI (Régimen de Incentivo para Medianas Inversiones)</h3>
+                <p><strong style="color: var(--text-light);">Costo fiscal: sin dato específico publicado</strong></p>
+                <ul style="margin: 0.75rem 0 0 1.5rem; color: var(--text-light);">
+                    <li>Inversiones elegibles: <strong style="color: var(--text);">USD 150.000 a USD 30 millones</strong></li>
+                    <li>Beneficios: amortización acelerada de Ganancias</li>
+                    <li>Devolución anticipada de IVA</li>
+                </ul>
+            </div>
+
+            <div class="incentivo-card" style="background: var(--bg-medium); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #666;">
+                <h3 style="margin-top: 0;">6. Blanqueo Laboral (PER - Promoción del Empleo Registrado)</h3>
+                <p><strong>Vigencia:</strong> 6 meses desde la entrada en vigor</p>
+                <ul style="margin: 0.75rem 0 0 1.5rem; color: var(--text-light);">
+                    <li>Extinción de acción penal por evasión</li>
+                    <li>Condonación de multas y sanciones</li>
+                    <li>Condonación de al menos <strong style="color: var(--accent);">70%</strong> de deuda por aportes</li>
+                    <li>Pago del resto en hasta <strong style="color: var(--accent);">72 cuotas</strong></li>
+                </ul>
+                <div class="alert" style="margin-top: 1rem; background: rgba(255, 220, 0, 0.1);">
+                    <strong>⚠️ Antecedente:</strong> El blanqueo de la Ley Bases 2024 logró formalizar solo 16.000 trabajadores sobre 5.8 millones de informales (0.003% de efectividad).
+                </div>
+            </div>
+        </section>
+
+        <!-- Parámetros Base -->
+        <section class="section">
+            <h2>📊 Parámetros Base del Análisis</h2>
+            
+            <div class="input-group">
+                <h3>Datos Oficiales <span class="data-tag">DATO</span></h3>
+                
+                <div class="input-row">
+                    <label>
+                        PBI nominal 2026 (billones $)
+                        <span class="label-info">Estimado a partir del presupuesto 2026</span>
+                    </label>
+                    <input type="number" id="pbi" value="650.8" step="10">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        Transferencias trabajadores → empresas (billones $)
+                        <span class="label-info">Según <a href="https://leito-monk.github.io/reforma-laboral/" target="_blank">análisis previo de retrocesos</a></span>
+                    </label>
+                    <input type="number" id="transferencias" value="21" step="0.5">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        Salario promedio mensual (millones $)
+                        <span class="label-info">Datos oficiales</span>
+                    </label>
+                    <input type="number" id="salario_mensual" value="0.88" step="0.01">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <h3>Costo Fiscal por Medida (% PBI) <span class="hypothesis-tag">HIPÓTESIS</span></h3>
+                <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem;">Estimaciones basadas en análisis de consultoras y cálculos propios. Modificá los valores para explorar escenarios.</p>
+                
+                <div class="input-row">
+                    <label>
+                        1. Reducción Contribuciones Patronales
+                        <span class="label-info">~USD 3.000M/año según Invecq. Baja de 20,4%→17,4% y 18%→15%</span>
+                    </label>
+                    <input type="number" id="costo_contrib" value="0.50" step="0.01">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        2. Fondo de Asistencia Laboral (FAL)
+                        <span class="label-info">Neto cero: 3% al FAL compensado con -3% al SIPA. Impacto directo = 0</span>
+                    </label>
+                    <input type="number" id="costo_fal" value="0.00" step="0.01">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        3. Impuesto a las Ganancias Corporativo
+                        <span class="label-info">Estimación propia: 30%→27% y 35%→31,5% reduce ~10% recaudación del impuesto</span>
+                    </label>
+                    <input type="number" id="costo_ganancias_corp" value="0.20" step="0.01">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        4. Eliminación Impuestos Internos
+                        <span class="label-info">Estimación propia basada en recaudación actual de internos (~0,3% PBI parcial)</span>
+                    </label>
+                    <input type="number" id="costo_internos" value="0.10" step="0.01">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        5. RIMI (Medianas Inversiones)
+                        <span class="label-info">Sin dato oficial. Estimación conservadora por amortización acelerada + IVA</span>
+                    </label>
+                    <input type="number" id="costo_rimi" value="0.03" step="0.01">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        6. Blanqueo Laboral (PER)
+                        <span class="label-info">Condonación de deuda existente, no genera costo recurrente. Impacto puntual</span>
+                    </label>
+                    <input type="number" id="costo_blanqueo" value="0.00" step="0.01">
+                </div>
+
+                <div style="background: var(--bg); padding: 1rem; border-radius: 6px; margin-top: 1rem; border: 1px solid var(--border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <strong>COSTO FISCAL TOTAL:</strong>
+                        <span id="costo_total_display" style="font-family: 'IBM Plex Mono', monospace; font-size: 1.2rem; color: var(--primary);">0.83% PBI</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem;">Invecq estima 0,83% PBI total. Nuestro desglose suma aproximadamente lo mismo.</p>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <h3>Tasas de Recaudación <span class="hypothesis-tag">HIPÓTESIS</span></h3>
+                
+                <div class="input-row">
+                    <label>
+                        Contribuciones patronales promedio (%)
+                        <span class="label-info">Mix entre RIFL (2%) y tasa reducida (15%)</span>
+                    </label>
+                    <input type="number" id="tasa_contrib" value="10" step="1">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        Aportes personales (%)
+                        <span class="label-info">Tasa estándar</span>
+                    </label>
+                    <input type="number" id="tasa_aportes" value="17" step="1">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        IVA indirecto recuperado (%)
+                        <span class="label-info">21% IVA × 60% consumo × 50% recuperación</span>
+                    </label>
+                    <input type="number" id="tasa_iva" value="6.3" step="0.1">
+                </div>
+
+                <div class="input-row">
+                    <label>
+                        Ganancias promedio (%)
+                        <span class="label-info">15% sobre ~30% de empleos sobre mínimo no imponible</span>
+                    </label>
+                    <input type="number" id="tasa_ganancias" value="4.5" step="0.1">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <h3>Efectividad Histórica <span class="hypothesis-tag">HIPÓTESIS</span></h3>
+                
+                <div class="input-row">
+                    <label>
+                        % del "ahorro" empresarial que va a nuevos empleos
+                        <span class="label-info">Basado en comportamiento histórico</span>
+                    </label>
+                    <input type="number" id="ratio_empleo" value="25" step="5">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button onclick="calcular()">Calcular Análisis</button>
+                <button onclick="resetearOriginal()" style="background: var(--accent);">Restaurar Valores Originales</button>
+            </div>
+        </section>
+
+        <!-- Resultados -->
+        <section class="section" id="resultados" style="display: none;">
+            <h2>📈 Resultados del Análisis</h2>
+
+            <h3>Paso 1: Costo Fiscal Bruto</h3>
+            <div class="calc-step">
+                <div class="calc-step-title">Inversión del Estado</div>
+                <div class="formula" id="formula1"></div>
+                <p style="margin-top: 0.5rem;">El Estado resigna <strong id="costo_bruto"></strong> en ingresos fiscales anuales.</p>
+            </div>
+
+            <h3>Paso 2: Empleos Potenciales</h3>
+            <div class="calc-step">
+                <div class="calc-step-title">Con la inversión del Estado</div>
+                <div class="formula" id="formula2"></div>
+                <p style="margin-top: 0.5rem;">Si todo el dinero fuera a salarios: <strong id="empleos_potenciales"></strong> empleos posibles.</p>
+            </div>
+
+            <h3>Paso 3: Recaudación Adicional (Escenario Optimista)</h3>
+            <div class="calc-step">
+                <div class="calc-step-title">Si se crean TODOS los empleos</div>
+                <div id="formulas_recaudacion"></div>
+                <p style="margin-top: 0.5rem;">Recaudación adicional total: <strong id="recaudacion_optimista"></strong></p>
+            </div>
+
+            <div class="result-box">
+                <h3>Escenario Optimista</h3>
+                <div class="result-item">
+                    <span class="result-label">Costo fiscal bruto</span>
+                    <span class="result-value" id="res_costo_bruto"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Recaudación adicional</span>
+                    <span class="result-value" id="res_recaud_opt"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Costo fiscal NETO</span>
+                    <span class="result-value" id="res_costo_neto_opt"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">% recuperado</span>
+                    <span class="result-value" id="res_pct_recup"></span>
+                </div>
+            </div>
+
+            <h3>Paso 4: Escenario Realista</h3>
+            <div class="calc-step">
+                <div class="calc-step-title">Aplicando efectividad histórica</div>
+                <div class="formula" id="formula_realista"></div>
+                <p style="margin-top: 0.5rem;">Empleos realmente esperados: <strong id="empleos_realistas"></strong></p>
+                <p>Recaudación adicional realista: <strong id="recaudacion_realista"></strong></p>
+            </div>
+
+            <div class="result-box" style="background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 100%); border: 2px solid var(--accent);">
+                <h3>Escenario Realista</h3>
+                <div class="result-item">
+                    <span class="result-label">Empleos creados (realista)</span>
+                    <span class="result-value" id="res_emp_real"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Recaudación adicional</span>
+                    <span class="result-value" id="res_recaud_real"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Costo fiscal NETO</span>
+                    <span class="result-value" id="res_costo_neto_real"></span>
+                </div>
+            </div>
+
+            <h3>Comparación con Transferencias</h3>
+            <div class="grid">
+                <div class="stat-card">
+                    <div class="stat-label">Transferencias trabajadores</div>
+                    <div class="stat-value" id="stat_transf"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Inversión Estado (neta)</div>
+                    <div class="stat-value" id="stat_inversion"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Ganancia neta empresas</div>
+                    <div class="stat-value" id="stat_ganancia"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusiones -->
+        <section class="section warning" id="conclusiones" style="display: none;">
+            <h2>⚠️ Conclusiones Críticas</h2>
+
+            <div class="conclusion-item">
+                <strong>1. Costo fiscal significativo sin garantías</strong>
+                <p>Incluso en el escenario optimista, el Estado invierte <span id="concl_inversion"></span> netos. En el escenario realista: <span id="concl_inversion_real"></span>.</p>
+            </div>
+
+            <div class="conclusion-item">
+                <strong>2. Ausencia total de metas cuantificables</strong>
+                <p>El proyecto NO establece:</p>
+                <ul style="margin: 0.5rem 0 0 1.5rem;">
+                    <li>Cuántos empleos se espera crear</li>
+                    <li>En qué plazo</li>
+                    <li>Cómo se medirá el éxito</li>
+                    <li>Qué sectores se priorizarán</li>
+                </ul>
+            </div>
+
+            <div class="conclusion-item">
+                <strong>3. Sin mecanismos de seguimiento ni monitoreo</strong>
+                <p>No existe en el proyecto:</p>
+                <ul style="margin: 0.5rem 0 0 1.5rem;">
+                    <li>Sistema de evaluación periódica</li>
+                    <li>Indicadores de desempeño</li>
+                    <li>Obligación de reportar resultados</li>
+                    <li>Auditorías independientes</li>
+                </ul>
+            </div>
+
+            <div class="conclusion-item">
+                <strong>4. Incentivos sin condicionalidades</strong>
+                <p>Los beneficios fiscales se otorgan SIN:</p>
+                <ul style="margin: 0.5rem 0 0 1.5rem;">
+                    <li>Obligación de mantener empleos por período mínimo</li>
+                    <li>Penalidades por incumplimiento</li>
+                    <li>Devolución de beneficios si no se crean empleos</li>
+                    <li>Verificación posterior de resultados</li>
+                </ul>
+            </div>
+
+            <div class="conclusion-item">
+                <strong>5. Antecedente: Blanqueo 2024 fracasó</strong>
+                <p>El blanqueo anterior formalizó solo <strong>16.000 empleos sobre 5.8 millones</strong> de trabajadores informales (0.003% de efectividad).</p>
+            </div>
+
+            <div class="alert alert-critical" style="margin-top: 1.5rem;">
+                <strong>Resultado:</strong> El Estado invierte miles de millones sin metas claras, sin seguimiento, sin condicionalidades y sin antecedentes que justifiquen optimismo sobre los resultados.
+            </div>
+        </section>
+
+        <!-- Metodología -->
+        <section class="section" id="metodologia" style="display: none;">
+            <h2>🔬 Notas Metodológicas</h2>
+            
+            <div class="methodology">
+                <h3>Fuentes de Datos</h3>
+                <ul style="margin-left: 1.5rem;">
+                    <li><strong>Proyecto de ley:</strong> <a href="https://www.argentina.gob.ar/sites/default/files/proyecto_de_ley_de_modernizacion_laboral._vf.pdf" target="_blank">Ley de Modernización Laboral (PDF oficial)</a></li>
+                    <li><strong>PBI 2026:</strong> Estimado a partir del presupuesto nacional 2026 ($148 billones de gasto / 22.74% presión tributaria)</li>
+                    <li><strong>Costo fiscal 0.83% PBI:</strong> Consultora Invecq (citada en Infobae, DataClave)</li>
+                    <li><strong>Transferencias $21 billones:</strong> <a href="https://leito-monk.github.io/reforma-laboral/" target="_blank">Análisis previo de retrocesos laborales</a></li>
+                    <li><strong>Salario promedio:</strong> Datos oficiales</li>
+                </ul>
+            </div>
+
+            <div class="methodology">
+                <h3>Supuestos del Modelo</h3>
+                <ul style="margin-left: 1.5rem;">
+                    <li><strong>Contribuciones patronales:</strong> Promedio ponderado entre RIFL (2% × 4 años) y tasa reducida general (15%)</li>
+                    <li><strong>IVA indirecto:</strong> Asume que 60% del salario se consume, generando IVA del 21%, del cual el Estado recupera efectivamente ~50%</li>
+                    <li><strong>Efectividad 25%:</strong> Basado en estudios históricos sobre destino de "ahorros" empresariales</li>
+                </ul>
+            </div>
+
+            <div class="methodology">
+                <h3>Limitaciones</h3>
+                <ul style="margin-left: 1.5rem;">
+                    <li>No considera efectos de equilibrio general en la economía</li>
+                    <li>Asume salario promedio constante (no considera posibles cambios en composición)</li>
+                    <li>No modela efectos dinámicos temporales (el análisis es de estado estacionario)</li>
+                    <li>Recaudación adicional puede tener rezagos temporales no considerados</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Foto de perfil -->
+                <div class="profile-photo">
+                    <img src="Yo.jpeg" alt="Leandro Monk">
+                </div>
+                
+                <!-- Información de contacto -->
+                <div class="contact-info">
+                    <h3>Leandro Monk</h3>
+                    <p class="bio">
+                        Fundador de <a href="https://gcoop.coop" target="_blank" style="color: var(--accent);">gcoop</a>, primera cooperativa de software libre de Argentina. 
+                        Presidente de <a href="https://mit.org.ar" target="_blank" style="color: var(--accent);">MIT.</a> 
+                        Especialista en tecnología cooperativa, soberanía tecnológica y economía social.
+                    </p>
+                    
+                    <!-- Redes sociales -->
+                    <div class="social-links">
+                        <a href="https://x.com/leitomonk" target="_blank">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                            @leitomonk
+                        </a>
+                        <a href="https://www.linkedin.com/in/leandromonk/" target="_blank">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                        <a href="https://github.com/leito-monk" target="_blank">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                        <a href="mailto:leandro@gcoop.coop">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            Contacto
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Nota final -->
+                <div class="footer-note">
+                    <p><strong>Serie: Reforma Laboral Argentina</strong></p>
+                    <p style="margin-top: 0.5rem;">
+                        <a href="index.html">Inicio</a> · 
+                        <a href="analisis-transferencia-trabajadores.html" target="_blank">Parte I: Análisis de Retrocesos</a> · 
+                        Parte II: Análisis del Costo Fiscal (este documento)
+                    </p>
+                    <p style="margin-top: 1rem;">Análisis elaborado como ejercicio de transparencia y debate público</p>
+                    <p style="margin-top: 0.5rem;">Documento colaborativo abierto a correcciones y mejoras</p>
+                    <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">Diciembre 2025</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Valores originales para resetear
+        const VALORES_ORIGINALES = {
+            pbi: 650.8,
+            costo_contrib: 0.50,
+            costo_fal: 0.00,
+            costo_ganancias_corp: 0.20,
+            costo_internos: 0.10,
+            costo_rimi: 0.03,
+            costo_blanqueo: 0.00,
+            transferencias: 21,
+            salario_mensual: 0.88,
+            tasa_contrib: 10,
+            tasa_aportes: 17,
+            tasa_iva: 6.3,
+            tasa_ganancias: 4.5,
+            ratio_empleo: 25
+        };
+
+        function formatearNumero(num) {
+            return new Intl.NumberFormat('es-AR').format(Math.round(num));
+        }
+
+        function formatearBillones(num) {
+            return '$' + num.toFixed(2) + ' billones';
+        }
+
+        function actualizarCostoTotal() {
+            const costo_contrib = parseFloat(document.getElementById('costo_contrib').value) || 0;
+            const costo_fal = parseFloat(document.getElementById('costo_fal').value) || 0;
+            const costo_ganancias_corp = parseFloat(document.getElementById('costo_ganancias_corp').value) || 0;
+            const costo_internos = parseFloat(document.getElementById('costo_internos').value) || 0;
+            const costo_rimi = parseFloat(document.getElementById('costo_rimi').value) || 0;
+            const costo_blanqueo = parseFloat(document.getElementById('costo_blanqueo').value) || 0;
+            
+            const total = costo_contrib + costo_fal + costo_ganancias_corp + costo_internos + costo_rimi + costo_blanqueo;
+            document.getElementById('costo_total_display').textContent = total.toFixed(2) + '% PBI';
+            return total;
+        }
+
+        function resetearOriginal() {
+            Object.keys(VALORES_ORIGINALES).forEach(key => {
+                const el = document.getElementById(key);
+                if (el) el.value = VALORES_ORIGINALES[key];
+            });
+            actualizarCostoTotal();
+            calcular();
+        }
+
+        function calcular() {
+            // Obtener valores
+            const pbi = parseFloat(document.getElementById('pbi').value);
+            const costo_pct = actualizarCostoTotal();
+            const transferencias = parseFloat(document.getElementById('transferencias').value);
+            const salario_mensual = parseFloat(document.getElementById('salario_mensual').value);
+            const tasa_contrib = parseFloat(document.getElementById('tasa_contrib').value);
+            const tasa_aportes = parseFloat(document.getElementById('tasa_aportes').value);
+            const tasa_iva = parseFloat(document.getElementById('tasa_iva').value);
+            const tasa_ganancias = parseFloat(document.getElementById('tasa_ganancias').value);
+            const ratio_empleo = parseFloat(document.getElementById('ratio_empleo').value);
+
+            // Obtener costos individuales para el desglose
+            const costo_contrib_pct = parseFloat(document.getElementById('costo_contrib').value) || 0;
+            const costo_fal_pct = parseFloat(document.getElementById('costo_fal').value) || 0;
+            const costo_ganancias_corp_pct = parseFloat(document.getElementById('costo_ganancias_corp').value) || 0;
+            const costo_internos_pct = parseFloat(document.getElementById('costo_internos').value) || 0;
+            const costo_rimi_pct = parseFloat(document.getElementById('costo_rimi').value) || 0;
+            const costo_blanqueo_pct = parseFloat(document.getElementById('costo_blanqueo').value) || 0;
+
+            // Cálculos
+            const costo_bruto = pbi * (costo_pct / 100);
+            const salario_anual = salario_mensual * 12;
+            const empleos_potenciales = (costo_bruto * 1000000) / salario_anual;
+            
+            const masa_salarial = (empleos_potenciales * salario_anual) / 1000000;
+            const recaud_contrib = masa_salarial * (tasa_contrib / 100);
+            const recaud_aportes = masa_salarial * (tasa_aportes / 100);
+            const recaud_iva = masa_salarial * (tasa_iva / 100);
+            const recaud_ganancias = masa_salarial * (tasa_ganancias / 100);
+            const recaudacion_optimista = recaud_contrib + recaud_aportes + recaud_iva + recaud_ganancias;
+            
+            const costo_neto_optimista = costo_bruto - recaudacion_optimista;
+            const pct_recuperado = (recaudacion_optimista / costo_bruto) * 100;
+            
+            const empleos_realistas = empleos_potenciales * (ratio_empleo / 100);
+            const recaudacion_realista = recaudacion_optimista * (ratio_empleo / 100);
+            const costo_neto_realista = costo_bruto - recaudacion_realista;
+            
+            const ganancia_empresas = transferencias - costo_neto_realista;
+
+            // Mostrar fórmulas con desglose
+            document.getElementById('formula1').innerHTML = `
+                <div style="margin-bottom: 0.5rem;"><strong>Desglose por medida:</strong></div>
+                <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.25rem; font-size: 0.9em;">
+                    <span>1. Reducción Contribuciones:</span><span>${(pbi * costo_contrib_pct / 100).toFixed(2)} billones (${costo_contrib_pct}%)</span>
+                    <span>2. FAL:</span><span>${(pbi * costo_fal_pct / 100).toFixed(2)} billones (${costo_fal_pct}%)</span>
+                    <span>3. Ganancias Corporativo:</span><span>${(pbi * costo_ganancias_corp_pct / 100).toFixed(2)} billones (${costo_ganancias_corp_pct}%)</span>
+                    <span>4. Impuestos Internos:</span><span>${(pbi * costo_internos_pct / 100).toFixed(2)} billones (${costo_internos_pct}%)</span>
+                    <span>5. RIMI:</span><span>${(pbi * costo_rimi_pct / 100).toFixed(2)} billones (${costo_rimi_pct}%)</span>
+                    <span>6. Blanqueo:</span><span>${(pbi * costo_blanqueo_pct / 100).toFixed(2)} billones (${costo_blanqueo_pct}%)</span>
+                </div>
+                <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border);"><strong>TOTAL: ${costo_bruto.toFixed(2)} billones (${costo_pct.toFixed(2)}% del PBI)</strong></div>
+            `;
+
+            document.getElementById('formula2').textContent = 
+                `Empleos = Costo × 1.000.000 / Salario anual = ${costo_bruto.toFixed(2)} × 1.000.000 / ${salario_anual.toFixed(2)} = ${formatearNumero(empleos_potenciales)}`;
+
+            document.getElementById('formulas_recaudacion').innerHTML = `
+                <div class="formula">Contribuciones = ${masa_salarial.toFixed(2)} × ${tasa_contrib}% = ${recaud_contrib.toFixed(2)} billones</div>
+                <div class="formula">Aportes = ${masa_salarial.toFixed(2)} × ${tasa_aportes}% = ${recaud_aportes.toFixed(2)} billones</div>
+                <div class="formula">IVA = ${masa_salarial.toFixed(2)} × ${tasa_iva}% = ${recaud_iva.toFixed(2)} billones</div>
+                <div class="formula">Ganancias = ${masa_salarial.toFixed(2)} × ${tasa_ganancias}% = ${recaud_ganancias.toFixed(2)} billones</div>
+            `;
+
+            document.getElementById('formula_realista').textContent = 
+                `Empleos reales = ${formatearNumero(empleos_potenciales)} × ${ratio_empleo}% = ${formatearNumero(empleos_realistas)}`;
+
+            // Mostrar resultados
+            document.getElementById('costo_bruto').textContent = formatearBillones(costo_bruto);
+            document.getElementById('empleos_potenciales').textContent = formatearNumero(empleos_potenciales);
+            document.getElementById('recaudacion_optimista').textContent = formatearBillones(recaudacion_optimista);
+            document.getElementById('empleos_realistas').textContent = formatearNumero(empleos_realistas);
+            document.getElementById('recaudacion_realista').textContent = formatearBillones(recaudacion_realista);
+
+            // Result boxes
+            document.getElementById('res_costo_bruto').textContent = formatearBillones(costo_bruto);
+            document.getElementById('res_recaud_opt').textContent = formatearBillones(recaudacion_optimista);
+            document.getElementById('res_costo_neto_opt').textContent = formatearBillones(costo_neto_optimista);
+            document.getElementById('res_pct_recup').textContent = pct_recuperado.toFixed(1) + '%';
+
+            document.getElementById('res_emp_real').textContent = formatearNumero(empleos_realistas);
+            document.getElementById('res_recaud_real').textContent = formatearBillones(recaudacion_realista);
+            document.getElementById('res_costo_neto_real').textContent = formatearBillones(costo_neto_realista);
+
+            // Stats
+            document.getElementById('stat_transf').textContent = formatearBillones(transferencias);
+            document.getElementById('stat_inversion').textContent = formatearBillones(costo_neto_realista);
+            document.getElementById('stat_ganancia').textContent = formatearBillones(ganancia_empresas);
+
+            // Conclusiones
+            document.getElementById('concl_inversion').textContent = formatearBillones(costo_neto_optimista);
+            document.getElementById('concl_inversion_real').textContent = formatearBillones(costo_neto_realista);
+
+            // Mostrar secciones
+            document.getElementById('resultados').style.display = 'block';
+            document.getElementById('conclusiones').style.display = 'block';
+            document.getElementById('metodologia').style.display = 'block';
+        }
+
+        // Event listeners para actualizar el total en tiempo real
+        document.addEventListener('DOMContentLoaded', function() {
+            const costInputs = ['costo_contrib', 'costo_fal', 'costo_ganancias_corp', 'costo_internos', 'costo_rimi', 'costo_blanqueo'];
+            costInputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', actualizarCostoTotal);
+                }
+            });
+            
+            // Calcular automáticamente al cargar
+            actualizarCostoTotal();
+            calcular();
+        });
+    </script>
+</body>
+</html>

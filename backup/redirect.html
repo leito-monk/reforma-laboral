@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Análisis económico de la Reforma Laboral Argentina - Transferencia de $21 billones anuales">
+    <title>Reforma Laboral Argentina - Análisis Económico</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variables */
+        :root {
+            --primary: #D32F2F;
+            --primary-dark: #B71C1C;
+            --secondary: #FF6F00;
+            --accent: #FDD835;
+            --bg-dark: #1A1A1A;
+            --bg-medium: #2C2C2C;
+            --text-light: #FFFFFF;
+            --text-gray: #B0B0B0;
+        }
+
+        /* Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Base - Mobile First */
+        html {
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 3rem 2rem;
+            }
+        }
+
+        /* Hero */
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+
+        .hero-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 5rem;
+            }
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        @media (min-width: 768px) {
+            .hero-description {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Metric Box */
+        .metric-box {
+            background: var(--bg-medium);
+            border: 3px solid var(--primary);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            margin: 2rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .metric-box {
+                padding: 3rem 2rem;
+            }
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        @media (min-width: 768px) {
+            .metric-label {
+                font-size: 1.2rem;
+            }
+        }
+
+        .metric-value {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        @media (min-width: 768px) {
+            .metric-value {
+                font-size: 5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .metric-value {
+                font-size: 6rem;
+            }
+        }
+
+        .metric-text {
+            font-size: 1rem;
+            color: #E0E0E0;
+            line-height: 1.6;
+        }
+
+        @media (min-width: 768px) {
+            .metric-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Highlights */
+        .highlights {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .highlights {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        .highlight-item {
+            background: rgba(253, 216, 53, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .highlight-item strong {
+            display: block;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .highlight-item p {
+            font-size: 0.95rem;
+            color: #E0E0E0;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--text-light);
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.2rem;
+            padding: 1.25rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4);
+            margin: 2rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .cta-button {
+                font-size: 1.4rem;
+                padding: 1.5rem 3rem;
+            }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(211, 47, 47, 0.6);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="hero-subtitle">Análisis Económico</p>
+        <h1 class="hero-title">Reforma Laboral Argentina</h1>
+        <p class="hero-description">
+            Análisis detallado del impacto económico de los retrocesos laborales propuestos. 
+            Datos públicos, metodología transparente, perspectiva interseccional.
+        </p>
+
+        <div class="metric-box">
+            <p class="metric-label">Transferencia Total</p>
+            <p class="metric-value">$21 billones</p>
+            <p class="metric-text">
+                Transferencia anual desde trabajadores registrados hacia la patronal 
+                por la suma de todas las medidas propuestas.
+            </p>
+        </div>
+
+        <div class="highlights">
+            <div class="highlight-item">
+                <strong>📊 12 Retrocesos Analizados</strong>
+                <p>Desde tope indemnizatorio hasta banco de horas, cada medida cuantificada con datos oficiales.</p>
+            </div>
+
+            <div class="highlight-item">
+                <strong>👥 Impacto Interseccional</strong>
+                <p>Análisis diferencial por género, raza, edad, capacidad y región geográfica.</p>
+            </div>
+
+            <div class="highlight-item">
+                <strong>💰 Análisis de Redistribución</strong>
+                <p>¿Cuántos empleos deberían crearse para no perjudicar a trabajadores? 2.2 millones con salario promedio.</p>
+            </div>
+
+            <div class="highlight-item">
+                <strong>🔍 Metodología Transparente</strong>
+                <p>Fuentes públicas (INDEC, MTEySS), cálculos reproducibles, supuestos explícitos.</p>
+            </div>
+        </div>
+
+        <a href="https://leito-monk.github.io/reforma-laboral/" class="cta-button">
+            Ver Informe Completo →
+        </a>
+
+        <div class="footer">
+            <p>
+                <strong>Informe completo en:</strong><br>
+                <a href="https://leito-monk.github.io/reforma-laboral/">leito-monk.github.io/reforma-laboral</a>
+            </p>
+            <p style="margin-top: 1rem;">
+                Análisis independiente • Diciembre 2025 • Fuentes públicas verificables
+            </p>
+        </div>
+    </div>
+</body>
+</html>
