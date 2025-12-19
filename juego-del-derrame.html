@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Juego del Derrame</title>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF4136; --accent: #FF851B; --gold: #FFD700; --bg: #0D0D0D;
+            --bg-medium: #1A1A1A; --surface: #1F1F1F; --text: #E8E8E8; --text-light: #A0A0A0;
+            --border: #333; --success: #2ECC40; --worker: #3498db; --informal: #9b59b6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Work Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        .screen { display: none !important; min-height: 100vh; padding: 1rem; }
+        .screen.active { display: flex !important; flex-direction: column; }
+
+        /* INICIO */
+        #screen-inicio.active { align-items: center; justify-content: center; text-align: center; }
+        .game-title { font-family: 'Archivo Black', sans-serif; font-size: clamp(2rem, 8vw, 4rem); background: linear-gradient(135deg, var(--gold), var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .game-subtitle { font-family: 'IBM Plex Mono', monospace; color: var(--text-light); margin-top: 0.5rem; }
+        .drip-icon { font-size: 4rem; animation: drip 2s ease-in-out infinite; }
+        @keyframes drip { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+        
+        .start-form { background: var(--surface); padding: 2rem; border-radius: 12px; margin: 2rem 0; max-width: 400px; width: 100%; border: 2px solid var(--border); }
+        .form-group { margin-bottom: 1.5rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--accent); }
+        .form-group input { width: 100%; padding: 0.75rem; border: 2px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 1rem; }
+        .form-group input:focus { outline: none; border-color: var(--gold); }
+        .avatar-selector { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+        .avatar-option { font-size: 2rem; padding: 0.5rem; background: var(--bg); border: 3px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; text-align: center; }
+        .avatar-option:hover { border-color: var(--accent); transform: scale(1.05); }
+        .avatar-option.selected { border-color: var(--gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+        
+        .btn { font-family: 'Archivo Black', sans-serif; padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1rem; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-primary { background: linear-gradient(135deg, var(--gold), var(--accent)); color: var(--bg); }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4); }
+        .btn-secondary { background: var(--surface); color: var(--text); border: 2px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--accent); }
+        .btn-small { padding: 0.5rem 1rem; font-size: 0.8rem; }
+        .btn-danger { background: var(--primary); color: white; }
+        
+        /* AYUDA */
+        #screen-ayuda { max-width: 800px; margin: 0 auto; }
+        .help-title { font-family: 'Archivo Black', sans-serif; font-size: 2rem; margin-bottom: 1.5rem; color: var(--gold); }
+        .help-section { background: var(--surface); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--accent); }
+        .help-section h3 { color: var(--accent); margin-bottom: 0.75rem; }
+        .help-section ul { margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-light); }
+        .help-section li { margin-bottom: 0.5rem; }
+        
+        /* JUEGO */
+        #screen-juego { max-width: 1400px; margin: 0 auto; }
+        
+        /* Ticker noticias */
+        .news-ticker { background: var(--primary); color: white; padding: 0.5rem 0; overflow: hidden; margin: -1rem -1rem 1rem -1rem; }
+        .ticker-content { display: flex; animation: ticker 30s linear infinite; white-space: nowrap; }
+        .ticker-item { padding: 0 3rem; font-weight: 500; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        /* Header juego */
+        .game-header { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+        .player-info { display: flex; align-items: center; gap: 0.75rem; }
+        .player-avatar { font-size: 2.5rem; }
+        .player-name { font-family: 'Archivo Black', sans-serif; color: var(--gold); }
+        .player-title { font-size: 0.75rem; color: var(--text-light); }
+        
+        .turn-display { text-align: center; background: var(--surface); padding: 1rem 2rem; border-radius: 12px; }
+        .turn-number { font-family: 'Archivo Black', sans-serif; font-size: 2rem; color: var(--accent); }
+        .turn-label { font-size: 0.8rem; color: var(--text-light); }
+        
+        .capital-politico { text-align: right; }
+        .capital-bar { background: var(--bg); height: 24px; border-radius: 12px; overflow: hidden; width: 150px; margin-left: auto; border: 2px solid var(--border); }
+        .capital-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.5s; }
+        .capital-label { font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem; }
+        
+        /* Objetivo */
+        .objective-bar { background: var(--surface); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+        .objective-label { font-size: 0.85rem; color: var(--text-light); }
+        .objective-progress { flex: 1; background: var(--bg); height: 16px; border-radius: 8px; overflow: hidden; }
+        .objective-fill { height: 100%; background: linear-gradient(90deg, var(--success), #27ae60); transition: width 0.5s; }
+        .objective-text { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; min-width: 120px; text-align: right; }
+        
+        /* Indicadores */
+        .indicators-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+        .indicator { background: var(--surface); padding: 1rem; border-radius: 8px; border: 2px solid var(--border); }
+        .indicator.empresario { border-color: var(--gold); }
+        .indicator.trabajadores { border-color: var(--worker); }
+        .indicator.informales { border-color: var(--informal); }
+        .indicator-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .indicator-title { font-size: 0.85rem; }
+        .indicator-value { font-family: 'Archivo Black', sans-serif; font-size: 1.3rem; }
+        .indicator-bar { background: var(--bg); height: 12px; border-radius: 6px; overflow: hidden; }
+        .indicator-fill { height: 100%; border-radius: 6px; transition: width 0.5s; }
+        .indicator-fill.gold { background: linear-gradient(90deg, var(--accent), var(--gold)); }
+        .indicator-fill.blue { background: var(--worker); }
+        .indicator-fill.purple { background: var(--informal); }
+        
+        /* Trabajadores visuales */
+        .workers-display { background: var(--surface); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+        .workers-title { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.75rem; text-align: center; }
+        .workers-grid { display: flex; justify-content: center; gap: 2px; flex-wrap: wrap; }
+        .worker-icon { font-size: 1.2rem; transition: all 0.3s; }
+        .worker-icon.formal-happy { filter: none; }
+        .worker-icon.formal-sad { filter: saturate(0.5); }
+        .worker-icon.informal { filter: grayscale(0.5); opacity: 0.7; }
+        .worker-icon.desempleado { filter: grayscale(1); opacity: 0.3; }
+        .workers-legend { display: flex; justify-content: center; gap: 1rem; margin-top: 0.75rem; font-size: 0.7rem; color: var(--text-light); }
+        
+        /* Layout principal */
+        .game-main { display: grid; grid-template-columns: 1fr 350px; gap: 1rem; }
+        
+        /* Medidas */
+        .measures-panel { background: var(--surface); padding: 1rem; border-radius: 8px; max-height: 500px; overflow-y: auto; }
+        .measures-title { font-family: 'Archivo Black', sans-serif; font-size: 1rem; margin-bottom: 1rem; }
+        .measure-card { background: var(--bg); border: 2px solid var(--border); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s; }
+        .measure-card:hover:not(.used):not(.locked) { border-color: var(--accent); transform: translateX(4px); }
+        .measure-card.used { opacity: 0.4; cursor: not-allowed; border-color: var(--success); }
+        .measure-card.locked { opacity: 0.3; cursor: not-allowed; }
+        .measure-card.selected { border-color: var(--gold); background: rgba(255, 215, 0, 0.1); }
+        .measure-category { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+        .measure-name { font-weight: 600; font-size: 0.85rem; margin: 0.25rem 0; }
+        .measure-effects { display: flex; gap: 0.4rem; flex-wrap: wrap; font-size: 0.7rem; font-family: 'IBM Plex Mono', monospace; }
+        .effect { padding: 0.1rem 0.3rem; border-radius: 3px; background: var(--surface); }
+        .effect.positive { color: var(--success); }
+        .effect.negative { color: var(--primary); }
+        .measure-cost { font-size: 0.7rem; color: var(--accent); margin-top: 0.25rem; }
+        
+        /* Panel derecho - eventos y acciones */
+        .side-panel { display: flex; flex-direction: column; gap: 1rem; }
+        
+        .action-panel { background: var(--surface); padding: 1rem; border-radius: 8px; text-align: center; }
+        .selected-measure { background: var(--bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; min-height: 80px; display: flex; align-items: center; justify-content: center; }
+        .selected-measure.empty { color: var(--text-light); font-style: italic; }
+        
+        .event-panel { background: var(--surface); padding: 1rem; border-radius: 8px; flex: 1; }
+        .event-title { font-family: 'Archivo Black', sans-serif; font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--accent); }
+        .event-card { background: var(--bg); border-radius: 8px; padding: 1rem; text-align: center; border: 2px solid var(--border); min-height: 150px; display: flex; flex-direction: column; justify-content: center; }
+        .event-card.positive { border-color: var(--success); }
+        .event-card.negative { border-color: var(--primary); }
+        .event-card.neutral { border-color: var(--accent); }
+        .event-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .event-name { font-weight: 600; margin-bottom: 0.5rem; }
+        .event-desc { font-size: 0.8rem; color: var(--text-light); }
+        .event-effect { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; margin-top: 0.5rem; padding: 0.25rem 0.5rem; background: var(--surface); border-radius: 4px; display: inline-block; }
+        
+        /* Stats panel */
+        .stats-panel { background: var(--surface); padding: 1rem; border-radius: 8px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.8rem; }
+        .stat-item { display: flex; justify-content: space-between; padding: 0.25rem 0; border-bottom: 1px solid var(--border); }
+        .stat-value { font-family: 'IBM Plex Mono', monospace; }
+        
+        /* Modal Game Over / Victoria */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: var(--surface); padding: 2rem; border-radius: 16px; max-width: 500px; width: 100%; text-align: center; border: 3px solid var(--gold); animation: modalIn 0.3s ease-out; }
+        @keyframes modalIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .modal-title { font-family: 'Archivo Black', sans-serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .modal-subtitle { color: var(--text-light); margin-bottom: 1.5rem; }
+        .modal-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .modal-stat { background: var(--bg); padding: 1rem; border-radius: 8px; }
+        .modal-stat-value { font-family: 'Archivo Black', sans-serif; font-size: 1.5rem; }
+        .modal-stat-label { font-size: 0.75rem; color: var(--text-light); }
+        .modal-message { background: var(--bg); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: left; font-size: 0.9rem; line-height: 1.5; }
+        .modal-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        @media (max-width: 900px) {
+            .game-main { grid-template-columns: 1fr; }
+            .game-header { grid-template-columns: 1fr; text-align: center; }
+            .capital-bar { margin: 0 auto; }
+            .indicators-row { grid-template-columns: 1fr; }
+        }
+
+        /* Botón Mute */
+        .btn-mute { position: fixed; bottom: 1rem; right: 1rem; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; padding: 0; z-index: 100; display: flex; align-items: center; justify-content: center; background: var(--surface); border: 2px solid var(--border); cursor: pointer; transition: all 0.2s; }
+        .btn-mute:hover { border-color: var(--accent); transform: scale(1.1); }
+        .btn-mute.muted { opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA INICIO -->
+    <div id="screen-inicio" class="screen active">
+        <div class="drip-icon">💧</div>
+        <h1 class="game-title">El Juego del Derrame</h1>
+        <p class="game-subtitle">Simulador de Reforma Laboral Argentina 2025</p>
+        <div class="start-form">
+            <div class="form-group">
+                <label>Nombre de tu empresa</label>
+                <input type="text" id="player-name-input" placeholder="Ej: Grupo Derramix S.A." maxlength="25">
+            </div>
+            <div class="form-group">
+                <label>Tu avatar de CEO</label>
+                <div class="avatar-selector">
+                    <div class="avatar-option selected" data-avatar="🦈">🦈</div>
+                    <div class="avatar-option" data-avatar="🎩">🎩</div>
+                    <div class="avatar-option" data-avatar="💼">💼</div>
+                    <div class="avatar-option" data-avatar="🏦">🏦</div>
+                    <div class="avatar-option" data-avatar="💎">💎</div>
+                    <div class="avatar-option" data-avatar="🦅">🦅</div>
+                    <div class="avatar-option" data-avatar="🐺">🐺</div>
+                    <div class="avatar-option" data-avatar="👑">👑</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="startGame()" style="width: 100%;">¡Empezar a Derramar!</button>
+        </div>
+        <button class="btn btn-secondary" onclick="showScreen('ayuda')">📖 Cómo se juega</button>
+        <p style="margin-top:2rem; font-size:0.7rem; color:var(--text-light);">Basado en el análisis del Proyecto de Ley de Modernización Laboral 2025</p>
+    </div>
+
+    <!-- PANTALLA AYUDA -->
+    <div id="screen-ayuda" class="screen">
+        <button class="btn btn-secondary" onclick="showScreen('inicio')" style="margin-bottom:1.5rem;">← Volver</button>
+        <h2 class="help-title">📖 Cómo se juega</h2>
+        <div class="help-section">
+            <h3>🎯 Objetivo</h3>
+            <p>Acumulá <strong>$15 billones</strong> en ganancias antes de que el bienestar de los trabajadores llegue a 0% o te quedes sin Capital Político.</p>
+        </div>
+        <div class="help-section">
+            <h3>🎮 Mecánica por turnos</h3>
+            <ul>
+                <li>Cada turno elegís <strong>UNA medida</strong> de la reforma para activar</li>
+                <li>La medida te da ganancias pero afecta a los trabajadores</li>
+                <li>Después de cada turno aparece un <strong>EVENTO</strong> aleatorio</li>
+                <li>Los eventos pueden beneficiarte o perjudicarte</li>
+            </ul>
+        </div>
+        <div class="help-section">
+            <h3>📊 Recursos</h3>
+            <ul>
+                <li><strong style="color:var(--gold);">💰 Ganancias:</strong> Tu objetivo. Llegá a $15B para ganar</li>
+                <li><strong style="color:var(--accent);">🏛️ Capital Político:</strong> Se gasta con medidas impopulares. Si llega a 0, perdés</li>
+                <li><strong style="color:var(--worker);">👷 Bienestar Formales:</strong> Si llega a 0%, colapso social = perdés</li>
+                <li><strong style="color:var(--informal);">🔧 Ingresos Informales:</strong> Caen en cascada cuando bajan los formales</li>
+            </ul>
+        </div>
+        <div class="help-section">
+            <h3>👥 Los trabajadores</h3>
+            <p>Observá cómo van cambiando: de formales felices 😊 a formales tristes 😟, a informales 😰, a desempleados 💀. El "derrame" en acción.</p>
+        </div>
+        <button class="btn btn-primary" onclick="showScreen('inicio')">¡Entendido!</button>
+    </div>
+
+    <!-- PANTALLA JUEGO -->
+    <div id="screen-juego" class="screen">
+        <div class="news-ticker">
+            <div class="ticker-content" id="ticker-content"></div>
+        </div>
+
+        <div class="game-header">
+            <div class="player-info">
+                <span class="player-avatar" id="game-avatar">🦈</span>
+                <div>
+                    <div class="player-name" id="game-player-name">Mi Empresa</div>
+                    <div class="player-title">CEO & Modernizador</div>
+                </div>
+            </div>
+            <div class="turn-display">
+                <div class="turn-number" id="turn-number">1</div>
+                <div class="turn-label">TURNO</div>
+            </div>
+            <div class="capital-politico">
+                <div class="capital-bar"><div class="capital-fill" id="capital-fill" style="width:100%"></div></div>
+                <div class="capital-label">🏛️ Capital Político: <span id="capital-value">100</span>%</div>
+            </div>
+        </div>
+
+        <div class="objective-bar">
+            <span class="objective-label">🎯 Meta:</span>
+            <div class="objective-progress"><div class="objective-fill" id="objective-fill" style="width:0%"></div></div>
+            <span class="objective-text"><span id="ganancias-actual">0</span> / $15B</span>
+        </div>
+
+        <div class="indicators-row">
+            <div class="indicator empresario">
+                <div class="indicator-header">
+                    <span class="indicator-title">💰 Ganancias</span>
+                    <span class="indicator-value" id="val-ganancias" style="color:var(--gold)">$0B</span>
+                </div>
+                <div class="indicator-bar"><div class="indicator-fill gold" id="bar-ganancias" style="width:0%"></div></div>
+            </div>
+            <div class="indicator trabajadores">
+                <div class="indicator-header">
+                    <span class="indicator-title">👷 Bienestar Formales</span>
+                    <span class="indicator-value" id="val-formales" style="color:var(--worker)">100%</span>
+                </div>
+                <div class="indicator-bar"><div class="indicator-fill blue" id="bar-formales" style="width:100%"></div></div>
+            </div>
+            <div class="indicator informales">
+                <div class="indicator-header">
+                    <span class="indicator-title">🔧 Ingresos Informales</span>
+                    <span class="indicator-value" id="val-informales" style="color:var(--informal)">100%</span>
+                </div>
+                <div class="indicator-bar"><div class="indicator-fill purple" id="bar-informales" style="width:100%"></div></div>
+            </div>
+        </div>
+
+        <div class="workers-display">
+            <div class="workers-title">👥 Estado de los trabajadores (cada ícono = 500.000 personas)</div>
+            <div class="workers-grid" id="workers-grid"></div>
+            <div class="workers-legend">
+                <span>😊 Formal OK</span>
+                <span>😟 Formal mal</span>
+                <span>😰 Informal</span>
+                <span>💀 Sin trabajo</span>
+            </div>
+        </div>
+
+        <div class="game-main">
+            <div class="measures-panel">
+                <div class="measures-title">📋 Medidas disponibles (elegí una)</div>
+                <div id="medidas-list"></div>
+            </div>
+
+            <div class="side-panel">
+                <div class="action-panel">
+                    <div class="selected-measure empty" id="selected-measure">Seleccioná una medida</div>
+                    <button class="btn btn-primary" id="btn-aplicar" onclick="aplicarMedida()" disabled>⚡ Aplicar Medida</button>
+                    <button class="btn btn-secondary btn-small" onclick="skipTurn()" style="margin-top:0.5rem;">⏭️ Pasar turno (sin medida)</button>
+                </div>
+
+                <div class="event-panel">
+                    <div class="event-title">📰 Último evento</div>
+                    <div class="event-card" id="event-card">
+                        <div class="event-icon">🎬</div>
+                        <div class="event-name">Inicio del juego</div>
+                        <div class="event-desc">La reforma está lista. ¿Qué medida aplicarás primero?</div>
+                    </div>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stats-grid">
+                        <div class="stat-item"><span>Medidas usadas</span><span class="stat-value" id="stat-medidas">0/18</span></div>
+                        <div class="stat-item"><span>Formalizados</span><span class="stat-value" id="stat-formalizados">0</span></div>
+                        <div class="stat-item"><span>Transferido</span><span class="stat-value" id="stat-transferido">$0B</span></div>
+                        <div class="stat-item"><span>Pérdida/trabaj.</span><span class="stat-value" id="stat-perdida">$0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL GAME OVER / VICTORIA -->
+    <div class="modal-overlay" id="modal-overlay">
+
+    <!-- BOTÓN MUTE -->
+    <button class="btn-mute" id="btn-mute" onclick="toggleMute()">🔊</button>
+        <div class="modal-content">
+            <div class="modal-icon" id="modal-icon">🏆</div>
+            <h2 class="modal-title" id="modal-title">¡Victoria!</h2>
+            <p class="modal-subtitle" id="modal-subtitle">Nivel alcanzado</p>
+            <div class="modal-stats">
+                <div class="modal-stat"><div class="modal-stat-value" style="color:var(--gold)" id="modal-ganancias">$0B</div><div class="modal-stat-label">Ganancias</div></div>
+                <div class="modal-stat"><div class="modal-stat-value" style="color:var(--primary)" id="modal-bienestar">0%</div><div class="modal-stat-label">Bienestar final</div></div>
+                <div class="modal-stat"><div class="modal-stat-value" style="color:var(--success)" id="modal-formalizados">0</div><div class="modal-stat-label">Formalizados</div></div>
+                <div class="modal-stat"><div class="modal-stat-value" id="modal-turnos">0</div><div class="modal-stat-label">Turnos</div></div>
+            </div>
+            <div class="modal-message" id="modal-message"></div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="reiniciarJuego()">🔄 Jugar de nuevo</button>
+                <button class="btn btn-secondary" onclick="window.open('https://leito-monk.github.io/reforma-laboral/')">📊 Ver informe real</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// ============ AUDIO 8-BIT ============
+let audioCtx = null;
+let isMuted = false;
+let musicInterval = null;
+
+function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+}
+
+function playTone(freq, duration, type = 'square', volume = 0.15) {
+    if (isMuted || !audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+}
+
+function playSound(type) {
+    if (isMuted) return;
+    initAudio();
+    
+    switch(type) {
+        case 'click':
+            playTone(800, 0.05, 'square', 0.1);
+            break;
+        case 'coin':
+            playTone(987, 0.1, 'square', 0.15);
+            setTimeout(() => playTone(1318, 0.15, 'square', 0.15), 100);
+            break;
+        case 'apply':
+            playTone(523, 0.08, 'square', 0.12);
+            setTimeout(() => playTone(659, 0.08, 'square', 0.12), 80);
+            setTimeout(() => playTone(784, 0.12, 'square', 0.12), 160);
+            break;
+        case 'negative':
+            playTone(300, 0.15, 'sawtooth', 0.12);
+            setTimeout(() => playTone(250, 0.2, 'sawtooth', 0.1), 150);
+            break;
+        case 'event':
+            playTone(600, 0.08, 'triangle', 0.15);
+            setTimeout(() => playTone(800, 0.08, 'triangle', 0.15), 100);
+            break;
+        case 'victory':
+            const victoryNotes = [523, 659, 784, 1047];
+            victoryNotes.forEach((note, i) => {
+                setTimeout(() => playTone(note, 0.2, 'square', 0.15), i * 150);
+            });
+            break;
+        case 'gameover':
+            playTone(400, 0.3, 'sawtooth', 0.15);
+            setTimeout(() => playTone(300, 0.3, 'sawtooth', 0.12), 300);
+            setTimeout(() => playTone(200, 0.5, 'sawtooth', 0.1), 600);
+            break;
+        case 'select':
+            playTone(440, 0.05, 'square', 0.08);
+            break;
+    }
+}
+
+// Música de fondo estilo chiptune
+let musicPlaying = false;
+const musicNotes = [
+    262, 294, 330, 262, 330, 294, 262, 220,
+    262, 294, 330, 349, 330, 294, 262, 247,
+    262, 294, 330, 262, 392, 349, 330, 294,
+    262, 330, 294, 262, 247, 220, 262, 262
+];
+let musicIndex = 0;
+
+function startMusic() {
+    if (musicPlaying || isMuted) return;
+    initAudio();
+    musicPlaying = true;
+    musicInterval = setInterval(() => {
+        if (isMuted) return;
+        playTone(musicNotes[musicIndex], 0.15, 'triangle', 0.06);
+        // Bass note
+        playTone(musicNotes[musicIndex] / 2, 0.15, 'triangle', 0.04);
+        musicIndex = (musicIndex + 1) % musicNotes.length;
+    }, 250);
+}
+
+function stopMusic() {
+    musicPlaying = false;
+    if (musicInterval) {
+        clearInterval(musicInterval);
+        musicInterval = null;
+    }
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    const btn = document.getElementById('btn-mute');
+    btn.textContent = isMuted ? '🔇' : '🔊';
+    btn.classList.toggle('muted', isMuted);
+    
+    if (isMuted) {
+        stopMusic();
+    } else if (document.getElementById('screen-juego').classList.contains('active')) {
+        startMusic();
+    }
+    playSound('click');
+}
+
+// ============ DATOS ============
+const MEDIDAS = [
+    // RETROCESOS (12)
+    { id:'r1', cat:'RETROCESO', nombre:'Eliminación presunción laboral', desc:'Factura elimina presunción', ganancia:2.82, bienestar:-5, capital:-8, formal:0 },
+    { id:'r2', cat:'RETROCESO', nombre:'Banco de horas', desc:'Adiós 50% extra por horas', ganancia:2.48, bienestar:-5, capital:-5, formal:0 },
+    { id:'r3', cat:'RETROCESO', nombre:'Base cálculo reducida', desc:'Excluye SAC (-17% indem.)', ganancia:2.34, bienestar:-4, capital:-4, formal:0 },
+    { id:'r4', cat:'RETROCESO', nombre:'Tope indemnizatorio 3x', desc:'Límite a indemnizaciones', ganancia:2.06, bienestar:-4, capital:-6, formal:0 },
+    { id:'r5', cat:'RETROCESO', nombre:'Limitar solidaridad tercerización', desc:'Principal se libera', ganancia:1.58, bienestar:-3, capital:-4, formal:0 },
+    { id:'r6', cat:'RETROCESO', nombre:'Período prueba sin preaviso', desc:'Despido libre', ganancia:1.32, bienestar:-3, capital:-3, formal:0 },
+    { id:'r7', cat:'RETROCESO', nombre:'Fondo de cese opcional', desc:'Empleador decide', ganancia:1.20, bienestar:-2, capital:-5, formal:0 },
+    { id:'r8', cat:'RETROCESO', nombre:'Solidaridad solo con fraude', desc:'Carga en trabajador', ganancia:0.95, bienestar:-2, capital:-3, formal:0 },
+    { id:'r9', cat:'RETROCESO', nombre:'Extinción por silencio', desc:'2 meses = fin contrato', ganancia:0.88, bienestar:-3, capital:-4, formal:0 },
+    { id:'r10', cat:'RETROCESO', nombre:'Pluspetición inexcusable', desc:'Trabajador paga costas', ganancia:0.75, bienestar:-2, capital:-6, formal:0 },
+    { id:'r11', cat:'RETROCESO', nombre:'Reducción salarial incapacidad', desc:'Hasta -40% salario', ganancia:0.65, bienestar:-2, capital:-5, formal:0 },
+    { id:'r12', cat:'RETROCESO', nombre:'Vacaciones fraccionables', desc:'Mínimo 7 días', ganancia:0.45, bienestar:-1, capital:-2, formal:0 },
+    // FISCALES (6)
+    { id:'f1', cat:'FISCAL', nombre:'Reducción contrib. patronales', desc:'20,4%→17,4%', ganancia:3.25, bienestar:0, capital:-3, formal:8000 },
+    { id:'f2', cat:'FISCAL', nombre:'RIFL nuevo empleo', desc:'Contrib. al 2% x48 meses', ganancia:0.80, bienestar:0, capital:+5, formal:5000 },
+    { id:'f3', cat:'FISCAL', nombre:'Baja Ganancias corporativo', desc:'30%→27%', ganancia:1.30, bienestar:0, capital:-2, formal:2000 },
+    { id:'f4', cat:'FISCAL', nombre:'Eliminar Imp. Internos', desc:'Seguros, telefonía...', ganancia:0.65, bienestar:0, capital:-1, formal:500 },
+    { id:'f5', cat:'FISCAL', nombre:'RIMI inversiones', desc:'Amortización acelerada', ganancia:0.20, bienestar:0, capital:+2, formal:300 },
+    { id:'f6', cat:'FISCAL', nombre:'Blanqueo laboral PER', desc:'Condonación 70% deuda', ganancia:0.15, bienestar:0, capital:+3, formal:200 }
+];
+
+const EVENTOS = [
+    // Negativos
+    { icon:'📢', nombre:'Paro general', desc:'Los sindicatos responden', efecto:'capital', valor:-15, tipo:'negative' },
+    { icon:'⚖️', nombre:'Juicio colectivo', desc:'Demanda masiva de trabajadores', efecto:'ganancias', valor:-0.8, tipo:'negative' },
+    { icon:'📺', nombre:'Escándalo mediático', desc:'Cámara oculta en tu empresa', efecto:'capital', valor:-20, tipo:'negative' },
+    { icon:'🚪', nombre:'Fuga de talentos', desc:'Renuncian los mejores', efecto:'ganancias', valor:-0.5, tipo:'negative' },
+    { icon:'🔥', nombre:'Conflicto en planta', desc:'Tensión entre empleados', efecto:'bienestar', valor:-5, tipo:'negative' },
+    { icon:'📉', nombre:'Caída de productividad', desc:'Desmotivación generalizada', efecto:'ganancias', valor:-0.6, tipo:'negative' },
+    { icon:'🏥', nombre:'Accidente laboral', desc:'Falta de seguridad', efecto:'capital', valor:-12, tipo:'negative' },
+    { icon:'📰', nombre:'Investigación periodística', desc:'Exponen condiciones', efecto:'capital', valor:-18, tipo:'negative' },
+    // Positivos
+    { icon:'📈', nombre:'Nota en La Nación', desc:'"Empresario modelo"', efecto:'capital', valor:+10, tipo:'positive' },
+    { icon:'🤝', nombre:'Acuerdo con sindicato', desc:'Negociación exitosa', efecto:'capital', valor:+8, tipo:'positive' },
+    { icon:'💹', nombre:'Boom de exportaciones', desc:'El mercado te favorece', efecto:'ganancias', valor:+0.7, tipo:'positive' },
+    { icon:'🏆', nombre:'Premio a la innovación', desc:'Reconocimiento empresarial', efecto:'capital', valor:+12, tipo:'positive' },
+    { icon:'📊', nombre:'Informe favorable', desc:'Consultora te elogia', efecto:'capital', valor:+6, tipo:'positive' },
+    { icon:'💰', nombre:'Subsidio estatal', desc:'El gobierno te ayuda', efecto:'ganancias', valor:+0.4, tipo:'positive' },
+    // Neutros
+    { icon:'🗞️', nombre:'Declaración oficialista', desc:'"La reforma crea empleo"', efecto:'nada', valor:0, tipo:'neutral' },
+    { icon:'🤷', nombre:'Encuesta ambigua', desc:'50% a favor, 50% en contra', efecto:'nada', valor:0, tipo:'neutral' },
+    { icon:'📋', nombre:'Nuevo trámite burocrático', desc:'AFIP suma formularios', efecto:'nada', valor:0, tipo:'neutral' },
+    { icon:'🎙️', nombre:'Economista en TV', desc:'"Ya viene el derrame"', efecto:'nada', valor:0, tipo:'neutral' }
+];
+
+const TITULARES = [
+    '📰 "La modernización laboral generará millones de empleos" - Vocero oficial',
+    '📺 Economista: "El derrame es cuestión de tiempo, hay que esperar"',
+    '📰 Cámara empresaria celebra "nuevo clima de negocios"',
+    '📺 "Los trabajadores deben adaptarse al siglo XXI" - Editorial',
+    '📰 Informe privado: "Flexibilización warming up the economy"',
+    '📺 "Antes los empresarios no podían contratar, ahora sí" - Ministro',
+    '📰 CAME: "Pymes listas para crear empleo genuino"',
+    '📺 "El problema era la rigidez, no los salarios" - Analista',
+    '📰 Récord de blanqueo: 200 trabajadores regularizados',
+    '📺 "El goteo ya empezó" afirma consultor económico',
+    '📰 UIA: "Hacían falta estas reformas desde hace 50 años"',
+    '📺 Encuesta: 47% cree que la reforma creará empleo',
+    '📰 "Los sindicatos no entienden la economía moderna" - Columnista',
+    '📺 FMI elogia reformas estructurales argentinas',
+    '📰 "El mercado laboral necesitaba un shock" - Empresario del año'
+];
+
+// ============ ESTADO ============
+let estado = {
+    turno: 1,
+    ganancias: 0,
+    bienestar: 100,
+    informal: 100,
+    capital: 100,
+    formalizados: 0,
+    medidasUsadas: [],
+    medidaSeleccionada: null,
+    playerName: 'Mi Empresa',
+    playerAvatar: '🦈',
+    juegoTerminado: false
+};
+
+const META_GANANCIAS = 15;
+const TOTAL_TRABAJADORES = 25; // íconos visuales
+
+// ============ FUNCIONES UI ============
+let pantallaAnterior = 'inicio';
+
+function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-'+id).classList.add('active');
+    pantallaAnterior = id;
+}
+
+document.querySelectorAll('.avatar-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.querySelectorAll('.avatar-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        estado.playerAvatar = opt.dataset.avatar;
+    });
+});
+
+function startGame() {
+    initAudio();
+    playSound('apply');
+    const nombre = document.getElementById('player-name-input').value.trim();
+    estado = {
+        turno: 1,
+        ganancias: 0,
+        bienestar: 100,
+        informal: 100,
+        capital: 100,
+        formalizados: 0,
+        medidasUsadas: [],
+        medidaSeleccionada: null,
+        playerName: nombre || 'Grupo Derramix S.A.',
+        playerAvatar: document.querySelector('.avatar-option.selected')?.dataset.avatar || '🦈',
+        juegoTerminado: false
+    };
+    document.getElementById('game-player-name').textContent = estado.playerName;
+    document.getElementById('game-avatar').textContent = estado.playerAvatar;
+    initTicker();
+    renderMedidas();
+    renderWorkers();
+    actualizarUI();
+    showScreen('juego');
+    setTimeout(() => startMusic(), 500);
+}
+
+function initTicker() {
+    const ticker = document.getElementById('ticker-content');
+    let html = '';
+    const shuffled = TITULARES.sort(() => Math.random() - 0.5);
+    for (let i = 0; i < 3; i++) {
+        shuffled.forEach(t => { html += `<span class="ticker-item">${t}</span>`; });
+    }
+    ticker.innerHTML = html;
+}
+
+function renderMedidas() {
+    const container = document.getElementById('medidas-list');
+    container.innerHTML = '';
+    MEDIDAS.forEach(m => {
+        const usado = estado.medidasUsadas.includes(m.id);
+        const selected = estado.medidaSeleccionada === m.id;
+        let efectos = `<span class="effect positive">+$${m.ganancia}B</span>`;
+        if (m.bienestar < 0) efectos += `<span class="effect negative">${m.bienestar}% bien.</span>`;
+        if (m.capital < 0) efectos += `<span class="effect negative">${m.capital} cap.</span>`;
+        if (m.capital > 0) efectos += `<span class="effect positive">+${m.capital} cap.</span>`;
+        if (m.formal > 0) efectos += `<span class="effect positive">+${m.formal.toLocaleString()} form.</span>`;
+        
+        container.innerHTML += `
+            <div class="measure-card ${usado ? 'used' : ''} ${selected ? 'selected' : ''}" 
+                 data-id="${m.id}" onclick="seleccionarMedida('${m.id}')">
+                <div class="measure-category">${m.cat}</div>
+                <div class="measure-name">${m.nombre}</div>
+                <div class="measure-effects">${efectos}</div>
+            </div>
+        `;
+    });
+}
+
+function renderWorkers() {
+    const grid = document.getElementById('workers-grid');
+    let html = '';
+    const pctFormal = estado.bienestar;
+    const pctInformal = estado.informal;
+    
+    for (let i = 0; i < TOTAL_TRABAJADORES; i++) {
+        const pct = (i / TOTAL_TRABAJADORES) * 100;
+        let clase, emoji;
+        if (pct < pctFormal * 0.7) {
+            clase = 'formal-happy'; emoji = '😊';
+        } else if (pct < pctFormal) {
+            clase = 'formal-sad'; emoji = '😟';
+        } else if (pct < pctFormal + (100 - pctFormal) * (pctInformal / 100) * 0.5) {
+            clase = 'informal'; emoji = '😰';
+        } else {
+            clase = 'desempleado'; emoji = '💀';
+        }
+        html += `<span class="worker-icon ${clase}">${emoji}</span>`;
+    }
+    grid.innerHTML = html;
+}
+
+function seleccionarMedida(id) {
+    if (estado.medidasUsadas.includes(id) || estado.juegoTerminado) return;
+    playSound('select');
+    estado.medidaSeleccionada = id;
+    renderMedidas();
+    const medida = MEDIDAS.find(m => m.id === id);
+    document.getElementById('selected-measure').innerHTML = `<strong>${medida.nombre}</strong>`;
+    document.getElementById('selected-measure').classList.remove('empty');
+    document.getElementById('btn-aplicar').disabled = false;
+}
+
+function actualizarUI() {
+    document.getElementById('turn-number').textContent = estado.turno;
+    document.getElementById('capital-fill').style.width = estado.capital + '%';
+    document.getElementById('capital-value').textContent = estado.capital;
+    
+    document.getElementById('val-ganancias').textContent = '$' + estado.ganancias.toFixed(1) + 'B';
+    document.getElementById('bar-ganancias').style.width = (estado.ganancias / META_GANANCIAS * 100) + '%';
+    document.getElementById('ganancias-actual').textContent = '$' + estado.ganancias.toFixed(1) + 'B';
+    document.getElementById('objective-fill').style.width = Math.min(estado.ganancias / META_GANANCIAS * 100, 100) + '%';
+    
+    document.getElementById('val-formales').textContent = Math.max(0, estado.bienestar) + '%';
+    document.getElementById('bar-formales').style.width = Math.max(0, estado.bienestar) + '%';
+    
+    // Cascada: informales caen cuando formales caen
+    estado.informal = Math.max(0, 100 - (100 - estado.bienestar) * 0.6);
+    document.getElementById('val-informales').textContent = Math.round(estado.informal) + '%';
+    document.getElementById('bar-informales').style.width = estado.informal + '%';
+    
+    document.getElementById('stat-medidas').textContent = estado.medidasUsadas.length + '/18';
+    document.getElementById('stat-formalizados').textContent = estado.formalizados.toLocaleString();
+    document.getElementById('stat-transferido').textContent = '$' + estado.ganancias.toFixed(1) + 'B';
+    const perdidaUnit = Math.round((100 - estado.bienestar) / 100 * 1700000);
+    document.getElementById('stat-perdida').textContent = '$' + perdidaUnit.toLocaleString();
+    
+    renderWorkers();
+}
+
+// ============ LÓGICA DEL JUEGO ============
+function aplicarMedida() {
+    if (!estado.medidaSeleccionada || estado.juegoTerminado) return;
+    
+    const medida = MEDIDAS.find(m => m.id === estado.medidaSeleccionada);
+    estado.medidasUsadas.push(medida.id);
+    
+    // Sonidos según efecto
+    playSound('apply');
+    if (medida.ganancia > 1) {
+        setTimeout(() => playSound('coin'), 200);
+    }
+    if (medida.bienestar < -3) {
+        setTimeout(() => playSound('negative'), 400);
+    }
+    
+    // Aplicar efectos
+    estado.ganancias = Math.max(0, estado.ganancias + medida.ganancia);
+    estado.bienestar = Math.max(0, estado.bienestar + medida.bienestar);
+    estado.capital = Math.max(0, Math.min(100, estado.capital + medida.capital));
+    estado.formalizados += medida.formal;
+    
+    // Reset selección
+    estado.medidaSeleccionada = null;
+    document.getElementById('selected-measure').innerHTML = 'Seleccioná una medida';
+    document.getElementById('selected-measure').classList.add('empty');
+    document.getElementById('btn-aplicar').disabled = true;
+    
+    actualizarUI();
+    renderMedidas();
+    
+    // Chequear condiciones de fin
+    if (checkFinJuego()) return;
+    
+    // Evento aleatorio
+    setTimeout(() => {
+        ejecutarEvento();
+        estado.turno++;
+        actualizarUI();
+        checkFinJuego();
+    }, 500);
+}
+
+function skipTurn() {
+    if (estado.juegoTerminado) return;
+    playSound('click');
+    estado.medidaSeleccionada = null;
+    document.getElementById('selected-measure').innerHTML = 'Seleccioná una medida';
+    document.getElementById('selected-measure').classList.add('empty');
+    document.getElementById('btn-aplicar').disabled = true;
+    
+    // Pequeña penalización por no hacer nada
+    estado.capital = Math.min(100, estado.capital + 2); // recupera un poco de capital
+    
+    setTimeout(() => {
+        ejecutarEvento();
+        estado.turno++;
+        actualizarUI();
+        checkFinJuego();
+    }, 300);
+}
+
+function ejecutarEvento() {
+    const evento = EVENTOS[Math.floor(Math.random() * EVENTOS.length)];
+    const card = document.getElementById('event-card');
+    
+    playSound('event');
+    if (evento.tipo === 'negative') {
+        setTimeout(() => playSound('negative'), 300);
+    } else if (evento.tipo === 'positive') {
+        setTimeout(() => playSound('coin'), 300);
+    }
+    
+    card.className = 'event-card ' + evento.tipo;
+    
+    let efectoTexto = '';
+    if (evento.efecto === 'ganancias') {
+        estado.ganancias = Math.max(0, estado.ganancias + evento.valor);
+        efectoTexto = (evento.valor >= 0 ? '+' : '') + evento.valor.toFixed(1) + 'B ganancias';
+    } else if (evento.efecto === 'capital') {
+        estado.capital = Math.max(0, Math.min(100, estado.capital + evento.valor));
+        efectoTexto = (evento.valor >= 0 ? '+' : '') + evento.valor + ' capital político';
+    } else if (evento.efecto === 'bienestar') {
+        estado.bienestar = Math.max(0, Math.min(100, estado.bienestar + evento.valor));
+        efectoTexto = (evento.valor >= 0 ? '+' : '') + evento.valor + '% bienestar';
+    } else {
+        efectoTexto = 'Sin efecto directo';
+    }
+    
+    card.innerHTML = `
+        <div class="event-icon">${evento.icon}</div>
+        <div class="event-name">${evento.nombre}</div>
+        <div class="event-desc">${evento.desc}</div>
+        <div class="event-effect">${efectoTexto}</div>
+    `;
+}
+
+function checkFinJuego() {
+    if (estado.juegoTerminado) return true;
+    
+    // Victoria
+    if (estado.ganancias >= META_GANANCIAS) {
+        estado.juegoTerminado = true;
+        mostrarFinal('victoria');
+        return true;
+    }
+    
+    // Derrota por capital
+    if (estado.capital <= 0) {
+        estado.juegoTerminado = true;
+        mostrarFinal('derrota-capital');
+        return true;
+    }
+    
+    // Derrota por colapso social
+    if (estado.bienestar <= 0) {
+        estado.juegoTerminado = true;
+        mostrarFinal('derrota-social');
+        return true;
+    }
+    
+    // Sin medidas disponibles
+    if (estado.medidasUsadas.length >= MEDIDAS.length) {
+        estado.juegoTerminado = true;
+        mostrarFinal('sin-medidas');
+        return true;
+    }
+    
+    return false;
+}
+
+function mostrarFinal(tipo) {
+    stopMusic();
+    const modal = document.getElementById('modal-overlay');
+    let icon, title, subtitle, mensaje;
+    
+    // Sonido según resultado
+    if (tipo === 'victoria') {
+        playSound('victory');
+    } else {
+        playSound('gameover');
+    }
+    
+    document.getElementById('modal-ganancias').textContent = '$' + estado.ganancias.toFixed(1) + 'B';
+    document.getElementById('modal-bienestar').textContent = Math.max(0, estado.bienestar) + '%';
+    document.getElementById('modal-formalizados').textContent = estado.formalizados.toLocaleString();
+    document.getElementById('modal-turnos').textContent = estado.turno;
+    
+    if (tipo === 'victoria') {
+        icon = '🏆';
+        title = '¡GANASTE!';
+        subtitle = 'Maestro del Derrame';
+        const pctBienestar = estado.bienestar;
+        if (pctBienestar > 70) {
+            mensaje = `<p>¡Increíble ${estado.playerName}! Llegaste a $${estado.ganancias.toFixed(1)}B manteniendo el bienestar en ${pctBienestar}%.</p>
+            <p>Lástima que en la realidad esto no pasa. Los ${estado.formalizados.toLocaleString()} "formalizados" no compensan los millones que perdieron derechos.</p>
+            <p style="color:var(--accent)">Para que cierre la cuenta harían falta 2.200.000 empleos nuevos. Vos "creaste" ${estado.formalizados.toLocaleString()}.</p>`;
+        } else if (pctBienestar > 40) {
+            mensaje = `<p>${estado.playerName}, lo lograste pero a qué costo. Bienestar en ${pctBienestar}%.</p>
+            <p>Ganaste $${estado.ganancias.toFixed(1)}B pero los trabajadores perdieron $${Math.round((100-pctBienestar)/100*1700000).toLocaleString()} cada uno por año.</p>
+            <p style="color:var(--accent)">El derrame funcionó... para vos. 💧</p>`;
+        } else {
+            mensaje = `<p>Ganaste ${estado.playerName}, pero dejaste tierra arrasada. Bienestar en ${pctBienestar}%.</p>
+            <p>Los informales también la sintieron: sus ingresos cayeron ${Math.round(100-estado.informal)}% en cascada.</p>
+            <p style="color:var(--primary)">¿Valió la pena? Para vos sí: $${estado.ganancias.toFixed(1)}B. Para el resto... 💀</p>`;
+        }
+    } else if (tipo === 'derrota-capital') {
+        icon = '🏛️💥';
+        title = 'GAME OVER';
+        subtitle = 'Sin Capital Político';
+        mensaje = `<p>Te quedaste sin capital político, ${estado.playerName}. Las medidas fueron demasiado impopulares.</p>
+        <p>Acumulaste $${estado.ganancias.toFixed(1)}B pero la presión social te sacó del juego.</p>
+        <p style="color:var(--accent)">Moraleja: incluso en la ficción, la precarización tiene límites políticos.</p>`;
+    } else if (tipo === 'derrota-social') {
+        icon = '💀';
+        title = 'COLAPSO SOCIAL';
+        subtitle = 'Bienestar en 0%';
+        mensaje = `<p>El bienestar llegó a 0%, ${estado.playerName}. Colapso total.</p>
+        <p>Acumulaste $${estado.ganancias.toFixed(1)}B pero ya no hay trabajadores en condiciones de producir.</p>
+        <p style="color:var(--primary)">El derrame no llegó. Solo quedó el desierto. 🏜️</p>`;
+    } else {
+        icon = '📋';
+        title = 'SIN MEDIDAS';
+        subtitle = 'Usaste todas las reformas';
+        const gano = estado.ganancias >= META_GANANCIAS;
+        if (gano) {
+            mensaje = `<p>Usaste todas las medidas y llegaste a la meta. ¡${estado.playerName} lo logró!</p>`;
+        } else {
+            mensaje = `<p>Se acabaron las medidas, ${estado.playerName}. Llegaste a $${estado.ganancias.toFixed(1)}B de $${META_GANANCIAS}B.</p>
+            <p>La reforma no alcanzó para cumplir tus sueños de derrame.</p>
+            <p style="color:var(--accent)">Pero tranquilo, siempre pueden inventar más "modernizaciones"... 📜</p>`;
+        }
+    }
+    
+    document.getElementById('modal-icon').textContent = icon;
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-title').style.color = tipo === 'victoria' ? 'var(--gold)' : 'var(--primary)';
+    document.getElementById('modal-subtitle').textContent = subtitle;
+    document.getElementById('modal-message').innerHTML = mensaje;
+    
+    modal.classList.add('active');
+}
+
+function reiniciarJuego() {
+    playSound('click');
+    stopMusic();
+    document.getElementById('modal-overlay').classList.remove('active');
+    showScreen('inicio');
+}
+</script>
+</body>
+</html>
