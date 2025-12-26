@@ -465,7 +465,47 @@
             margin-top: 3rem;
             padding: 2rem 1rem;
             border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: grid;
+            gap: 1.5rem;
             text-align: center;
+        }
+
+        .profile-photo img {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .bio {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .social-links {
+            margin-top: 0.7rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
         }
 
         .footer-title {
@@ -509,6 +549,15 @@
             margin-top: 0.8rem;
             font-size: 0.75rem;
             color: var(--text-light);
+        }
+
+        .footer-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
         }
 
         .footer-credit {
@@ -735,16 +784,15 @@
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer>
-            <div class="footer-title">Fuentes y metodología:</div>
+        <!-- Fuentes y metodología -->
+        <div class="card" style="margin-top: 3rem;">
+            <h2 class="footer-title">Fuentes y metodología:</h2>
             <div class="footer-list">
                 • Datos de trabajadores: MTEySS - Observatorio de Empleo<br>
                 • Salarios promedio: Encuesta Permanente de Hogares (EPH) Q3 2024<br>
                 • Beneficios por CCT: Relevamiento de convenios vigentes<br>
                 • Cálculos conservadores basados en valores promedio
             </div>
-            
             <div class="footer-download">
                 <button onclick="downloadReference()">
                     📥 Descargar datos de referencia completos (CSV)
@@ -753,9 +801,42 @@
                     Planilla con todos los parámetros utilizados para cada CCT, fuentes y metodología detallada
                 </div>
             </div>
-            
             <div class="footer-credit">
                 Desarrollado por cooperativistas para visibilizar el impacto de la reforma laboral 2025
+            </div>
+        </div>
+
+        <!-- Footer de crédito personal -->
+        <footer>
+            <div class="footer-content">
+                <div class="profile-photo">
+                    <img src="Yo.jpeg" alt="Leandro Monk">
+                </div>
+                <div class="contact-info">
+                    <h3>Leandro Monk</h3>
+                    <p class="bio">
+                        Fundador de <a href="https://gcoop.coop" target="_blank">gcoop</a>, primera cooperativa de software libre de Argentina.<br>
+                        Presidente de <a href="https://mit.org.ar" target="_blank">MIT.</a><br>
+                        Especialista en tecnología cooperativa, soberanía tecnológica y economía social.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://x.com/leitomonk" target="_blank">X (Twitter)</a>
+                        <a href="https://www.linkedin.com/in/leandromonk/" target="_blank">LinkedIn</a>
+                        <a href="https://github.com/leito-monk" target="_blank">GitHub</a>
+                        <a href="mailto:leandro@gcoop.coop">Contacto</a>
+                    </div>
+                </div>
+                <div class="footer-note">
+                    <p><strong>Serie: Reforma Laboral Argentina</strong></p>
+                    <p style="margin-top: 0.5rem;">
+                        <a href="index.html">Inicio</a> · 
+                        <a href="analisis-transferencia-trabajadores.html" target="_blank">Parte I: Análisis de Retrocesos</a> · 
+                        <a href="analisis-costo-fiscal-v6.html" target="_blank">Parte II: Análisis del Costo Fiscal</a>
+                    </p>
+                    <p style="margin-top: 1rem;">Análisis elaborado como ejercicio de transparencia y debate público</p>
+                    <p style="margin-top: 0.5rem;">Documento colaborativo abierto a correcciones y mejoras</p>
+                    <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">Diciembre 2025</p>
+                </div>
             </div>
         </footer>
     </div>
