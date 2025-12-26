@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Impacto - Caída de CCT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF4136;
+            --secondary: #e63946;
+            --accent: #FF851B;
+            --success: #2ECC40;
+            --bg: #0D0D0D;
+            --bg-medium: #1A1A1A;
+            --surface: #1F1F1F;
+            --text: #E8E8E8;
+            --text-light: #A0A0A0;
+            --border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, var(--bg-medium) 0%, var(--bg) 100%);
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        h1 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            color: var(--text-light);
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .mode-selector {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .mode-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem;
+            background: var(--bg-medium);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            width: 100%;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--primary);
+            background: var(--surface);
+            transform: translateY(-2px);
+        }
+
+        .mode-btn.empresa:hover {
+            border-color: var(--success);
+        }
+
+        .mode-btn-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .mode-btn-content {
+            flex: 1;
+        }
+
+        .mode-btn-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .mode-btn-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-medium);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .form-group input[type="number"]::-webkit-outer-spin-button,
+        .form-group input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .form-hint {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .input-wrapper input {
+            padding-left: 2rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #27a436;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--bg-medium);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: var(--surface);
+            border-color: var(--primary);
+        }
+
+        .advanced-toggle {
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .advanced-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .advanced-header:hover {
+            background: var(--bg-medium);
+        }
+
+        .advanced-header span {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .chevron {
+            transition: transform 0.3s;
+        }
+
+        .chevron.open {
+            transform: rotate(180deg);
+        }
+
+        .advanced-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .advanced-content.open {
+            max-height: 1000px;
+            padding-top: 1rem;
+            border-left: 2px solid var(--border);
+            padding-left: 1rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: start;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 0.2rem;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .result-main {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-main.empresa {
+            background: linear-gradient(135deg, var(--success) 0%, #27a436 100%);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .result-value {
+            font-size: clamp(2rem, 8vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'Archivo Black', sans-serif;
+        }
+
+        .result-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .breakdown {
+            margin-bottom: 1.5rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-item.advanced {
+            background: rgba(255, 133, 27, 0.1);
+            margin: 0 -1rem;
+            padding: 0.8rem 1rem;
+        }
+
+        .breakdown-label {
+            color: var(--text-light);
+        }
+
+        .breakdown-value {
+            font-weight: 600;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .breakdown-total {
+            background: rgba(255, 65, 54, 0.1);
+            margin: 0 -1.5rem -1.5rem;
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .breakdown-total.empresa {
+            background: rgba(46, 204, 64, 0.1);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .alert-info {
+            background: rgba(100, 181, 246, 0.1);
+            border-left: 4px solid #64B5F6;
+        }
+
+        .alert-success {
+            background: rgba(46, 204, 64, 0.1);
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .alert-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .alert-text ul {
+            margin-top: 0.5rem;
+            padding-left: 1.2rem;
+        }
+
+        .alert-text li {
+            margin-bottom: 0.2rem;
+        }
+
+        .share-section {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #20ba5a;
+            transform: translateY(-2px);
+        }
+
+        .btn-download {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-list {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .footer-download {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-download button {
+            background: transparent;
+            color: #2196F3;
+            border: 1px solid #2196F3;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-download button:hover {
+            background: #2196F3;
+            color: white;
+        }
+
+        .footer-note {
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .footer-credit {
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0.8rem;
+            }
+
+            .card {
+                padding: 1.2rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧮 Calculadora de Impacto</h1>
+            <p class="subtitle">Calculá la pérdida económica si caen los Convenios Colectivos de Trabajo con la reforma laboral 2025</p>
+        </header>
+
+        <!-- Selector de Modo -->
+        <div id="modeSelector" class="card">
+            <h2>¿Qué querés calcular?</h2>
+            <div class="mode-selector">
+                <button class="mode-btn" onclick="selectMode('individual')">
+                    <div class="mode-btn-icon">👤</div>
+                    <div class="mode-btn-content">
+                        <div class="mode-btn-title">Cálculo Individual</div>
+                        <div class="mode-btn-desc">Tu pérdida personal por año</div>
+                    </div>
+                </button>
+
+                <button class="mode-btn" onclick="selectMode('sectorial')">
+                    <div class="mode-btn-icon">👥</div>
+                    <div class="mode-btn-content">
+                        <div class="mode-btn-title">Cálculo Sectorial</div>
+                        <div class="mode-btn-desc">Impacto total en el sector</div>
+                    </div>
+                </button>
+
+                <button class="mode-btn empresa" onclick="selectMode('empresa')">
+                    <div class="mode-btn-icon">💰</div>
+                    <div class="mode-btn-content">
+                        <div class="mode-btn-title">Cálculo por Empresa</div>
+                        <div class="mode-btn-desc">Transferencia de trabajadores a patronales</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Formulario -->
+        <div id="formSection" class="card hidden">
+            <button class="btn-back" onclick="resetCalculator()">
+                ← Volver a selección de modo
+            </button>
+
+            <h2 id="formTitle">Cálculo Individual</h2>
+
+            <form id="calculatorForm" onsubmit="handleCalculate(event)">
+                <div class="form-group">
+                    <label for="cctSelect">Seleccioná <span id="cctLabel">tu CCT</span></label>
+                    <select id="cctSelect" required>
+                        <option value="">Elegir convenio...</option>
+                    </select>
+                </div>
+
+                <!-- Campos Individual -->
+                <div id="individualFields" class="hidden">
+                    <div class="form-group">
+                        <label for="salario">Tu salario bruto mensual</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="salario" placeholder="850000" min="0" step="1000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="antiguedad">Tu antigüedad (años)</label>
+                        <input type="number" id="antiguedad" placeholder="8" min="0" max="40">
+                        <div class="form-hint">Si no completás este campo, usamos 8 años como promedio</div>
+                    </div>
+
+                    <!-- Opciones Avanzadas -->
+                    <div class="advanced-toggle">
+                        <div class="advanced-header" onclick="toggleAdvanced()">
+                            <span>⚙️ Opciones avanzadas (opcional)</span>
+                            <span class="chevron" id="advancedChevron">▼</span>
+                        </div>
+                        <div class="advanced-content" id="advancedContent">
+                            <div class="form-group">
+                                <label for="horasExtras">Horas extras mensuales</label>
+                                <input type="number" id="horasExtras" placeholder="0" min="0">
+                                <div class="form-hint">Perderías el recargo del 50% en horas extras</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hijos">Cantidad de hijos menores</label>
+                                <input type="number" id="hijos" placeholder="0" min="0" max="10">
+                                <div class="form-hint">Asignaciones familiares adicionales del CCT</div>
+                            </div>
+
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="zonaDesfavorable">
+                                <div>
+                                    <label for="zonaDesfavorable">Trabajo en zona desfavorable</label>
+                                    <div class="form-hint">Plus por zona desfavorable/alejada (aprox. 10%)</div>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="titulo">
+                                <div>
+                                    <label for="titulo">Tengo título profesional</label>
+                                    <div class="form-hint">Adicional por título universitario/terciario (aprox. 15%)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo Empresa -->
+                <div id="empresaFields" class="hidden">
+                    <div class="form-group">
+                        <label for="empleados">Cantidad de empleados</label>
+                        <input type="number" id="empleados" placeholder="50" min="1">
+                        <div class="form-hint">Cantidad de trabajadores bajo este CCT</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    Calcular Pérdida
+                </button>
+            </form>
+        </div>
+
+        <!-- Resultados -->
+        <div id="resultSection" class="hidden">
+            <button class="btn-back" onclick="resetForm()">
+                ← Calcular otra vez
+            </button>
+
+            <!-- Resultado Principal -->
+            <div class="result-main" id="resultMain">
+                <div class="result-header" id="resultHeader">
+                    📉 Tu Pérdida Anual
+                </div>
+                <div class="result-value" id="resultValue">
+                    $0
+                </div>
+                <div class="result-subtitle" id="resultSubtitle">
+                    $0 por mes
+                </div>
+            </div>
+
+            <!-- Alerta Empresa -->
+            <div id="empresaAlert" class="alert alert-success hidden">
+                <div class="alert-icon">💰</div>
+                <div class="alert-content">
+                    <div class="alert-title">Ahorro para la empresa</div>
+                    <div class="alert-text">
+                        Esta es la transferencia de recursos desde los trabajadores hacia la empresa. 
+                        Lo que los trabajadores pierden, la empresa lo ahorra en costos laborales.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desglose -->
+            <div class="card">
+                <h2 id="breakdownTitle">Desglose de pérdidas anuales:</h2>
+                <div class="breakdown" id="breakdown">
+                    <!-- Se genera dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Información -->
+            <div class="alert alert-info">
+                <div class="alert-icon">ℹ️</div>
+                <div class="alert-content">
+                    <div class="alert-title">Sobre estos cálculos:</div>
+                    <div class="alert-text">
+                        <ul>
+                            <li>Promedio de 8 años de antigüedad</li>
+                            <li>Congelamiento salarial estimado en 15% anual vs inflación</li>
+                            <li>Beneficios basados en CCT vigentes a diciembre 2024</li>
+                            <li>No incluye pérdidas por flexibilización horaria</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compartir -->
+            <div class="card">
+                <h2>Compartí y descargá</h2>
+                <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 1rem;">
+                    Ayudá a visibilizar el impacto real de la caída de los CCT
+                </p>
+                <div class="share-section">
+                    <button class="btn btn-whatsapp" onclick="shareWhatsApp()">
+                        Compartir en WhatsApp
+                    </button>
+                    <button class="btn btn-download" onclick="downloadCSV()">
+                        📥 Descargar planilla de cálculo (CSV)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-title">Fuentes y metodología:</div>
+            <div class="footer-list">
+                • Datos de trabajadores: MTEySS - Observatorio de Empleo<br>
+                • Salarios promedio: Encuesta Permanente de Hogares (EPH) Q3 2024<br>
+                • Beneficios por CCT: Relevamiento de convenios vigentes<br>
+                • Cálculos conservadores basados en valores promedio
+            </div>
+            
+            <div class="footer-download">
+                <button onclick="downloadReference()">
+                    📥 Descargar datos de referencia completos (CSV)
+                </button>
+                <div class="footer-note">
+                    Planilla con todos los parámetros utilizados para cada CCT, fuentes y metodología detallada
+                </div>
+            </div>
+            
+            <div class="footer-credit">
+                Desarrollado por cooperativistas para visibilizar el impacto de la reforma laboral 2025
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Base de datos de CCT
+        const cctDatabase = {
+            '130/75': {
+                nombre: 'Bancarios',
+                trabajadores: 95000,
+                salarioPromedio: 850000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 45000,
+                    licenciasExtra: 3,
+                    subsidios: 25000
+                }
+            },
+            '36/75': {
+                nombre: 'Empleados de Comercio',
+                trabajadores: 1200000,
+                salarioPromedio: 520000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 15000,
+                    licenciasExtra: 2,
+                    subsidios: 8000
+                }
+            },
+            '260/75': {
+                nombre: 'Gastronómicos (UTHGRA)',
+                trabajadores: 320000,
+                salarioPromedio: 450000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 12000,
+                    licenciasExtra: 1,
+                    subsidios: 5000
+                }
+            },
+            '257/92': {
+                nombre: 'Empleados Públicos',
+                trabajadores: 850000,
+                salarioPromedio: 620000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 20000,
+                    licenciasExtra: 4,
+                    subsidios: 15000
+                }
+            },
+            '36/89': {
+                nombre: 'Docentes',
+                trabajadores: 750000,
+                salarioPromedio: 580000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 18000,
+                    licenciasExtra: 5,
+                    subsidios: 12000
+                }
+            },
+            '76/75': {
+                nombre: 'Construcción (UOCRA)',
+                trabajadores: 480000,
+                salarioPromedio: 550000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 22000,
+                    licenciasExtra: 1,
+                    subsidios: 10000
+                }
+            },
+            '40/89': {
+                nombre: 'Salud',
+                trabajadores: 420000,
+                salarioPromedio: 650000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 25000,
+                    licenciasExtra: 3,
+                    subsidios: 18000
+                }
+            },
+            '107/70': {
+                nombre: 'Transporte Automotor de Pasajeros',
+                trabajadores: 110000,
+                salarioPromedio: 680000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 28000,
+                    licenciasExtra: 2,
+                    subsidios: 12000
+                }
+            },
+            '589/10': {
+                nombre: 'Camioneros',
+                trabajadores: 230000,
+                salarioPromedio: 720000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 32000,
+                    licenciasExtra: 2,
+                    subsidios: 15000
+                }
+            },
+            '56/92': {
+                nombre: 'Telefónicos',
+                trabajadores: 45000,
+                salarioPromedio: 780000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 35000,
+                    licenciasExtra: 3,
+                    subsidios: 20000
+                }
+            },
+            '566/10': {
+                nombre: 'Seguridad Privada',
+                trabajadores: 180000,
+                salarioPromedio: 480000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 10000,
+                    licenciasExtra: 1,
+                    subsidios: 6000
+                }
+            },
+            '335/75': {
+                nombre: 'Vigilancia',
+                trabajadores: 95000,
+                salarioPromedio: 460000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 9000,
+                    licenciasExtra: 1,
+                    subsidios: 5000
+                }
+            },
+            '397/04': {
+                nombre: 'Empleados de Entidades Deportivas',
+                trabajadores: 35000,
+                salarioPromedio: 510000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 14000,
+                    licenciasExtra: 2,
+                    subsidios: 7000
+                }
+            },
+            '161/75': {
+                nombre: 'Metalúrgicos (UOM)',
+                trabajadores: 320000,
+                salarioPromedio: 590000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 24000,
+                    licenciasExtra: 2,
+                    subsidios: 11000
+                }
+            },
+            '260/94': {
+                nombre: 'Plástico',
+                trabajadores: 85000,
+                salarioPromedio: 540000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 16000,
+                    licenciasExtra: 2,
+                    subsidios: 8000
+                }
+            },
+            '122/75': {
+                nombre: 'Mecánicos y Afines del Transporte',
+                trabajadores: 140000,
+                salarioPromedio: 560000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 18000,
+                    licenciasExtra: 2,
+                    subsidios: 9000
+                }
+            },
+            '408/05': {
+                nombre: 'Call Centers',
+                trabajadores: 95000,
+                salarioPromedio: 420000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 8000,
+                    licenciasExtra: 1,
+                    subsidios: 4000
+                }
+            },
+            '541/08': {
+                nombre: 'Telecomunicaciones',
+                trabajadores: 67000,
+                salarioPromedio: 670000,
+                beneficios: {
+                    antiguedad: 0.01,
+                    adicionales: 26000,
+                    licenciasExtra: 3,
+                    subsidios: 14000
+                }
+            }
+        };
+
+        // Variables globales
+        let currentMode = '';
+        let currentResult = null;
+
+        // Inicializar select de CCT
+        function initCCTSelect() {
+            const select = document.getElementById('cctSelect');
+            Object.entries(cctDatabase).forEach(([codigo, data]) => {
+                const option = document.createElement('option');
+                option.value = codigo;
+                option.textContent = `${data.nombre} (CCT ${codigo})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Formatear pesos
+        function formatPesos(monto) {
+            return new Intl.NumberFormat('es-AR', {
+                style: 'currency',
+                currency: 'ARS',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(monto);
+        }
+
+        // Seleccionar modo
+        function selectMode(mode) {
+            currentMode = mode;
+            document.getElementById('modeSelector').classList.add('hidden');
+            document.getElementById('formSection').classList.remove('hidden');
+
+            const titles = {
+                individual: 'Cálculo Individual',
+                sectorial: 'Cálculo Sectorial',
+                empresa: 'Cálculo por Empresa'
+            };
+
+            document.getElementById('formTitle').textContent = titles[mode];
+            document.getElementById('cctLabel').textContent = mode === 'empresa' ? 'el sector' : 'tu CCT';
+
+            // Mostrar campos según modo
+            document.getElementById('individualFields').classList.toggle('hidden', mode !== 'individual');
+            document.getElementById('empresaFields').classList.toggle('hidden', mode !== 'empresa');
+
+            // Cambiar botón
+            const submitBtn = document.getElementById('submitBtn');
+            if (mode === 'empresa') {
+                submitBtn.textContent = 'Calcular Transferencia';
+                submitBtn.classList.remove('btn-primary');
+                submitBtn.classList.add('btn-success');
+            } else {
+                submitBtn.textContent = 'Calcular Pérdida';
+                submitBtn.classList.remove('btn-success');
+                submitBtn.classList.add('btn-primary');
+            }
+
+            // Actualizar required
+            updateRequiredFields();
+        }
+
+        // Actualizar campos requeridos
+        function updateRequiredFields() {
+            document.getElementById('salario').required = currentMode === 'individual';
+            document.getElementById('empleados').required = currentMode === 'empresa';
+        }
+
+        // Toggle avanzado
+        function toggleAdvanced() {
+            const content = document.getElementById('advancedContent');
+            const chevron = document.getElementById('advancedChevron');
+            content.classList.toggle('open');
+            chevron.classList.toggle('open');
+        }
+
+        // Calcular pérdida individual
+        function calcularPerdidaIndividual(salario, cct, antiguedadAnios = 8, extras = {}) {
+            const beneficios = cctDatabase[cct].beneficios;
+            
+            const perdidaAntiguedad = salario * beneficios.antiguedad * antiguedadAnios;
+            const perdidaAdicionales = beneficios.adicionales;
+            const perdidaSubsidios = beneficios.subsidios;
+            const perdidaLicencias = (salario / 30) * beneficios.licenciasExtra;
+            const perdidaParitarias = salario * 0.15;
+            
+            let perdidaHorasExtras = 0;
+            if (extras.horasExtras) {
+                const valorHora = salario / 200;
+                perdidaHorasExtras = valorHora * extras.horasExtras * 0.5;
+            }
+            
+            let perdidaAsignaciones = 0;
+            if (extras.tieneHijos) {
+                perdidaAsignaciones = 15000 * parseInt(extras.tieneHijos);
+            }
+            
+            let perdidaZona = 0;
+            if (extras.zonaDesfavorable) {
+                perdidaZona = salario * 0.10;
+            }
+            
+            let perdidaTitulo = 0;
+            if (extras.tieneTitulo) {
+                perdidaTitulo = salario * 0.15;
+            }
+            
+            const perdidaMensual = perdidaAntiguedad + perdidaAdicionales + 
+                                   perdidaSubsidios + perdidaLicencias + perdidaParitarias +
+                                   perdidaHorasExtras + perdidaAsignaciones + perdidaZona + perdidaTitulo;
+            
+            return {
+                perdidaMensual: Math.round(perdidaMensual),
+                perdidaAnual: Math.round(perdidaMensual * 12),
+                desglose: {
+                    antiguedad: Math.round(perdidaAntiguedad * 12),
+                    adicionales: Math.round(perdidaAdicionales * 12),
+                    subsidios: Math.round(perdidaSubsidios * 12),
+                    licencias: Math.round(perdidaLicencias * 12),
+                    paritarias: Math.round(perdidaParitarias * 12),
+                    horasExtras: Math.round(perdidaHorasExtras * 12),
+                    asignaciones: Math.round(perdidaAsignaciones * 12),
+                    zona: Math.round(perdidaZona * 12),
+                    titulo: Math.round(perdidaTitulo * 12)
+                }
+            };
+        }
+
+        // Calcular pérdida sectorial
+        function calcularPerdidaSectorial(cct) {
+            const sector = cctDatabase[cct];
+            const perdidaIndividual = calcularPerdidaIndividual(sector.salarioPromedio, cct);
+            
+            return {
+                ...perdidaIndividual,
+                trabajadoresAfectados: sector.trabajadores,
+                perdidaTotalSector: Math.round(perdidaIndividual.perdidaAnual * sector.trabajadores / 1000000)
+            };
+        }
+
+        // Calcular transferencia empresa
+        function calcularTransferenciaEmpresa(cct, numEmpleados) {
+            const sector = cctDatabase[cct];
+            const perdidaPorEmpleado = calcularPerdidaIndividual(sector.salarioPromedio, cct);
+            
+            const transferenciaAnual = perdidaPorEmpleado.perdidaAnual * numEmpleados;
+            const transferenciaMensual = perdidaPorEmpleado.perdidaMensual * numEmpleados;
+            
+            return {
+                ...perdidaPorEmpleado,
+                empleados: numEmpleados,
+                transferenciaAnual: Math.round(transferenciaAnual),
+                transferenciaMensual: Math.round(transferenciaMensual),
+                salarioPromedio: sector.salarioPromedio
+            };
+        }
+
+        // Manejar cálculo
+        function handleCalculate(event) {
+            event.preventDefault();
+
+            const cctSeleccionado = document.getElementById('cctSelect').value;
+            if (!cctSeleccionado) return;
+
+            let resultado;
+
+            if (currentMode === 'sectorial') {
+                resultado = calcularPerdidaSectorial(cctSeleccionado);
+            } else if (currentMode === 'individual') {
+                const salarioBruto = parseFloat(document.getElementById('salario').value);
+                if (!salarioBruto) return;
+
+                const antiguedad = parseFloat(document.getElementById('antiguedad').value) || 8;
+                const extras = {
+                    horasExtras: parseFloat(document.getElementById('horasExtras').value) || 0,
+                    tieneHijos: document.getElementById('hijos').value || 0,
+                    zonaDesfavorable: document.getElementById('zonaDesfavorable').checked,
+                    tieneTitulo: document.getElementById('titulo').checked
+                };
+                
+                resultado = calcularPerdidaIndividual(salarioBruto, cctSeleccionado, antiguedad, extras);
+                resultado.antiguedadUsada = antiguedad;
+                resultado.extrasUsados = extras;
+            } else if (currentMode === 'empresa') {
+                const cantidadEmpleados = parseInt(document.getElementById('empleados').value);
+                if (!cantidadEmpleados) return;
+
+                resultado = calcularTransferenciaEmpresa(cctSeleccionado, cantidadEmpleados);
+            }
+
+            currentResult = { resultado, cct: cctSeleccionado };
+            mostrarResultado();
+        }
+
+        // Mostrar resultado
+        function mostrarResultado() {
+            const { resultado, cct } = currentResult;
+            const cctData = cctDatabase[cct];
+
+            document.getElementById('formSection').classList.add('hidden');
+            document.getElementById('resultSection').classList.remove('hidden');
+
+            // Resultado principal
+            const resultMain = document.getElementById('resultMain');
+            const isEmpresa = currentMode === 'empresa';
+            
+            resultMain.classList.toggle('empresa', isEmpresa);
+
+            // Header
+            let headerText, valueText, subtitleText;
+            
+            if (currentMode === 'sectorial') {
+                headerText = '📉 Pérdida Total del Sector';
+                valueText = `$${resultado.perdidaTotalSector.toLocaleString('es-AR')} millones`;
+                subtitleText = `${resultado.trabajadoresAfectados.toLocaleString('es-AR')} trabajadores afectados`;
+            } else if (currentMode === 'individual') {
+                headerText = '📉 Tu Pérdida Anual';
+                valueText = formatPesos(resultado.perdidaAnual);
+                subtitleText = `${formatPesos(resultado.perdidaMensual)} por mes`;
+                if (resultado.antiguedadUsada) {
+                    subtitleText += ` • ${resultado.antiguedadUsada} años de antigüedad`;
+                }
+            } else {
+                headerText = '💰 Transferencia Anual a la Empresa';
+                valueText = formatPesos(resultado.transferenciaAnual);
+                subtitleText = `${formatPesos(resultado.transferenciaMensual)} por mes • ${resultado.empleados} empleados`;
+            }
+
+            document.getElementById('resultHeader').textContent = headerText;
+            document.getElementById('resultValue').textContent = valueText;
+            document.getElementById('resultSubtitle').textContent = subtitleText;
+
+            // Alerta empresa
+            document.getElementById('empresaAlert').classList.toggle('hidden', !isEmpresa);
+
+            // Título desglose
+            document.getElementById('breakdownTitle').textContent = 
+                isEmpresa ? 'Desglose de la transferencia anual (por empleado):' : 'Desglose de pérdidas anuales:';
+
+            // Generar desglose
+            const breakdown = document.getElementById('breakdown');
+            breakdown.innerHTML = '';
+
+            const items = [
+                { label: 'Plus por antigüedad', value: resultado.desglose.antiguedad },
+                { label: 'Adicionales del CCT', value: resultado.desglose.adicionales },
+                { label: 'Subsidios y beneficios', value: resultado.desglose.subsidios },
+                { label: 'Días de licencia extra', value: resultado.desglose.licencias },
+                { label: 'Congelamiento salarial', value: resultado.desglose.paritarias }
+            ];
+
+            // Opciones avanzadas
+            if (resultado.desglose.horasExtras > 0) {
+                items.push({ label: 'Recargo horas extras (50%)', value: resultado.desglose.horasExtras, advanced: true });
+            }
+            if (resultado.desglose.asignaciones > 0) {
+                items.push({ label: 'Asignaciones familiares CCT', value: resultado.desglose.asignaciones, advanced: true });
+            }
+            if (resultado.desglose.zona > 0) {
+                items.push({ label: 'Plus zona desfavorable', value: resultado.desglose.zona, advanced: true });
+            }
+            if (resultado.desglose.titulo > 0) {
+                items.push({ label: 'Adicional por título', value: resultado.desglose.titulo, advanced: true });
+            }
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'breakdown-item' + (item.advanced ? ' advanced' : '');
+                div.innerHTML = `
+                    <span class="breakdown-label">${item.label}</span>
+                    <span class="breakdown-value">${formatPesos(item.value)}</span>
+                `;
+                breakdown.appendChild(div);
+            });
+
+            // Total
+            const totalDiv = document.createElement('div');
+            totalDiv.className = 'breakdown-item breakdown-total' + (isEmpresa ? ' empresa' : '');
+            
+            let totalValue;
+            if (currentMode === 'sectorial') {
+                totalValue = `$${resultado.perdidaTotalSector.toLocaleString('es-AR')}M`;
+            } else if (currentMode === 'empresa') {
+                totalValue = formatPesos(resultado.transferenciaAnual);
+            } else {
+                totalValue = formatPesos(resultado.perdidaAnual);
+            }
+
+            totalDiv.innerHTML = `
+                <span class="breakdown-label" style="font-weight: 600;">${isEmpresa ? 'AHORRO TOTAL' : 'TOTAL'}</span>
+                <span class="breakdown-value" style="font-size: 1.2rem; color: ${isEmpresa ? 'var(--success)' : 'var(--primary)'};">${totalValue}</span>
+            `;
+            breakdown.appendChild(totalDiv);
+
+            // Scroll al resultado
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Compartir WhatsApp
+        function shareWhatsApp() {
+            const { resultado, cct } = currentResult;
+            const cctData = cctDatabase[cct];
+            let mensaje = '';
+            
+            if (currentMode === 'empresa') {
+                mensaje = `💰 TRANSFERENCIA DE TRABAJADORES A PATRONALES\n\n`;
+                mensaje += `Sector: ${cctData.nombre}\n`;
+                mensaje += `Empleados: ${resultado.empleados}\n`;
+                mensaje += `Ahorro anual para la empresa: ${formatPesos(resultado.transferenciaAnual)}\n`;
+                mensaje += `Ahorro mensual: ${formatPesos(resultado.transferenciaMensual)}\n\n`;
+                mensaje += `Lo que los trabajadores pierden, la empresa lo ahorra.\n\n`;
+            } else if (currentMode === 'sectorial') {
+                mensaje = `⚠️ IMPACTO DE LA CAÍDA DE CCT\n\n`;
+                mensaje += `Sector: ${cctData.nombre}\n`;
+                mensaje += `Trabajadores afectados: ${resultado.trabajadoresAfectados.toLocaleString('es-AR')}\n`;
+                mensaje += `Pérdida total anual: $${resultado.perdidaTotalSector.toLocaleString('es-AR')} MILLONES\n\n`;
+            } else {
+                mensaje = `⚠️ IMPACTO DE LA CAÍDA DE CCT\n\n`;
+                mensaje += `CCT: ${cctData.nombre}\n`;
+                mensaje += `Pérdida anual: ${formatPesos(resultado.perdidaAnual)}\n`;
+                mensaje += `Pérdida mensual: ${formatPesos(resultado.perdidaMensual)}\n\n`;
+            }
+            
+            mensaje += `Calculá tu pérdida en: [URL de la calculadora]`;
+            
+            const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
+        // Descargar CSV
+        function downloadCSV() {
+            const { resultado, cct } = currentResult;
+            const cctData = cctDatabase[cct];
+            let csvContent = "data:text/csv;charset=utf-8,";
+            
+            csvContent += "CALCULADORA DE IMPACTO - CAÍDA DE CONVENIOS COLECTIVOS DE TRABAJO\n\n";
+            csvContent += `Fecha de cálculo:,${new Date().toLocaleDateString('es-AR')}\n`;
+            csvContent += `Tipo de cálculo:,${currentMode === 'individual' ? 'Individual' : currentMode === 'sectorial' ? 'Sectorial' : 'Por Empresa'}\n`;
+            csvContent += `CCT:,${cct}\n`;
+            csvContent += `Sector:,${cctData.nombre}\n\n`;
+            
+            if (currentMode === 'individual') {
+                csvContent += "DATOS INGRESADOS\n";
+                csvContent += `Salario bruto mensual:,$${parseFloat(document.getElementById('salario').value).toLocaleString('es-AR')}\n`;
+                csvContent += `Antigüedad (años):,${resultado.antiguedadUsada}\n`;
+                
+                if (resultado.extrasUsados) {
+                    if (resultado.extrasUsados.horasExtras > 0) {
+                        csvContent += `Horas extras mensuales:,${resultado.extrasUsados.horasExtras}\n`;
+                    }
+                    if (resultado.extrasUsados.tieneHijos > 0) {
+                        csvContent += `Hijos menores:,${resultado.extrasUsados.tieneHijos}\n`;
+                    }
+                    if (resultado.extrasUsados.zonaDesfavorable) {
+                        csvContent += `Zona desfavorable:,Sí\n`;
+                    }
+                    if (resultado.extrasUsados.tieneTitulo) {
+                        csvContent += `Título profesional:,Sí\n`;
+                    }
+                }
+                
+                csvContent += "\nDESGLOSE DE PÉRDIDAS ANUALES\n";
+                csvContent += `Plus por antigüedad:,$${resultado.desglose.antiguedad.toLocaleString('es-AR')}\n`;
+                csvContent += `Adicionales del CCT:,$${resultado.desglose.adicionales.toLocaleString('es-AR')}\n`;
+                csvContent += `Subsidios y beneficios:,$${resultado.desglose.subsidios.toLocaleString('es-AR')}\n`;
+                csvContent += `Días de licencia extra:,$${resultado.desglose.licencias.toLocaleString('es-AR')}\n`;
+                csvContent += `Congelamiento salarial (15%):,$${resultado.desglose.paritarias.toLocaleString('es-AR')}\n`;
+                
+                if (resultado.desglose.horasExtras > 0) {
+                    csvContent += `Recargo horas extras:,$${resultado.desglose.horasExtras.toLocaleString('es-AR')}\n`;
+                }
+                if (resultado.desglose.asignaciones > 0) {
+                    csvContent += `Asignaciones familiares CCT:,$${resultado.desglose.asignaciones.toLocaleString('es-AR')}\n`;
+                }
+                if (resultado.desglose.zona > 0) {
+                    csvContent += `Plus zona desfavorable:,$${resultado.desglose.zona.toLocaleString('es-AR')}\n`;
+                }
+                if (resultado.desglose.titulo > 0) {
+                    csvContent += `Adicional por título:,$${resultado.desglose.titulo.toLocaleString('es-AR')}\n`;
+                }
+                
+                csvContent += `\nPÉRDIDA MENSUAL:,$${resultado.perdidaMensual.toLocaleString('es-AR')}\n`;
+                csvContent += `PÉRDIDA ANUAL:,$${resultado.perdidaAnual.toLocaleString('es-AR')}\n`;
+                
+            } else if (currentMode === 'sectorial') {
+                csvContent += "DATOS DEL SECTOR\n";
+                csvContent += `Trabajadores afectados:,${resultado.trabajadoresAfectados.toLocaleString('es-AR')}\n`;
+                csvContent += `Salario promedio mensual:,$${cctData.salarioPromedio.toLocaleString('es-AR')}\n\n`;
+                csvContent += `PÉRDIDA POR TRABAJADOR (ANUAL):,$${resultado.perdidaAnual.toLocaleString('es-AR')}\n`;
+                csvContent += `PÉRDIDA TOTAL DEL SECTOR (ANUAL):,$${resultado.perdidaTotalSector.toLocaleString('es-AR')} millones\n`;
+                
+            } else if (currentMode === 'empresa') {
+                csvContent += "DATOS DE LA EMPRESA\n";
+                csvContent += `Cantidad de empleados:,${resultado.empleados}\n`;
+                csvContent += `Salario promedio del sector:,$${resultado.salarioPromedio.toLocaleString('es-AR')}\n\n`;
+                csvContent += `AHORRO MENSUAL PARA LA EMPRESA:,$${resultado.transferenciaMensual.toLocaleString('es-AR')}\n`;
+                csvContent += `AHORRO ANUAL PARA LA EMPRESA:,$${resultado.transferenciaAnual.toLocaleString('es-AR')}\n`;
+            }
+            
+            csvContent += "\n\nMETODOLOGÍA\n";
+            csvContent += "- Antigüedad promedio considerada: 8 años\n";
+            csvContent += "- Congelamiento salarial estimado: 15% anual vs inflación\n";
+            csvContent += "- Beneficios basados en CCT vigentes a diciembre 2024\n";
+            csvContent += "- Cálculos conservadores basados en valores promedio\n";
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `calculo-cct-${cct.replace('/', '-')}-${Date.now()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Descargar referencia
+        function downloadReference() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            
+            csvContent += "DATOS DE REFERENCIA - CONVENIOS COLECTIVOS DE TRABAJO\n";
+            csvContent += "Calculadora de Impacto - Caída de CCT 2025\n";
+            csvContent += `Generado el: ${new Date().toLocaleDateString('es-AR')}\n\n`;
+            
+            csvContent += "CCT,Sector,Trabajadores,Salario Promedio Mensual,Plus Antigüedad (%/año),Adicionales Mensuales,Días Licencia Extra,Subsidios Mensuales\n";
+            
+            Object.entries(cctDatabase).forEach(([codigo, data]) => {
+                csvContent += `"${codigo}","${data.nombre}",${data.trabajadores},$${data.salarioPromedio.toLocaleString('es-AR')},${(data.beneficios.antiguedad * 100)}%,$${data.beneficios.adicionales.toLocaleString('es-AR')},${data.beneficios.licenciasExtra},$${data.beneficios.subsidios.toLocaleString('es-AR')}\n`;
+            });
+            
+            csvContent += "\n\nNOTAS METODOLÓGICAS\n";
+            csvContent += "Antigüedad,Se considera un promedio de 8 años para cálculos sectoriales\n";
+            csvContent += "Congelamiento salarial,Se estima una pérdida del 15% anual vs inflación proyectada\n";
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `datos-referencia-cct-${Date.now()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Reset formulario
+        function resetForm() {
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('formSection').classList.remove('hidden');
+            document.getElementById('calculatorForm').reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Reset calculadora
+        function resetCalculator() {
+            currentMode = '';
+            currentResult = null;
+            document.getElementById('formSection').classList.add('hidden');
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('modeSelector').classList.remove('hidden');
+            document.getElementById('calculatorForm').reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Inicializar
+        initCCTSelect();
+    </script>
+</body>
+</html>

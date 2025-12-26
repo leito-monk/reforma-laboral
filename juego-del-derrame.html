@@ -84,29 +84,37 @@
         
         /* Indicadores */
         .indicators-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
-        .indicator { background: var(--surface); padding: 1rem; border-radius: 8px; border: 2px solid var(--border); }
+        .indicator { background: var(--surface); padding: 1rem; border-radius: 8px; border: 2px solid var(--border); position: relative; overflow: hidden; }
         .indicator.empresario { border-color: var(--gold); }
         .indicator.trabajadores { border-color: var(--worker); }
+        .indicator.trabajadores.suffering { border-color: var(--primary); animation: danger-pulse 2s ease-in-out infinite; }
         .indicator.informales { border-color: var(--informal); }
+        .indicator.informales.suffering { border-color: var(--primary); animation: danger-pulse 2s ease-in-out infinite; }
         .indicator-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
         .indicator-title { font-size: 0.85rem; }
         .indicator-value { font-family: 'Archivo Black', sans-serif; font-size: 1.3rem; }
-        .indicator-bar { background: var(--bg); height: 12px; border-radius: 6px; overflow: hidden; }
+        .indicator-bar { background: var(--bg); height: 12px; border-radius: 6px; overflow: hidden; position: relative; }
         .indicator-fill { height: 100%; border-radius: 6px; transition: width 0.5s; }
         .indicator-fill.gold { background: linear-gradient(90deg, var(--accent), var(--gold)); }
         .indicator-fill.blue { background: var(--worker); }
         .indicator-fill.purple { background: var(--informal); }
+        .indicator-pain { font-size: 0.7rem; color: var(--primary); margin-top: 0.3rem; font-style: italic; min-height: 16px; }
+        @keyframes danger-pulse { 0%, 100% { box-shadow: 0 0 0 rgba(255, 65, 54, 0); } 50% { box-shadow: 0 0 15px rgba(255, 65, 54, 0.5); } }
         
         /* Trabajadores visuales */
-        .workers-display { background: var(--surface); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
-        .workers-title { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.75rem; text-align: center; }
-        .workers-grid { display: flex; justify-content: center; gap: 2px; flex-wrap: wrap; }
-        .worker-icon { font-size: 1.2rem; transition: all 0.3s; }
+        .workers-display { background: var(--surface); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 2px solid var(--border); }
+        .workers-title { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.75rem; text-align: center; font-weight: 600; }
+        .workers-grid { display: flex; justify-content: center; gap: 3px; flex-wrap: wrap; }
+        .worker-icon { font-size: 1.3rem; transition: all 0.5s; display: inline-block; }
         .worker-icon.formal-happy { filter: none; }
-        .worker-icon.formal-sad { filter: saturate(0.5); }
-        .worker-icon.informal { filter: grayscale(0.5); opacity: 0.7; }
-        .worker-icon.desempleado { filter: grayscale(1); opacity: 0.3; }
-        .workers-legend { display: flex; justify-content: center; gap: 1rem; margin-top: 0.75rem; font-size: 0.7rem; color: var(--text-light); }
+        .worker-icon.formal-sad { filter: saturate(0.6) brightness(0.9); animation: subtle-shake 2s ease-in-out infinite; }
+        .worker-icon.informal { filter: grayscale(0.5) brightness(0.8); opacity: 0.7; animation: fade-pulse 3s ease-in-out infinite; }
+        .worker-icon.desempleado { filter: grayscale(1); opacity: 0.35; animation: sink 4s ease-in-out infinite; }
+        .workers-legend { display: flex; justify-content: center; gap: 1rem; margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-light); flex-wrap: wrap; }
+        .workers-suffering-msg { text-align: center; font-size: 0.8rem; color: var(--primary); margin-top: 0.5rem; font-style: italic; min-height: 20px; }
+        @keyframes subtle-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-1px); } 75% { transform: translateX(1px); } }
+        @keyframes fade-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 0.4; } }
+        @keyframes sink { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(2px); } }
         
         /* Layout principal */
         .game-main { display: grid; grid-template-columns: 1fr 350px; gap: 1rem; }
@@ -319,6 +327,7 @@
                     <span class="indicator-value" id="val-formales" style="color:var(--worker)">100%</span>
                 </div>
                 <div class="indicator-bar"><div class="indicator-fill blue" id="bar-formales" style="width:100%"></div></div>
+                <div class="indicator-pain" id="pain-formales"></div>
             </div>
             <div class="indicator informales">
                 <div class="indicator-header">
@@ -326,6 +335,7 @@
                     <span class="indicator-value" id="val-informales" style="color:var(--informal)">100%</span>
                 </div>
                 <div class="indicator-bar"><div class="indicator-fill purple" id="bar-informales" style="width:100%"></div></div>
+                <div class="indicator-pain" id="pain-informales"></div>
             </div>
         </div>
 
@@ -334,10 +344,11 @@
             <div class="workers-grid" id="workers-grid"></div>
             <div class="workers-legend">
                 <span>😊 Formal OK</span>
-                <span>😟 Formal mal</span>
-                <span>😰 Informal</span>
-                <span>💀 Sin trabajo</span>
+                <span>😟😢 Formal sufriendo</span>
+                <span>😰😭 Informal</span>
+                <span>💀 Sin futuro</span>
             </div>
+            <div class="workers-suffering-msg" id="workers-suffering-msg"></div>
         </div>
 
         <div class="game-main">
@@ -538,15 +549,19 @@ const MEDIDAS = [
 ];
 
 const EVENTOS = [
-    // Negativos
-    { icon:'📢', nombre:'Paro general', desc:'Los sindicatos responden', efecto:'capital', valor:-15, tipo:'negative' },
-    { icon:'⚖️', nombre:'Juicio colectivo', desc:'Demanda masiva de trabajadores', efecto:'ganancias', valor:-0.8, tipo:'negative' },
-    { icon:'📺', nombre:'Escándalo mediático', desc:'Cámara oculta en tu empresa', efecto:'capital', valor:-20, tipo:'negative' },
-    { icon:'🚪', nombre:'Fuga de talentos', desc:'Renuncian los mejores', efecto:'ganancias', valor:-0.5, tipo:'negative' },
-    { icon:'🔥', nombre:'Conflicto en planta', desc:'Tensión entre empleados', efecto:'bienestar', valor:-5, tipo:'negative' },
-    { icon:'📉', nombre:'Caída de productividad', desc:'Desmotivación generalizada', efecto:'ganancias', valor:-0.6, tipo:'negative' },
-    { icon:'🏥', nombre:'Accidente laboral', desc:'Falta de seguridad', efecto:'capital', valor:-12, tipo:'negative' },
-    { icon:'📰', nombre:'Investigación periodística', desc:'Exponen condiciones', efecto:'capital', valor:-18, tipo:'negative' },
+    // Negativos - sufrimiento explícito
+    { icon:'📢', nombre:'Paro general', desc:'Los sindicatos responden con bronca', efecto:'capital', valor:-15, tipo:'negative', mensaje:'Miles en las calles: "No somos descartables"' },
+    { icon:'⚖️', nombre:'Juicio colectivo', desc:'Demanda masiva de trabajadores precarizados', efecto:'ganancias', valor:-0.8, tipo:'negative', mensaje:'"Nos quitaron todo, ahora vamos por justicia"' },
+    { icon:'📺', nombre:'Escándalo mediático', desc:'Cámara oculta muestra explotación', efecto:'capital', valor:-20, tipo:'negative', mensaje:'"Trabajan 12 horas sin descanso ni comida"' },
+    { icon:'🚪', nombre:'Fuga de talentos', desc:'Los mejores huyen de la precarización', efecto:'ganancias', valor:-0.5, tipo:'negative', mensaje:'"Preferimos ganar menos pero dignamente"' },
+    { icon:'🔥', nombre:'Conflicto en planta', desc:'Trabajadores al borde del quiebre', efecto:'bienestar', valor:-5, tipo:'negative', mensaje:'"Ya no podemos más con esta presión"' },
+    { icon:'📉', nombre:'Caída de productividad', desc:'Desmotivación y agotamiento extremo', efecto:'ganancias', valor:-0.6, tipo:'negative', mensaje:'"Sin derechos, sin ganas de dar más"' },
+    { icon:'🏥', nombre:'Accidente laboral grave', desc:'Sin protecciones adecuadas', efecto:'capital', valor:-12, tipo:'negative', mensaje:'"La precarización mata, literalmente"' },
+    { icon:'📰', nombre:'Investigación periodística', desc:'Exponen condiciones inhumanas', efecto:'capital', valor:-18, tipo:'negative', mensaje:'"Duermen en el piso, comen una vez al día"' },
+    { icon:'😢', nombre:'Trabajador se suicida', desc:'La presión laboral fue demasiado', efecto:'capital', valor:-25, tipo:'negative', mensaje:'"Dejó una carta: no aguantaba más la incertidumbre"' },
+    { icon:'👨‍👩‍👧', nombre:'Familias destruidas', desc:'Padres sin tiempo ni dinero para sus hijos', efecto:'bienestar', valor:-6, tipo:'negative', mensaje:'"Los chicos ya no me reconocen, siempre trabajo"' },
+    { icon:'🍞', nombre:'Hambre en aumento', desc:'Salarios no alcanzan para comer', efecto:'bienestar', valor:-4, tipo:'negative', mensaje:'"Comemos una vez por día para que alcance"' },
+    { icon:'💊', nombre:'Crisis de salud mental', desc:'Ansiedad y depresión masiva', efecto:'bienestar', valor:-5, tipo:'negative', mensaje:'"Sin obra social, sin terapia, sin esperanza"' },
     // Positivos
     { icon:'📈', nombre:'Nota en La Nación', desc:'"Empresario modelo"', efecto:'capital', valor:+10, tipo:'positive' },
     { icon:'🤝', nombre:'Acuerdo con sindicato', desc:'Negociación exitosa', efecto:'capital', valor:+8, tipo:'positive' },
@@ -676,25 +691,45 @@ function renderMedidas() {
 
 function renderWorkers() {
     const grid = document.getElementById('workers-grid');
+    const sufferingMsg = document.getElementById('workers-suffering-msg');
     let html = '';
     const pctFormal = estado.bienestar;
     const pctInformal = estado.informal;
     
+    let happyCount = 0, sadCount = 0, informalCount = 0, unemployedCount = 0;
+    
     for (let i = 0; i < TOTAL_TRABAJADORES; i++) {
         const pct = (i / TOTAL_TRABAJADORES) * 100;
         let clase, emoji;
-        if (pct < pctFormal * 0.7) {
-            clase = 'formal-happy'; emoji = '😊';
+        if (pct < pctFormal * 0.6) {
+            clase = 'formal-happy'; emoji = '😊'; happyCount++;
+        } else if (pct < pctFormal * 0.85) {
+            clase = 'formal-sad'; emoji = '😟'; sadCount++;
         } else if (pct < pctFormal) {
-            clase = 'formal-sad'; emoji = '😟';
-        } else if (pct < pctFormal + (100 - pctFormal) * (pctInformal / 100) * 0.5) {
-            clase = 'informal'; emoji = '😰';
+            clase = 'formal-sad'; emoji = '😢'; sadCount++;
+        } else if (pct < pctFormal + (100 - pctFormal) * (pctInformal / 100) * 0.4) {
+            clase = 'informal'; emoji = '😰'; informalCount++;
+        } else if (pct < pctFormal + (100 - pctFormal) * (pctInformal / 100)) {
+            clase = 'informal'; emoji = '😭'; informalCount++;
         } else {
-            clase = 'desempleado'; emoji = '💀';
+            clase = 'desempleado'; emoji = '💀'; unemployedCount++;
         }
         html += `<span class="worker-icon ${clase}">${emoji}</span>`;
     }
     grid.innerHTML = html;
+    
+    // Mensaje de sufrimiento
+    let mensaje = '';
+    if (unemployedCount > 5) {
+        mensaje = `${unemployedCount} trabajadores sin futuro 💀`;
+    } else if (informalCount > 8) {
+        mensaje = `${informalCount} en la informalidad, sin protección 😭`;
+    } else if (sadCount > 7) {
+        mensaje = `${sadCount} trabajadores formales sufriendo precarización 😢`;
+    } else if (sadCount > 0) {
+        mensaje = `Los primeros ${sadCount} ya sienten el impacto... 😟`;
+    }
+    if (sufferingMsg) sufferingMsg.textContent = mensaje;
 }
 
 function seleccionarMedida(id) {
@@ -721,10 +756,43 @@ function actualizarUI() {
     document.getElementById('val-formales').textContent = Math.max(0, estado.bienestar) + '%';
     document.getElementById('bar-formales').style.width = Math.max(0, estado.bienestar) + '%';
     
+    // Mensajes de dolor en indicadores
+    const formalIndicator = document.querySelector('.indicator.trabajadores');
+    const painFormal = document.getElementById('pain-formales');
+    if (estado.bienestar < 30) {
+        formalIndicator.classList.add('suffering');
+        painFormal.textContent = '💔 Colapso inminente';
+    } else if (estado.bienestar < 50) {
+        formalIndicator.classList.add('suffering');
+        painFormal.textContent = '😢 Sufrimiento extremo';
+    } else if (estado.bienestar < 70) {
+        painFormal.textContent = '😟 Precarización creciente';
+    } else if (estado.bienestar < 90) {
+        painFormal.textContent = '😕 Empiezan a sentirlo';
+    } else {
+        formalIndicator.classList.remove('suffering');
+        painFormal.textContent = '';
+    }
+    
     // Cascada: informales caen cuando formales caen
     estado.informal = Math.max(0, 100 - (100 - estado.bienestar) * 0.6);
     document.getElementById('val-informales').textContent = Math.round(estado.informal) + '%';
     document.getElementById('bar-informales').style.width = estado.informal + '%';
+    
+    const informalIndicator = document.querySelector('.indicator.informales');
+    const painInformal = document.getElementById('pain-informales');
+    if (estado.informal < 40) {
+        informalIndicator.classList.add('suffering');
+        painInformal.textContent = '💀 Pobreza extrema';
+    } else if (estado.informal < 60) {
+        informalIndicator.classList.add('suffering');
+        painInformal.textContent = '😭 Crisis de ingresos';
+    } else if (estado.informal < 80) {
+        painInformal.textContent = '😰 Efecto cascada';
+    } else {
+        informalIndicator.classList.remove('suffering');
+        painInformal.textContent = '';
+    }
     
     document.getElementById('stat-medidas').textContent = estado.medidasUsadas.length + '/18';
     document.getElementById('stat-formalizados').textContent = estado.formalizados.toLocaleString();
@@ -824,11 +892,14 @@ function ejecutarEvento() {
         efectoTexto = 'Sin efecto directo';
     }
     
+    let mensajeExtra = evento.mensaje ? `<div style="font-size:0.75rem; margin-top:0.5rem; padding:0.5rem; background:var(--surface); border-radius:4px; font-style:italic; color:var(--primary);">"${evento.mensaje}"</div>` : '';
+    
     card.innerHTML = `
         <div class="event-icon">${evento.icon}</div>
         <div class="event-name">${evento.nombre}</div>
         <div class="event-desc">${evento.desc}</div>
         <div class="event-effect">${efectoTexto}</div>
+        ${mensajeExtra}
     `;
 }
 
@@ -883,6 +954,9 @@ function mostrarFinal(tipo) {
     document.getElementById('modal-formalizados').textContent = estado.formalizados.toLocaleString();
     document.getElementById('modal-turnos').textContent = estado.turno;
     
+    const trabajadoresAfectados = Math.round((100 - estado.bienestar) / 100 * 12500000);
+    const perdidaAnualPorPersona = Math.round((100 - estado.bienestar) / 100 * 1700000);
+    
     if (tipo === 'victoria') {
         icon = '🏆';
         title = '¡GANASTE!';
@@ -890,42 +964,79 @@ function mostrarFinal(tipo) {
         const pctBienestar = estado.bienestar;
         if (pctBienestar > 70) {
             mensaje = `<p>¡Increíble ${estado.playerName}! Llegaste a $${estado.ganancias.toFixed(1)}B manteniendo el bienestar en ${pctBienestar}%.</p>
-            <p>Lástima que en la realidad esto no pasa. Los ${estado.formalizados.toLocaleString()} "formalizados" no compensan los millones que perdieron derechos.</p>
-            <p style="color:var(--accent)">Para que cierre la cuenta harían falta 2.200.000 empleos nuevos. Vos "creaste" ${estado.formalizados.toLocaleString()}.</p>`;
+            <p style="color:var(--primary); font-weight:600;">Pero en la realidad, ${trabajadoresAfectados.toLocaleString()} trabajadores perdieron derechos laborales. Cada uno pierde $${perdidaAnualPorPersona.toLocaleString()} al año.</p>
+            <p style="color:var(--accent)">Para que cierre la cuenta harían falta 2.200.000 empleos nuevos formales. Vos "creaste" ${estado.formalizados.toLocaleString()}. La brecha: ${(2200000 - estado.formalizados).toLocaleString()} trabajadores.</p>
+            <p style="font-size:0.85rem; margin-top:1rem;">💀 El derrame en la realidad: familias que no llegan a fin de mes, niños que pasan hambre, trabajadores sin obra social.</p>`;
         } else if (pctBienestar > 40) {
             mensaje = `<p>${estado.playerName}, lo lograste pero a qué costo. Bienestar en ${pctBienestar}%.</p>
-            <p>Ganaste $${estado.ganancias.toFixed(1)}B pero los trabajadores perdieron $${Math.round((100-pctBienestar)/100*1700000).toLocaleString()} cada uno por año.</p>
-            <p style="color:var(--accent)">El derrame funcionó... para vos. 💧</p>`;
+            <p style="color:var(--primary); font-weight:600;">${trabajadoresAfectados.toLocaleString()} trabajadores sufren precarización extrema. Perdieron $${perdidaAnualPorPersona.toLocaleString()} cada uno por año en derechos y protecciones.</p>
+            <p>Ganaste $${estado.ganancias.toFixed(1)}B para tu empresa, pero:</p>
+            <ul style="text-align:left; margin-top:0.5rem; color:var(--text-light);">
+                <li>🏥 Millones sin obra social adecuada</li>
+                <li>🍞 Familias que saltean comidas</li>
+                <li>📚 Niños que abandonan la escuela</li>
+                <li>💔 Parejas que se separan por la crisis económica</li>
+            </ul>
+            <p style="color:var(--accent); margin-top:1rem;">El derrame funcionó... para vos. Para ellos, solo lágrimas. 💧</p>`;
         } else {
             mensaje = `<p>Ganaste ${estado.playerName}, pero dejaste tierra arrasada. Bienestar en ${pctBienestar}%.</p>
+            <p style="color:var(--primary); font-weight:600; font-size:1.1rem;">💀 ${trabajadoresAfectados.toLocaleString()} trabajadores destruidos. Pérdida promedio: $${perdidaAnualPorPersona.toLocaleString()}/año.</p>
             <p>Los informales también la sintieron: sus ingresos cayeron ${Math.round(100-estado.informal)}% en cascada.</p>
-            <p style="color:var(--primary)">¿Valió la pena? Para vos sí: $${estado.ganancias.toFixed(1)}B. Para el resto... 💀</p>`;
+            <div style="background:var(--bg); padding:1rem; border-radius:8px; margin-top:1rem; border-left:4px solid var(--primary);">
+                <p style="font-weight:600; margin-bottom:0.5rem;">El costo humano real:</p>
+                <ul style="text-align:left; color:var(--text-light); font-size:0.85rem;">
+                    <li>😢 Trabajadores de 50+ años sin chance de reinsertarse</li>
+                    <li>💊 Aumento de enfermedades por estrés y malnutrición</li>
+                    <li>🚪 Desalojos por no poder pagar alquiler</li>
+                    <li>🏚️ Villas miseria creciendo sin control</li>
+                    <li>😰 Tasa de suicidios en aumento</li>
+                </ul>
+            </div>
+            <p style="color:var(--primary); font-weight:600; margin-top:1rem;">¿Valió la pena? Para vos sí: $${estado.ganancias.toFixed(1)}B. Para el resto... un infierno. 💀</p>`;
         }
     } else if (tipo === 'derrota-capital') {
         icon = '🏛️💥';
         title = 'GAME OVER';
         subtitle = 'Sin Capital Político';
         mensaje = `<p>Te quedaste sin capital político, ${estado.playerName}. Las medidas fueron demasiado impopulares.</p>
+        <p style="color:var(--primary); font-weight:600;">Pero antes de caer, ${trabajadoresAfectados.toLocaleString()} trabajadores ya sufrieron tu reforma. Pérdida promedio: $${perdidaAnualPorPersona.toLocaleString()}/año.</p>
         <p>Acumulaste $${estado.ganancias.toFixed(1)}B pero la presión social te sacó del juego.</p>
-        <p style="color:var(--accent)">Moraleja: incluso en la ficción, la precarización tiene límites políticos.</p>`;
+        <div style="background:var(--bg); padding:1rem; border-radius:8px; margin-top:1rem;">
+            <p style="color:var(--text-light); font-size:0.9rem;">Las calles se llenaron de protestas. Los sindicatos paralizaron el país. Las familias destruidas exigieron justicia. Ya era tarde, pero al menos te frenaron.</p>
+        </div>
+        <p style="color:var(--accent); margin-top:1rem;">Moraleja: incluso en la ficción, la precarización tiene límites políticos.</p>`;
     } else if (tipo === 'derrota-social') {
         icon = '💀';
         title = 'COLAPSO SOCIAL';
         subtitle = 'Bienestar en 0%';
-        mensaje = `<p>El bienestar llegó a 0%, ${estado.playerName}. Colapso total.</p>
-        <p>Acumulaste $${estado.ganancias.toFixed(1)}B pero ya no hay trabajadores en condiciones de producir.</p>
-        <p style="color:var(--primary)">El derrame no llegó. Solo quedó el desierto. 🏜️</p>`;
+        mensaje = `<p style="color:var(--primary); font-size:1.2rem; font-weight:700;">Destruiste ${trabajadoresAfectados.toLocaleString()} vidas, ${estado.playerName}.</p>
+        <p>El bienestar llegó a 0%. Colapso total de la sociedad.</p>
+        <div style="background:var(--bg); padding:1rem; border-radius:8px; margin-top:1rem; border-left:4px solid var(--primary);">
+            <p style="font-weight:600; margin-bottom:0.5rem; color:var(--primary);">Lo que dejaste atrás:</p>
+            <ul style="text-align:left; color:var(--text-light); font-size:0.85rem;">
+                <li>💀 Trabajadores sin derechos, sin dignidad, sin esperanza</li>
+                <li>🏚️ Familias viviendo en la calle</li>
+                <li>😢 Una generación perdida de niños sin educación ni salud</li>
+                <li>🔥 Tensión social al borde de la explosión</li>
+                <li>💔 El tejido social completamente destruido</li>
+            </ul>
+        </div>
+        <p style="margin-top:1rem;">Acumulaste $${estado.ganancias.toFixed(1)}B pero ya no hay trabajadores en condiciones de producir. No hay economía sin personas.</p>
+        <p style="color:var(--primary); font-weight:600; font-size:1.1rem; margin-top:1rem;">El derrame no llegó. Solo quedó el desierto y el sufrimiento. 🏜️💀</p>`;
     } else {
         icon = '📋';
         title = 'SIN MEDIDAS';
         subtitle = 'Usaste todas las reformas';
         const gano = estado.ganancias >= META_GANANCIAS;
         if (gano) {
-            mensaje = `<p>Usaste todas las medidas y llegaste a la meta. ¡${estado.playerName} lo logró!</p>`;
+            mensaje = `<p>Usaste todas las medidas y llegaste a la meta. ¡${estado.playerName} lo logró!</p>
+            <p style="color:var(--primary); font-weight:600;">Costo: ${trabajadoresAfectados.toLocaleString()} trabajadores precarizados. Pérdida promedio: $${perdidaAnualPorPersona.toLocaleString()}/año por persona.</p>
+            <p style="margin-top:1rem; color:var(--text-light);">Detrás de cada número hay familias reales, sueños destruidos, futuros cancelados.</p>`;
         } else {
             mensaje = `<p>Se acabaron las medidas, ${estado.playerName}. Llegaste a $${estado.ganancias.toFixed(1)}B de $${META_GANANCIAS}B.</p>
-            <p>La reforma no alcanzó para cumplir tus sueños de derrame.</p>
-            <p style="color:var(--accent)">Pero tranquilo, siempre pueden inventar más "modernizaciones"... 📜</p>`;
+            <p style="color:var(--primary);">Pero ${trabajadoresAfectados.toLocaleString()} trabajadores ya pagaron el costo de tu experimento.</p>
+            <p>La reforma no alcanzó para cumplir tus sueños de derrame, pero sí alcanzó para destruir miles de vidas.</p>
+            <p style="color:var(--accent); margin-top:1rem;">Pero tranquilo, siempre pueden inventar más "modernizaciones"... 📜</p>`;
         }
     }
     
