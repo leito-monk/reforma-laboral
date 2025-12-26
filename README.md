@@ -14,39 +14,6 @@ Proporcionar calculadoras transparentes e interactivas, basadas en datos oficial
 
 ## 📊 Herramientas Interactivas
 
-### 🧮 [Calculadora por CCT](https://leito-monk.github.io/reforma-laboral/calculadora-cct.html)
-
-Calculá tu pérdida personal según tu Convenio Colectivo de Trabajo.
-
-**✨ Características:**
-- 🎯 **Tres modos de cálculo**: Individual, Sectorial, o por Empresa
-- 📋 **12 CCTs verificados** con datos de INDEC EPH Q3 2024
-- 💰 Incluye: antigüedad, adicionales, licencias, subsidios, congelamiento salarial
-- ⚙️ Opciones avanzadas: horas extras, hijos, zona desfavorable, título profesional
-- 📥 Exportá a CSV o compartí por WhatsApp
-
-**CCTs disponibles:**
-<details>
-<summary>Ver lista completa de 12 convenios</summary>
-
-- 130/75 - Bancarios (95.000 trabajadores)
-- 36/75 - Empleados de Comercio (1.200.000)
-- 260/75 - Gastronómicos - UTHGRA (320.000)
-- 36/89 - Docentes (750.000)
-- 76/75 - Construcción - UOCRA (480.000)
-- 107/70 - Transporte Automotor de Pasajeros (110.000)
-- 589/10 - Camioneros (230.000)
-- 161/75 - Metalúrgicos - UOM (320.000)
-- 260/94 - Plástico (85.000)
-- 122/75 - Mecánicos y Afines del Transporte (140.000)
-- 408/05 - Call Centers (95.000)
-- 541/08 - Telecomunicaciones (67.000)
-
-**Total:** 3.9 millones de trabajadores cubiertos
-</details>
-
----
-
 ### 📊 [Análisis de Transferencia](https://leito-monk.github.io/reforma-laboral/analisis-transferencia-trabajadores.html)
 
 Impacto agregado en el conjunto de trabajadores registrados.
@@ -81,26 +48,24 @@ Simulador interactivo educativo sobre la teoría del derrame económico.
 
 ## 📐 Metodología
 
-### Calculadora Individual por CCT
+### Análisis de Transferencia
 
 ```javascript
-Pérdida Anual = 
-  + (Salario × % Antigüedad × Años)     // Plus por antigüedad
-  + (Adicionales CCT × 12 meses)        // Montos mensuales del convenio
-  + (Subsidios CCT × 12 meses)          // Subsidios adicionales
-  + (Salario ÷ 30 × Días Licencia)      // Valor de días de licencia extra
-  + (Salario × 15% × 12 meses)          // Congelamiento salarial vs inflación
-  + Opciones avanzadas                   // Horas extras, hijos, zona, título
+// Cálculo por medida
+Transferencia = Trabajadores Afectados × Pérdida Promedio Anual
+
+// Total agregado
+Transferencia Total = Σ (todas las medidas)
 ```
 
-### Cálculo Agregado
+### Análisis de Costo Fiscal
 
 ```javascript
-// Impacto Sectorial
-Transferencia Total = Pérdida Individual × Trabajadores del Sector
-
-// Impacto por Empresa
-Transferencia Empresa = Pérdida Individual × Cantidad de Empleados
+Costo Fiscal = 
+  + Reducción de contribuciones patronales
+  + Blanqueo laboral (menor recaudación)
+  - Recuperación vía IVA y Ganancias
+  - Creación potencial de empleo
 ```
 
 ### Supuestos
